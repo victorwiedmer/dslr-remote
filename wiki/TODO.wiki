@@ -1,0 +1,24 @@
+=TODO List==
+
+==preparation==
+
+===modelling class and enumeration diagrams===
+not modelled yet : 
+ * camera
+ * camera properties
+  # iso speed
+  # shutter speed
+  # aperture
+  # AEMode
+  # AFMode
+ * Lens
+
+
+----
+
+===class list===
+
+====lens====
+methods : getState,getName
+
+properties : attached,name

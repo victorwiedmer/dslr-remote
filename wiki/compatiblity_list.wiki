@@ -1,0 +1,6 @@
+This Wiki lists the compatiblity issues of the different Canon EOS D DSLR's.
+
+||Command || Canon EOS 1000D || Canon EOS 60D ||
+||Switch Programmmode || works || not works , camera message busy ||
+||get programmmodes || not works, return 0 elements || don't tested yet ||
+|| get iso desc || works || works ||

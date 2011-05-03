@@ -33,3 +33,8 @@ reverse engineering got the following :
 ||20||not listed||ok||4||
 ||24||not listed||ok||4,5||
 ||28||not listed||ok||5||
+
+
+----
+
+Starting video capturing are not supported by the sdk yet.

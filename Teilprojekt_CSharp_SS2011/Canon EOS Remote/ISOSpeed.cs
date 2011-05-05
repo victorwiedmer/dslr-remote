@@ -22,7 +22,17 @@ namespace Canon_EOS_Remote
         public List<UInt32> AvailableISOSpeed
         {
             get { return _availableISOSpeeds; }
-            set { _availableISOSpeeds = value; }
+            set
+            {
+                try
+                {
+                    _availableISOSpeeds = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
         }
         private UInt32 _currentlySettedISOSpeed;
 
@@ -34,8 +44,15 @@ namespace Canon_EOS_Remote
             get { return _currentlySettedISOSpeed; }
             set
             {
-                if (checkISOSpeedInList(value)) { _currentlySettedISOSpeed = value; }
-                else { throw new Exception("This ISO Speed are not supported"); }
+                try
+                {
+                    if (checkISOSpeedInList(value)) { _currentlySettedISOSpeed = value; }
+                    else { throw new Exception("This ISO Speed are not supported"); }
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
             }
         }
 

@@ -11,8 +11,8 @@ namespace Canon_EOS_Remote
          * Added 05-05-2011 11:50
          * basic properties
          * */
-        private string _cameraName;
-        private string _cameraOwner;
+        private string _cameraName; /* The product name of the camera body*/
+        private string _cameraOwner; /*The setted name of the camera owner*/
         private string _cameraBodyID;
         private EdsTime _cameraTime;
         private UInt32 _cameraBatteryLevel;
@@ -25,5 +25,6 @@ namespace Canon_EOS_Remote
         private UInt32 _cameraShutterTime;
         private UInt32 _cameraExposureCompensation;
         private UInt32 _cameraAvailableShots;
+        private string _currentStorage;
     }
 }

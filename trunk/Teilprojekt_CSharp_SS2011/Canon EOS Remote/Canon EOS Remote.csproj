@@ -71,6 +71,9 @@
     <Compile Include="Camera.cs" />
     <Compile Include="EdsGetPropertyData.cs" />
     <Compile Include="EdsTime.cs" />
+    <Compile Include="Enumerations\DriveModes.cs" />
+    <Compile Include="Enumerations\ISOSpeeds.cs" />
+    <Compile Include="ExposureCompensation.cs" />
     <Compile Include="ISOSpeed.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

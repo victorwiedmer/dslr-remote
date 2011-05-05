@@ -31,10 +31,10 @@ namespace Canon_EOS_Remote
          */
         public UInt32 CurrentlySettedAEMode
         {
-            get { return _currentlySettedAEMode; }
+            get { return _currentlySettedISOSpeed; }
             set
             {
-                if (checkAEModeInList(value)) { _currentlySettedAEMode = value; }
+                if (checkAEModeInList(value)) { _currentlySettedISOSpeed = value; }
                 else { throw new Exception("This AEMode are not supported"); }
             }
         }

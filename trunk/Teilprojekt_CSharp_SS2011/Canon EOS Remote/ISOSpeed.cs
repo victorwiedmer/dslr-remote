@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Canon_EOS_Remote.Enumerations;
 
 namespace Canon_EOS_Remote
 {
@@ -15,6 +16,8 @@ namespace Canon_EOS_Remote
     class ISOSpeed
     {
         private List<UInt32> _availableISOSpeeds;
+        private UInt32 _currentlySettedISOSpeed;
+        private ISOSpeeds _convertISOSpeeds;
 
         /**
          * Setter and Getter of the class member _availableISOSpeed
@@ -34,7 +37,6 @@ namespace Canon_EOS_Remote
                 }
             }
         }
-        private UInt32 _currentlySettedISOSpeed;
 
         /**
          * Setter and Getter of the class member _currentlySettedAEMode

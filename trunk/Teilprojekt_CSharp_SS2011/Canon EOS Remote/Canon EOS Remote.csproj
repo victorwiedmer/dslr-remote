@@ -71,10 +71,11 @@
     <Compile Include="Camera.cs" />
     <Compile Include="EdsGetPropertyData.cs" />
     <Compile Include="EdsTime.cs" />
-    <Compile Include="Enumerations\DriveModes.cs" />
-    <Compile Include="Enumerations\ISOSpeeds.cs" />
+    <Compile Include="DriveModes.cs" />
+    <Compile Include="ISOSpeeds.cs" />
     <Compile Include="ExposureCompensation.cs" />
     <Compile Include="ISOSpeed.cs" />
+    <Compile Include="ISOValue.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -104,6 +105,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enumerations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

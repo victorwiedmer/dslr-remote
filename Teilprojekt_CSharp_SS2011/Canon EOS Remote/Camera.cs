@@ -18,7 +18,7 @@ namespace Canon_EOS_Remote
         private UInt32 _cameraBatteryLevel;
         private AEMode _cameraAEMode;
         private UInt32 _cameraDriveMode;
-        private UInt32 _cameraISOSpeed;
+        private ISOSpeed _cameraISOSpeed;
         private UInt32 _cameraMeteringMode;
         private UInt32 _cameraAFMode;
         private UInt32 _cameraAperture;

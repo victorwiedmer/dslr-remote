@@ -19,5 +19,110 @@ namespace Canon_EOS_Remote
         private UInt32 minute; // minute
         private UInt32 second; // second
         private UInt32 milliseconds; // reserved
+
+        public UInt32 Year
+        {
+            get { return year; }
+            set
+            {
+                try
+                {
+                    year = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+        public UInt32 Month
+        {
+            get { return month; }
+            set
+            {
+                try
+                {
+                    month = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+        public UInt32 Day
+        {
+            get { return day; }
+            set
+            {
+                try
+                {
+                    day = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+        public UInt32 Hour
+        {
+            get { return hour; }
+            set
+            {
+                try
+                {
+                    hour = value;
+                }
+                catch(FormatException e){
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+        public UInt32 Minute
+        {
+            get { return minute; }
+            set
+            {
+                try
+                {
+                    minute = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+        public UInt32 Second
+        {
+            get { return second; }
+            set
+            {
+                try
+                {
+                    second = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+        public UInt32 Milliseconds
+        {
+            get { return milliseconds; }
+            set
+            {
+                try
+                {
+                    milliseconds = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
     }
 }

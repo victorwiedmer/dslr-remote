@@ -15,6 +15,7 @@ namespace Canon_EOS_Remote
     class AEMode
     {
         private List<UInt32> _availableAEModes;
+        private UInt32 _currentlySettedAEMode;
 
         /**
          * Setter and Getter of the class member _availableAEModes
@@ -22,20 +23,36 @@ namespace Canon_EOS_Remote
         public List<UInt32> AvailableAEModes
         {
             get { return _availableAEModes; }
-            set { _availableAEModes = value; }
+            set
+            {
+                try
+                {
+                    _availableAEModes = value;
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
         }
-        private UInt32 _currentlySettedAEMode;
 
         /**
          * Setter and Getter of the class member _currentlySettedAEMode
          */
         public UInt32 CurrentlySettedAEMode
         {
-            get { return _currentlySettedISOSpeed; }
+            get { return _currentlySettedAEMode; }
             set
             {
-                if (checkAEModeInList(value)) { _currentlySettedISOSpeed = value; }
-                else { throw new Exception("This AEMode are not supported"); }
+                try
+                {
+                    if (checkAEModeInList(value)) { _currentlySettedAEMode = value; }
+                    else { throw new Exception("This AEMode are not supported"); }
+                }
+                catch (FormatException e)
+                {
+                    throw new Exception(e.Message);
+                }
             }
         }
 

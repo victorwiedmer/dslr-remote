@@ -69,6 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Camera.cs" />
+    <Compile Include="EdsGetPropertyData.cs" />
     <Compile Include="EdsTime.cs" />
     <Compile Include="ISOSpeed.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -16,5 +16,14 @@ namespace Canon_EOS_Remote
         private string _cameraBodyID;
         private EdsTime _cameraTime;
         private UInt32 _cameraBatteryLevel;
+        private AEMode _cameraAEMode;
+        private UInt32 _cameraDriveMode;
+        private UInt32 _cameraISOSpeed;
+        private UInt32 _cameraMeteringMode;
+        private UInt32 _cameraAFMode;
+        private UInt32 _cameraAperture;
+        private UInt32 _cameraShutterTime;
+        private UInt32 _cameraExposureCompensation;
+        private UInt32 _cameraAvailableShots;
     }
 }

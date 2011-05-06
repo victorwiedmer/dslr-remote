@@ -70,9 +70,11 @@
     </Compile>
     <Compile Include="Camera.cs" />
     <Compile Include="EDSDK.cs" />
+    <Compile Include="EdsError.cs" />
     <Compile Include="EdsGetPropertyData.cs" />
     <Compile Include="EdsTime.cs" />
     <Compile Include="DriveModes.cs" />
+    <Compile Include="ErrorCodes.cs" />
     <Compile Include="ISOSpeeds.cs" />
     <Compile Include="ExposureCompensation.cs" />
     <Compile Include="ISOSpeed.cs" />

@@ -26,6 +26,7 @@ namespace Canon_EOS_Remote
         private UInt32 _cameraAvailableShots;
         private string _currentStorage;
         private UInt32 tmpErrorCodeAfterCommand;
+        private string _cameraFirmware;
 
         public Camera(IntPtr cameraPtr)
         {
@@ -67,6 +68,23 @@ namespace Canon_EOS_Remote
         {
             tmpErrorCodeAfterCommand = 0;
             tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BatteryLevel, 0, out this._cameraBatteryLevel);
+            if (tmpErrorCodeAfterCommand != 0)
+            {
+                throw new Exception("Command execution not succesfull");
+            }
+        }
+
+        private void getCameraTime()
+        {
+            /*
+             * @TODO 
+             */
+        }
+
+        private void getCameraFirmwareFromBody()
+        {
+            tmpErrorCodeAfterCommand = 0;
+            tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_FirmwareVersion, 0, out this._cameraFirmware);
             if (tmpErrorCodeAfterCommand != 0)
             {
                 throw new Exception("Command execution not succesfull");

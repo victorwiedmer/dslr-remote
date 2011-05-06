@@ -3,7 +3,7 @@
 
 namespace Canon_EOS_Remote
 {
-    unsafe class Camera
+    class Camera
     {
         /**
          * Added 05-05-2011 11:50
@@ -25,6 +25,7 @@ namespace Canon_EOS_Remote
         private UInt32 _cameraExposureCompensation;
         private UInt32 _cameraAvailableShots;
         private string _currentStorage;
+        private UInt32 tmpErrorCodeAfterCommand;
 
         public Camera(IntPtr cameraPtr)
         {
@@ -34,8 +35,17 @@ namespace Canon_EOS_Remote
 
         private void getCameraNameFromBody()
         {
-            string tmpName;
-            EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_ProductName, 0, out tmpName);
+            tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_ProductName, 0, out this._cameraName);
+        }
+
+        private void getCameraOwnerFromBody()
+        {
+            tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_OwnerName, 0, out this._cameraName);
+        }
+
+        private void getCameraBodyIDFromBody()
+        {
+            tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BodyIDEx, 0, out this._cameraBodyID);
         }
     }
 }

@@ -35,17 +35,42 @@ namespace Canon_EOS_Remote
 
         private void getCameraNameFromBody()
         {
+            tmpErrorCodeAfterCommand = 0;
             tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_ProductName, 0, out this._cameraName);
+            if (tmpErrorCodeAfterCommand != 0)
+            {
+                throw new Exception("Command execution not succesfull");
+            }
         }
 
         private void getCameraOwnerFromBody()
         {
+            tmpErrorCodeAfterCommand = 0;
             tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_OwnerName, 0, out this._cameraName);
+            if (tmpErrorCodeAfterCommand != 0)
+            {
+                throw new Exception("Command execution not succesfull");
+            }
         }
 
         private void getCameraBodyIDFromBody()
         {
+            tmpErrorCodeAfterCommand = 0;
             tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BodyIDEx, 0, out this._cameraBodyID);
+            if (tmpErrorCodeAfterCommand != 0)
+            {
+                throw new Exception("Command execution not succesfull");
+            }
+        }
+
+        private void getCameraBatteryLevelFromBody()
+        {
+            tmpErrorCodeAfterCommand = 0;
+            tmpErrorCodeAfterCommand = EDSDKLib.EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BatteryLevel, 0, out this._cameraBatteryLevel);
+            if (tmpErrorCodeAfterCommand != 0)
+            {
+                throw new Exception("Command execution not succesfull");
+            }
         }
     }
 }

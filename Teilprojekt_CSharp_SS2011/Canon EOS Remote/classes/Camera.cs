@@ -3,11 +3,12 @@
  * Added on 09-05-2011 12:38 to simplify using of the canon sdk.
  * Now, every command , EDSDKLib namespace havent to be written.
  * */
-using EDSDKLib; 
+using EDSDKLib;
+using System.ComponentModel; 
 
 namespace Canon_EOS_Remote
 {
-    class Camera
+    class Camera : INotifyPropertyChanged
     {
         #region Declaration of class members
         /**
@@ -39,6 +40,7 @@ namespace Canon_EOS_Remote
         private UInt32 tmpErrorCodeAfterCommand;
         private string tmpErrorString;
         private string _cameraFirmware;
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
         #region Constructors
@@ -122,5 +124,6 @@ namespace Canon_EOS_Remote
             }
         }
         #endregion
+
     }
 }

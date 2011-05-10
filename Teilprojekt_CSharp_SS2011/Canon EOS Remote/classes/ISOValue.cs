@@ -7,14 +7,14 @@ namespace Canon_EOS_Remote
 {
     class ISOValue
     {
-        private UInt32 decValue;
+        #region Declaration of class members
 
-        public UInt32 DecValue
-        {
-            get { return decValue; }
-            set { decValue = value; }
-        }
+        private UInt32 decValue;
         private UInt32 hexValue;
+
+        #endregion
+
+        #region Getter and Setter of class members
 
         public UInt32 HexValue
         {
@@ -22,10 +22,22 @@ namespace Canon_EOS_Remote
             set { hexValue = value; }
         }
 
+        public UInt32 DecValue
+        {
+            get { return decValue; }
+            set { decValue = value; }
+        }
+
+        #endregion
+
+        #region Construtors
+
         public ISOValue(UInt32 decValue, UInt32 hexValue)
         {
             this.decValue = decValue;
             this.hexValue = hexValue;
         }
+
+        #endregion
     }
 }

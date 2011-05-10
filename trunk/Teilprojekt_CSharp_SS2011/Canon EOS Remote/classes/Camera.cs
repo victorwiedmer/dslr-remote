@@ -17,12 +17,6 @@ namespace Canon_EOS_Remote
          * */
         private IntPtr _cameraPtr;
         private string _cameraName; /* The product name of the camera body*/
-
-        public string CameraName
-        {
-            get { return _cameraName; }
-            set { _cameraName = value; }
-        }
         private string _cameraOwner; /*The setted name of the camera owner*/
         private string _cameraBodyID;
         private EdsTime _cameraTime;
@@ -41,6 +35,144 @@ namespace Canon_EOS_Remote
         private string tmpErrorString;
         private string _cameraFirmware;
         public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Setter and Getter of class member
+        public IntPtr CameraPtr
+        {
+            get { return _cameraPtr; }
+            set { _cameraPtr = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraPointerChanged"));
+            }
+        }
+        
+        public string CameraName
+        {
+            get { return _cameraName; }
+            set { _cameraName = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraNameChanged"));
+            }
+        }        
+
+        public string CameraOwner
+        {
+            get { return _cameraOwner; }
+            set { _cameraOwner = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraOwnerChanged"));
+            }
+        }        
+
+        public string CameraBodyID
+        {
+            get { return _cameraBodyID; }
+            set { _cameraBodyID = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraBodyIDChanged"));
+            }
+        }
+
+        internal EdsTime CameraTime
+        {
+            get { return _cameraTime; }
+            set { _cameraTime = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraTimeChanged"));
+            }
+        }
+
+        public UInt32 CameraBatteryLevel
+        {
+            get { return _cameraBatteryLevel; }
+            set { _cameraBatteryLevel = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraBatteryLevelChanged"));
+            }
+        }
+
+        internal AEMode CameraAEMode
+        {
+            get { return _cameraAEMode; }
+            set { _cameraAEMode = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraAEModeChanged"));
+            }
+        }
+
+        public UInt32 CameraDriveMode
+        {
+            get { return _cameraDriveMode; }
+            set { _cameraDriveMode = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraDriveModeChanged"));
+            }
+        }
+
+        internal ISOSpeed CameraISOSpeed
+        {
+            get { return _cameraISOSpeed; }
+            set { _cameraISOSpeed = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraISOSpeedChanged"));
+            }
+        }
+
+        public UInt32 CameraMeteringMode
+        {
+            get { return _cameraMeteringMode; }
+            set { _cameraMeteringMode = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraMeteringModeChanged"));
+            }
+        }
+
+        public UInt32 CameraAFMode
+        {
+            get { return _cameraAFMode; }
+            set { _cameraAFMode = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraAFModeChanged"));
+            }
+        }
+
+        public UInt32 CameraAperture
+        {
+            get { return _cameraAperture; }
+            set { _cameraAperture = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraApertureChanged"));
+            }
+        }
+
+        public UInt32 CameraShutterTime
+        {
+            get { return _cameraShutterTime; }
+            set { _cameraShutterTime = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraShutterTimeChanged"));
+            }
+        }
+
+        public UInt32 CameraExposureCompensation
+        {
+            get { return _cameraExposureCompensation; }
+            set { _cameraExposureCompensation = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraExposureCompensationChanged"));
+            }
+        }
+
+        public UInt32 CameraAvailableShots
+        {
+            get { return _cameraAvailableShots; }
+            set { _cameraAvailableShots = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraAAvailableShotsChanged"));
+            }
+        }
+
+        public string CurrentStorage
+        {
+            get { return _currentStorage; }
+            set { _currentStorage = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraCurrentStorageChanged"));
+            }
+        }    
+
+        public string CameraFirmware
+        {
+            get { return _cameraFirmware; }
+            set { _cameraFirmware = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraFirmwareChanged"));
+            }
+        }
         #endregion
 
         #region Constructors
@@ -66,6 +198,11 @@ namespace Canon_EOS_Remote
             return tmpErrorString;
         }
 
+        private void update()
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs("PropertyHasChanged"));
+        }
+
         #region camera methods
         private void getCameraNameFromBody()
         {
@@ -74,6 +211,10 @@ namespace Canon_EOS_Remote
             if (tmpErrorCodeAfterCommand != 0)
             {
                 throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
+            }
+            else
+            {
+                update();
             }
         }
 
@@ -85,6 +226,10 @@ namespace Canon_EOS_Remote
             {
                 throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
             }
+            else
+            {
+                update();
+            }
         }
 
         private void getCameraBodyIDFromBody()
@@ -95,6 +240,10 @@ namespace Canon_EOS_Remote
             {
                 throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
             }
+            else
+            {
+                update();
+            }
         }
 
         private void getCameraBatteryLevelFromBody()
@@ -104,6 +253,10 @@ namespace Canon_EOS_Remote
             if (tmpErrorCodeAfterCommand != 0)
             {
                 throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
+            }
+            else
+            {
+                update();
             }
         }
 
@@ -121,6 +274,10 @@ namespace Canon_EOS_Remote
             if (tmpErrorCodeAfterCommand != 0)
             {
                 throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
+            }
+            else
+            {
+                update();
             }
         }
         #endregion

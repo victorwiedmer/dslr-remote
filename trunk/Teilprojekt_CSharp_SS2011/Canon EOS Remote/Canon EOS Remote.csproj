@@ -63,22 +63,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AEMode.cs" />
+    <Compile Include="classes\AEMode.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Camera.cs" />
+    <Compile Include="classes\Camera.cs" />
+    <Compile Include="classes\Cameralist.cs" />
     <Compile Include="EDSDK.cs" />
-    <Compile Include="EdsError.cs" />
-    <Compile Include="EdsGetPropertyData.cs" />
-    <Compile Include="EdsTime.cs" />
-    <Compile Include="DriveModes.cs" />
-    <Compile Include="ErrorCodes.cs" />
-    <Compile Include="ISOSpeeds.cs" />
-    <Compile Include="ExposureCompensation.cs" />
-    <Compile Include="ISOSpeed.cs" />
-    <Compile Include="ISOValue.cs" />
+    <Compile Include="ErrorHandling\EdsError.cs" />
+    <Compile Include="classes\EdsGetPropertyData.cs" />
+    <Compile Include="classes\EdsTime.cs" />
+    <Compile Include="classes\DriveModes.cs" />
+    <Compile Include="ErrorHandling\ErrorCodes.cs" />
+    <Compile Include="classes\ISOSpeeds.cs" />
+    <Compile Include="classes\ExposureCompensation.cs" />
+    <Compile Include="classes\ISOSpeed.cs" />
+    <Compile Include="classes\ISOValue.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

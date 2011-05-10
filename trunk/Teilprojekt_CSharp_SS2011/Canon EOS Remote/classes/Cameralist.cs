@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace Canon_EOS_Remote.classes
 {
-    class Cameralist
+    class Cameralist : INotifyPropertyChanged, IDisposable
     {
+        #region Classmember
+
         private List<Camera> _cameraList {set;get;}
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         public Cameralist()
         {
@@ -16,11 +22,13 @@ namespace Canon_EOS_Remote.classes
 
         public void addCameraToList(Camera camera){
             this._cameraList.Add(camera);
+            PropertyChanged(this,new PropertyChangedEventArgs("CameraAddedToList"));
         }
 
         public void deleteCameraFromList(Camera camera)
         {
             this._cameraList.Remove(camera);
+            PropertyChanged(this, new PropertyChangedEventArgs("CameraDeletedFromList"));
         }
 
         public Camera getCameraFromList(string cameraName)
@@ -34,6 +42,11 @@ namespace Canon_EOS_Remote.classes
                 }
             }
             return tmpCamera;
+        }
+
+        public void Dispose()
+        {
+            this._cameraList = null;
         }
     }
 }

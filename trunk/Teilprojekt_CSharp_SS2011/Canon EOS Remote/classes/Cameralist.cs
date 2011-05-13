@@ -10,11 +10,26 @@ namespace Canon_EOS_Remote.classes
     {
         #region Classmember
 
-        private List<Camera> _cameraList {set;get;}
+        /*
+         * Added on 11-05-2011 22:30
+         * This list hold the connected cameras from the type Camera
+         * */
+        private List<Camera> _cameraList;
+
+        internal List<Camera> CameraList
+        {
+            get { return _cameraList; }
+            set { _cameraList = value; }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
+        /*
+         * Standard constructor of Cameralist
+         * its initilize the list _cameraList
+         * */
         public Cameralist()
         {
             _cameraList = new List<Camera>();
@@ -22,13 +37,13 @@ namespace Canon_EOS_Remote.classes
 
         public void addCameraToList(Camera camera){
             this._cameraList.Add(camera);
-            PropertyChanged(this,new PropertyChangedEventArgs("CameraAddedToList"));
+            PropertyChanged(this,new PropertyChangedEventArgs("_cameraList"));
         }
 
         public void deleteCameraFromList(Camera camera)
         {
             this._cameraList.Remove(camera);
-            PropertyChanged(this, new PropertyChangedEventArgs("CameraDeletedFromList"));
+            PropertyChanged(this, new PropertyChangedEventArgs("_cameraList"));
         }
 
         public Camera getCameraFromList(string cameraName)

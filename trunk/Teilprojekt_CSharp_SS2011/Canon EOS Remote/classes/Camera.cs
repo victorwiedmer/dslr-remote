@@ -34,6 +34,7 @@ namespace Canon_EOS_Remote
         private UInt32 tmpErrorCodeAfterCommand;
         private string tmpErrorString;
         private string _cameraFirmware;
+        private bool _lensAttached;
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 

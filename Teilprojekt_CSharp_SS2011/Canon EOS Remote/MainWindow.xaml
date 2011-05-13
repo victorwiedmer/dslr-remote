@@ -1,8 +1,85 @@
-﻿<Window x:Class="Canon_EOS_Remote.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="Teilprojekt_SS2011.MainWindow"
+	x:Name="Window"
+	Title="MainWindow"
+	Width="926" Height="591">
+	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.15*"/>
+			<RowDefinition Height="0.35*"/>
+			<RowDefinition Height="0.50*"/>
+		</Grid.RowDefinitions>
+		<Menu Height="25" VerticalAlignment="Top">
+			<MenuItem Header="Datei" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold">
+			<MenuItem Header="Beenden" Width="Auto" Height="Auto" Margin="0"></MenuItem>
+			</MenuItem>
+			<MenuItem Header="Kamera" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold">
+			</MenuItem>
+			<MenuItem Header="Script" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold">
+				<MenuItem Header="Neu"></MenuItem>
+				<MenuItem Header="Öffnen"></MenuItem>
+				<MenuItem Header="Speichern"></MenuItem>
+				<MenuItem Header="Speichern unter"></MenuItem>
+			</MenuItem>
+			<MenuItem Header="Info" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"/>
+		</Menu>
+		<Label Content="Kameraname" HorizontalAlignment="Left" Margin="0,25,0,15" d:LayoutOverrides="Height" Height="30"/>
+		<Label Content="FreierSpeicher" HorizontalAlignment="Left" Margin="150,25,0,15" Grid.Row="0" d:LayoutOverrides="Height" Height="30"/>
+		<Label Content="Batterie Status : " Margin="300,25,226,15" d:LayoutOverrides="Height" Grid.Row="0" Height="30"/>
+		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Value="100" Minimum="0" Maximum="100"/>
+		<TabControl Grid.Row="1" BorderBrush="{x:Null}">
+			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
+					<Label Content="Kamera auswählen : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto"></Label>
+                    <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="120" DataContext="{Binding}">
+                    </ComboBox>
+                    <Label Content="Kameraname" HorizontalAlignment="Left" Margin="0,25.96,0,0" Width="Auto" Height="Auto" VerticalAlignment="Top"/>
+					<Label Content="Besitzername" HorizontalAlignment="Left" Margin="0,55.92,0,40.86" Width="Auto" Height="Auto" d:LayoutOverrides="Height"/>
+					<Label Content="Firmware-Version" HorizontalAlignment="Left" Margin="0,0,0,50.86" VerticalAlignment="Bottom" Width="Auto" Height="Auto"/>
+					<Label Content="Gehäuse-ID" Margin="279,25.96,249.006,0" VerticalAlignment="Top" Width="Auto" Height="Auto"/>
+					<Label Content="Freier Speicher" HorizontalAlignment="Left" Margin="279,55.92,0,40.86" d:LayoutOverrides="Height" Width="Auto" Height="Auto"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Objektiv" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
+					<Grid HorizontalAlignment="Left" Margin="0,0,0,18.9" Width="154">
+						<Label Content="Fokussteuerung" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="SemiBold"/>
+						<Button x:Name="BFokusNah1" Content="Nah 1" HorizontalAlignment="Left" Margin="0,29.96,0,0" VerticalAlignment="Top" Width="75"/>
+						<Button x:Name="BFokusFern1" Content="Fern 1" HorizontalAlignment="Right" Margin="0,29.96,0,0" VerticalAlignment="Top" Width="75"/>
+						<Button x:Name="BFokusFern2" Content="Fern 2" Margin="0,55.92,0,64.81" HorizontalAlignment="Right" Width="75" d:LayoutOverrides="Height"/>
+						<Button x:Name="BFokusNah2" Content="Nah 2" Margin="0,55.92,0,64.81" HorizontalAlignment="Left" Width="75" d:LayoutOverrides="Height"/>
+						<Button x:Name="BFokusNah3" Content="Nah 3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,38.85"/>
+						<Button x:Name="BFokusFern3" Content="Fern 3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,38.85"/>
+					</Grid>
+					
+				</Grid>
+			</TabItem>
+			<TabItem Header="Kamera">
+				<Grid>
+					<Label Content="ISO" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<Label Content="Blende" HorizontalAlignment="Left" Margin="0,0,0,18.9" VerticalAlignment="Bottom"/>
+					<Label Content="Belichtungszeit" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
+					<Label Content="Programm" HorizontalAlignment="Left" Margin="0,51.92,0,44.86" d:LayoutOverrides="Height"/>
+					<Label Content="EBV" HorizontalAlignment="Left" Margin="269.596,0,0,0" VerticalAlignment="Top"/>
+					<ComboBox HorizontalAlignment="Left" Margin="116.787,4,0,0" VerticalAlignment="Top" Width="120"/>
+					<ComboBox HorizontalAlignment="Left" Margin="116.787,29.96,0,0" Width="120" VerticalAlignment="Top"/>
+					<ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height"/>
+					<ComboBox HorizontalAlignment="Left" Margin="116.787,0,0,18.9" VerticalAlignment="Bottom" Width="120"/>
+					<ComboBox HorizontalAlignment="Right" Margin="0,4,167,0" Width="120" VerticalAlignment="Top"/>
+					</Grid>
+			</TabItem>
+			<TabItem Header="Script">
+				<Grid>
+					<Button Content="ISO ändern" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126.277" Margin="8,0,0,0"/>
+					<Button Content="Blende ändern" Margin="8,0,0,51.79" VerticalAlignment="Bottom" Width="126.277" HorizontalAlignment="Left"/>
+					<Button Content="Belichtungszeit ändern" Margin="8,65.88,0,73.75" Width="Auto" HorizontalAlignment="Left" d:LayoutOverrides="Height"/>
+					<Button Content="EBV ändern" HorizontalAlignment="Left" Margin="8,21.96,0,0" VerticalAlignment="Top" Width="126.277"/>
+					<Button Content="Fokus ändern" HorizontalAlignment="Left" Margin="8,43.92,0,0" Width="126.277" Height="21.96" VerticalAlignment="Top"/>
+					</Grid>
+			</TabItem>
+		</TabControl>
+	</Grid>
 </Window>

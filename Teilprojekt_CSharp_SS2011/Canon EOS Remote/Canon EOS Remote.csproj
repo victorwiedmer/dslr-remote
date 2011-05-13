@@ -69,7 +69,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="classes\Camera.cs" />
-    <Compile Include="classes\Cameralist.cs" />
+    <Compile Include="classes\Cameralist.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="classes\ProgrammProperties.cs" />
     <Compile Include="EDSDK.cs" />
     <Compile Include="ErrorHandling\EdsError.cs" />
     <Compile Include="classes\EdsGetPropertyData.cs" />
@@ -86,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -467,7 +471,9 @@
   <ItemGroup>
     <Content Include="DPPDLL.dll" />
     <Content Include="DPPLibCom.dll" />
-    <Content Include="DPPRSC.dll" />
+    <Content Include="DPPRSC.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="EDSDK.dll" />
     <Content Include="EdsImage.dll" />
     <Content Include="MLib.dll" />

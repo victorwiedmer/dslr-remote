@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,19 +8,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Canon_EOS_Remote
+namespace Teilprojekt_SS2011
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Interaktionslogik für MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
+			this.InitializeComponent();
+
+			// Fügen Sie Code, der bei der Objekterstellung erforderlich ist, unter diesem Punkt ein.
+		}
+
+		private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+		}
+	}
 }

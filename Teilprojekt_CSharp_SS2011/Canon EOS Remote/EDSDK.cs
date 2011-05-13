@@ -618,7 +618,7 @@ namespace EDSDKLib
 			EdsImageQuality_SRM2J = 0x02640610,	/* SRAW(SRAW2) + Jpeg Middle2 */
 			EdsImageQuality_SRSJ = 0x02640210,	/* SRAW(SRAW2) + Jpeg Small */
 
-			EdsImageQuality_Unknown = 0xffffffff,
+			//EdsImageQuality_Unknown = 0xffffffff,
         }
 
         public enum ImageQualityForLegacy
@@ -648,7 +648,7 @@ namespace EDSDKLib
 			kEdsImageQualityForLegacy_LR2M2J = 0x002f061f,	/* RAW + Jpeg Middle2 */
 			kEdsImageQualityForLegacy_LR2SJ = 0x002f021f,	/* RAW + Jpeg Small */
 
-			kEdsImageQualityForLegacy_Unknown = 0xffffffff,
+			//kEdsImageQualityForLegacy_Unknown = 0xffffffff,
         }
 
         #endregion

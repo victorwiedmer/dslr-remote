@@ -91,8 +91,8 @@ namespace Canon_EOS_Remote
             _errorCodes.Add(new EdsError(0x00000066, "EDS_ERR_INVALID_SORT_FN", ""));
 
             /* Device errors */
-            _errorCodes.Add(new EdsError(0x00000080, "EDS_ERR_DEVICE_NOT_FOUND", ""));
-            _errorCodes.Add(new EdsError(0x00000081, "EDS_ERR_DEVICE_BUSY", ""));
+            _errorCodes.Add(new EdsError(0x00000080, "EDS_ERR_DEVICE_NOT_FOUND", "Device not found"));
+            _errorCodes.Add(new EdsError(0x00000081, "EDS_ERR_DEVICE_BUSY", "Device is busy or will get in unstable mode"));
             _errorCodes.Add(new EdsError(0x00000082, "EDS_ERR_DEVICE_INVALID", ""));
             _errorCodes.Add(new EdsError(0x00000083, "EDS_ERR_DEVICE_EMERGENCY", ""));
             _errorCodes.Add(new EdsError(0x00000084, "EDS_ERR_DEVICE_MEMORY_FULL", ""));

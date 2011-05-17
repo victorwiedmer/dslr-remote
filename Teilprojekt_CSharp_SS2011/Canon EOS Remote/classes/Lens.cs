@@ -22,7 +22,6 @@ namespace Canon_EOS_Remote.classes
         {
             EDSDK.EdsSendCommand(cameraPtr, EDSDK.EvfDriveLens_Near3, 0);
         }
-
         private void driveLensFar1(IntPtr cameraPtr)
         {
             EDSDK.EdsSendCommand(cameraPtr, EDSDK.EvfDriveLens_Far1, 0);

@@ -72,7 +72,9 @@
     <Compile Include="classes\Cameralist.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="classes\Lens.cs" />
     <Compile Include="classes\ProgrammProperties.cs" />
+    <Compile Include="classes\SDK.cs" />
     <Compile Include="EDSDK.cs" />
     <Compile Include="ErrorHandling\EdsError.cs" />
     <Compile Include="classes\EdsGetPropertyData.cs" />

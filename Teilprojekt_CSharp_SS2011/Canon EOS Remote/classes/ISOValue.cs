@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Canon_EOS_Remote
 {
+    /**
+     * Version 0.1
+     * */
     class ISOValue
     {
         #region Declaration of class members

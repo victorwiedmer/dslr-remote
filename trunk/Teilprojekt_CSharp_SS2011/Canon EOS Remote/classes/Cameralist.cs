@@ -62,6 +62,7 @@ namespace Canon_EOS_Remote.classes
         public void Dispose()
         {
             this._cameraList = null;
+            PropertyChanged(this, new PropertyChangedEventArgs("_cameraList"));
         }
     }
 }

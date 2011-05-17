@@ -72,6 +72,7 @@
     <Compile Include="classes\Cameralist.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="classes\DriveMode.cs" />
     <Compile Include="classes\Lens.cs" />
     <Compile Include="classes\ProgrammProperties.cs" />
     <Compile Include="classes\SDK.cs" />

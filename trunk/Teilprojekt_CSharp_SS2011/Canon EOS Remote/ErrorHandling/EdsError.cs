@@ -7,6 +7,8 @@ namespace Canon_EOS_Remote
 {
     class EdsError
     {
+        private bool developing = true;
+
         #region Declaration of class members
         private uint _errorCodeNumber;
         private string _errorCodeString;
@@ -53,5 +55,17 @@ namespace Canon_EOS_Remote
             this._errorDescription = _errorDescription;
         }
         #endregion
+
+        public override string ToString()
+        {
+            if (developing)
+            {
+                return this.ErrorCodeNumber + "-" + this.ErrorCodeString + "-" + this.ErrorDescription;
+            }
+            else
+            {
+                return this._errorDescription;
+            }
+        }
     }
 }

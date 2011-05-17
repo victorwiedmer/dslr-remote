@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Canon_EOS_Remote.Enumerations
 {
+    /**
+     * Version 0.1
+     * */
     class ISOSpeeds
     {
         private List<ISOValue> _isoSpeeds;

@@ -8,6 +8,7 @@ namespace Canon_EOS_Remote
 {
     /**
      * Added 05-05-2011 12:37 
+     * Version : 0.2
      * represents the ISOSpeed
      * this class hold a list with the available iso speeds from camera and 
      * a member with the currently setted iso speed, the iso speed can only be setted

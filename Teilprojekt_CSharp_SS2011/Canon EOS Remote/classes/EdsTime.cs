@@ -11,6 +11,10 @@ namespace Canon_EOS_Remote
          * Added 05-05-2011 11:53
          * represents the EdsTime for property DateTime
          * SDK property ID is kEdsPropID_DateTime
+         * 
+         * Version = 0.7
+         * 
+         * Not validation checking of date, mean 34-13-00 is possible but a not valid date
          * */
         private UInt32 year; // year
         private UInt32 month; // month 1=January, 2=February, ...
@@ -72,7 +76,14 @@ namespace Canon_EOS_Remote
             {
                 try
                 {
-                    hour = value;
+                    if (value > 24 || value < 0)
+                    {
+                        throw new Exception("Invalid hour value = " + value);
+                    }
+                    else
+                    {
+                        hour = value;
+                    }
                 }
                 catch(FormatException e){
                     throw new Exception(e.Message);
@@ -86,7 +97,12 @@ namespace Canon_EOS_Remote
             {
                 try
                 {
+                    if(value>60 || value<0){
+                        throw new Exception("Invalid minute value = " + value);
+                    }
+                    else{
                     minute = value;
+                    }
                 }
                 catch (FormatException e)
                 {
@@ -101,11 +117,22 @@ namespace Canon_EOS_Remote
             {
                 try
                 {
-                    second = value;
+                    if (value < 0 || value > 60)
+                    {
+                        throw new Exception("Invalid second value = " + value);
+                    }
+                    else
+                    {
+                        second = value;
+                    }
                 }
                 catch (FormatException e)
                 {
                     throw new Exception(e.Message);
+                }
+                catch (Exception e)
+                {
+
                 }
             }
         }

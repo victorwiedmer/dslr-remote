@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Canon_EOS_Remote.classes
 {
-    class DriveMode
+    class TDriveMode
     {
         private string _driveModeName;
         private uint _driveModeHex;
@@ -22,7 +22,7 @@ namespace Canon_EOS_Remote.classes
             set { _driveModeName = value; }
         }
 
-        public DriveMode(string driveModeName, uint driveModeHex)
+        public TDriveMode(string driveModeName, uint driveModeHex)
         {
             this.DriveModeName = driveModeName;
             this.DriveModeHex = driveModeHex;

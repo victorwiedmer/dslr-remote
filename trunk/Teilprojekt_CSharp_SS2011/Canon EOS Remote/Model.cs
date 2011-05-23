@@ -8,6 +8,7 @@ namespace Canon_EOS_Remote
 {
     class Model
     {
+        private SDK _sdk;
         private Cameralist _cameraList;
     }
 }

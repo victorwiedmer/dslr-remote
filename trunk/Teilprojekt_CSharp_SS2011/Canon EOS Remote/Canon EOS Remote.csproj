@@ -470,6 +470,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enumerations\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DPPDLL.dll" />

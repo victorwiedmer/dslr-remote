@@ -3,10 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canon EOS Remote", "Canon EOS Remote\Canon EOS Remote.csproj", "{A25D5F73-B74C-4103-A195-614324098524}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_1", "Test_1\Test_1.csproj", "{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB0A36BA-A5BC-48C7-B2BA-878CEF2626A8}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Teilprojekt_CSharp_SS2011.vsmdi = Teilprojekt_CSharp_SS2011.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Teilprojekt_CSharp_SS2011.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +39,16 @@ Global
 		{A25D5F73-B74C-4103-A195-614324098524}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A25D5F73-B74C-4103-A195-614324098524}.Release|x86.ActiveCfg = Release|x86
 		{A25D5F73-B74C-4103-A195-614324098524}.Release|x86.Build.0 = Release|x86
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8AA449FF-E9BE-4D96-A1AD-E86CC532C947}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

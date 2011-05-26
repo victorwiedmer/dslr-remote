@@ -12,6 +12,7 @@ namespace Canon_EOS_Remote
         #region static constructors
         static ErrorCodes()
         {
+            _errorCodes = new List<EdsError>();
             init();        
         }
         #endregion

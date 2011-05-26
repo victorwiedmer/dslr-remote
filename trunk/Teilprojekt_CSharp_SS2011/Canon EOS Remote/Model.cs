@@ -9,6 +9,17 @@ namespace Canon_EOS_Remote
     class Model
     {
         private SDK _sdk;
-        private Cameralist _cameraList;
+
+        internal SDK Sdk
+        {
+            get { return _sdk; }
+            set { _sdk = value; }
+        }
+        public Model()
+        {
+            _sdk = new SDK();
+         System.Windows.MessageBox.Show("Model created");
+        }
+
     }
 }

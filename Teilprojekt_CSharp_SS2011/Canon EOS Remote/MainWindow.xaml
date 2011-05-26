@@ -4,8 +4,14 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	x:Class="Teilprojekt_SS2011.MainWindow"
 	x:Name="Window"
-	Title="MainWindow"
-	Width="926" Height="591">
+	Width="926" Height="591"
+    xmlns:locale="clr-namespace:Teilprojekt_SS2011"
+    xmlns:vm="clr-namespace:Canon_EOS_Remote.ViewModel"
+    Title="{Binding Path=vm.Model.Sdk.SDKState}"
+    >
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="0.15*"/>

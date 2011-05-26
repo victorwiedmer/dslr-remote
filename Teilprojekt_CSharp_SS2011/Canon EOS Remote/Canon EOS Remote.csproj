@@ -59,6 +59,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\PropertyChanged.cs" />
+    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,356 +114,1056 @@
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
     <None Include="EDSDK.lib" />
-    <None Include="icc\1001_F.BIN" />
-    <None Include="icc\1001_faf.BIN" />
-    <None Include="icc\1001_L.BIN" />
-    <None Include="icc\1001_lnd.BIN" />
-    <None Include="icc\1001_N.BIN" />
-    <None Include="icc\1001_ntl.BIN" />
-    <None Include="icc\1001_P.BIN" />
-    <None Include="icc\1001_ptr.BIN" />
-    <None Include="icc\1001_S.BIN" />
-    <None Include="icc\1001_std.BIN" />
-    <None Include="icc\1011_F.BIN" />
-    <None Include="icc\1011_faf.BIN" />
-    <None Include="icc\1011_L.BIN" />
-    <None Include="icc\1011_lnd.BIN" />
-    <None Include="icc\1011_N.BIN" />
-    <None Include="icc\1011_ntl.BIN" />
-    <None Include="icc\1011_P.BIN" />
-    <None Include="icc\1011_ptr.BIN" />
-    <None Include="icc\1011_S.BIN" />
-    <None Include="icc\1011_std.BIN" />
-    <None Include="icc\1021_F.BIN" />
-    <None Include="icc\1021_fa.BIN" />
-    <None Include="icc\1021_faf.BIN" />
-    <None Include="icc\1021_L.BIN" />
-    <None Include="icc\1021_lnd.BIN" />
-    <None Include="icc\1021_N.BIN" />
-    <None Include="icc\1021_ntl.BIN" />
-    <None Include="icc\1021_P.BIN" />
-    <None Include="icc\1021_ptr.BIN" />
-    <None Include="icc\1021_S.BIN" />
-    <None Include="icc\1021_std.BIN" />
-    <None Include="icc\6000.ICC" />
-    <None Include="icc\6001_F.BIN" />
-    <None Include="icc\6001_faf.BIN" />
-    <None Include="icc\6001_L.BIN" />
-    <None Include="icc\6001_lnd.BIN" />
-    <None Include="icc\6001_ntl.BIN" />
-    <None Include="icc\6001_P.BIN" />
-    <None Include="icc\6001_ptr.BIN" />
-    <None Include="icc\6001_S.BIN" />
-    <None Include="icc\6001_std.BIN" />
-    <None Include="icc\6011_F.BIN" />
-    <None Include="icc\6011_faf.BIN" />
-    <None Include="icc\6011_L.BIN" />
-    <None Include="icc\6011_lnd.BIN" />
-    <None Include="icc\6011_N.BIN" />
-    <None Include="icc\6011_ntl.BIN" />
-    <None Include="icc\6011_P.BIN" />
-    <None Include="icc\6011_ptr.BIN" />
-    <None Include="icc\6011_std.BIN" />
-    <None Include="icc\6021_F.BIN" />
-    <None Include="icc\6021_faf.BIN" />
-    <None Include="icc\6021_L.BIN" />
-    <None Include="icc\6021_lnd.BIN" />
-    <None Include="icc\6021_ntl.BIN" />
-    <None Include="icc\6021_P.BIN" />
-    <None Include="icc\6021_ptr.BIN" />
-    <None Include="icc\6021_S.BIN" />
-    <None Include="icc\6021_std.BIN" />
-    <None Include="icc\6031_F.BIN" />
-    <None Include="icc\6031_faf.BIN" />
-    <None Include="icc\6031_L.BIN" />
-    <None Include="icc\6031_lnd.BIN" />
-    <None Include="icc\6031_N.BIN" />
-    <None Include="icc\6031_ntl.BIN" />
-    <None Include="icc\6031_P.BIN" />
-    <None Include="icc\6031_ptr.BIN" />
-    <None Include="icc\6031_std.BIN" />
-    <None Include="icc\6041_F.BIN" />
-    <None Include="icc\6041_faf.BIN" />
-    <None Include="icc\6041_L.BIN" />
-    <None Include="icc\6041_lnd.BIN" />
-    <None Include="icc\6041_N.BIN" />
-    <None Include="icc\6041_ntl.BIN" />
-    <None Include="icc\6041_P.BIN" />
-    <None Include="icc\6041_ptr.BIN" />
-    <None Include="icc\6041_std.BIN" />
-    <None Include="icc\6051_F.BIN" />
-    <None Include="icc\6051_faf.BIN" />
-    <None Include="icc\6051_L.BIN" />
-    <None Include="icc\6051_lnd.BIN" />
-    <None Include="icc\6051_ntl.BIN" />
-    <None Include="icc\6051_P.BIN" />
-    <None Include="icc\6051_ptr.BIN" />
-    <None Include="icc\6051_S.BIN" />
-    <None Include="icc\6051_std.BIN" />
-    <None Include="icc\6061_F.BIN" />
-    <None Include="icc\6061_faf.BIN" />
-    <None Include="icc\6061_L.BIN" />
-    <None Include="icc\6061_lnd.BIN" />
-    <None Include="icc\6061_N.BIN" />
-    <None Include="icc\6061_ntl.BIN" />
-    <None Include="icc\6061_P.BIN" />
-    <None Include="icc\6061_ptr.BIN" />
-    <None Include="icc\6061_std.BIN" />
-    <None Include="icc\6071_F.BIN" />
-    <None Include="icc\6071_faf.BIN" />
-    <None Include="icc\6071_L.BIN" />
-    <None Include="icc\6071_lnd.BIN" />
-    <None Include="icc\6071_N.BIN" />
-    <None Include="icc\6071_ntl.BIN" />
-    <None Include="icc\6071_P.BIN" />
-    <None Include="icc\6071_ptr.BIN" />
-    <None Include="icc\6071_std.BIN" />
-    <None Include="icc\6081_F.BIN" />
-    <None Include="icc\6081_faf.BIN" />
-    <None Include="icc\6081_L.BIN" />
-    <None Include="icc\6081_lnd.BIN" />
-    <None Include="icc\6081_ntl.BIN" />
-    <None Include="icc\6081_P.BIN" />
-    <None Include="icc\6081_ptr.BIN" />
-    <None Include="icc\6081_S.BIN" />
-    <None Include="icc\6081_std.BIN" />
-    <None Include="icc\6101_faf.BIN" />
-    <None Include="icc\6101_lnd.BIN" />
-    <None Include="icc\6101_ntl.BIN" />
-    <None Include="icc\6101_ptr.BIN" />
-    <None Include="icc\6101_std.BIN" />
-    <None Include="icc\6171_PA.BIN" />
-    <None Include="icc\6171_PS.BIN" />
-    <None Include="icc\6171_ptra.BIN" />
-    <None Include="icc\6171_ptrs.BIN" />
-    <None Include="icc\6181_FA.BIN" />
-    <None Include="icc\6181_fafa.BIN" />
-    <None Include="icc\6181_fafs.BIN" />
-    <None Include="icc\6181_FS.BIN" />
-    <None Include="icc\6181_NA.BIN" />
-    <None Include="icc\6181_ntla.BIN" />
-    <None Include="icc\6181_PA.BIN" />
-    <None Include="icc\6181_PS.BIN" />
-    <None Include="icc\6181_ptra.BIN" />
-    <None Include="icc\6181_ptrs.BIN" />
-    <None Include="icc\6181_SA.BIN" />
-    <None Include="icc\6181_stda.BIN" />
-    <None Include="icc\6191_FA.BIN" />
-    <None Include="icc\6191_fafa.BIN" />
-    <None Include="icc\6191_fafs.BIN" />
-    <None Include="icc\6191_FS.BIN" />
-    <None Include="icc\6191_LA.BIN" />
-    <None Include="icc\6191_lnda.BIN" />
-    <None Include="icc\6191_lnds.BIN" />
-    <None Include="icc\6191_LS.BIN" />
-    <None Include="icc\6191_NA.BIN" />
-    <None Include="icc\6191_NS.BIN" />
-    <None Include="icc\6191_ntla.BIN" />
-    <None Include="icc\6191_ntls.BIN" />
-    <None Include="icc\6191_PA.BIN" />
-    <None Include="icc\6191_PS.BIN" />
-    <None Include="icc\6191_ptra.BIN" />
-    <None Include="icc\6191_ptrs.BIN" />
-    <None Include="icc\6191_SA.BIN" />
-    <None Include="icc\6191_SS.BIN" />
-    <None Include="icc\6191_stda.BIN" />
-    <None Include="icc\6191_stds.BIN" />
-    <None Include="icc\6201_FA.BIN" />
-    <None Include="icc\6201_fafa.BIN" />
-    <None Include="icc\6201_fafs.BIN" />
-    <None Include="icc\6201_FS.BIN" />
-    <None Include="icc\6201_LA.BIN" />
-    <None Include="icc\6201_lnda.BIN" />
-    <None Include="icc\6201_lnds.BIN" />
-    <None Include="icc\6201_LS.BIN" />
-    <None Include="icc\6201_NA.BIN" />
-    <None Include="icc\6201_NS.BIN" />
-    <None Include="icc\6201_ntla.BIN" />
-    <None Include="icc\6201_ntls.BIN" />
-    <None Include="icc\6201_PA.BIN" />
-    <None Include="icc\6201_PS.BIN" />
-    <None Include="icc\6201_ptra.BIN" />
-    <None Include="icc\6201_ptrs.BIN" />
-    <None Include="icc\6201_SA.BIN" />
-    <None Include="icc\6201_SS.BIN" />
-    <None Include="icc\6201_stda.BIN" />
-    <None Include="icc\6201_stds.BIN" />
-    <None Include="icc\6211_FA.BIN" />
-    <None Include="icc\6211_fafa.BIN" />
-    <None Include="icc\6211_fafs.BIN" />
-    <None Include="icc\6211_FS.BIN" />
-    <None Include="icc\6211_LA.BIN" />
-    <None Include="icc\6211_lnda.BIN" />
-    <None Include="icc\6211_lnds.BIN" />
-    <None Include="icc\6211_LS.BIN" />
-    <None Include="icc\6211_NA.BIN" />
-    <None Include="icc\6211_NS.BIN" />
-    <None Include="icc\6211_ntla.BIN" />
-    <None Include="icc\6211_ntls.BIN" />
-    <None Include="icc\6211_PA.BIN" />
-    <None Include="icc\6211_PS.BIN" />
-    <None Include="icc\6211_ptra.BIN" />
-    <None Include="icc\6211_ptrs.BIN" />
-    <None Include="icc\6211_SA.BIN" />
-    <None Include="icc\6211_SS.BIN" />
-    <None Include="icc\6211_stda.BIN" />
-    <None Include="icc\6211_stds.BIN" />
-    <None Include="icc\6221_FA.BIN" />
-    <None Include="icc\6221_fafa.BIN" />
-    <None Include="icc\6221_fafs.BIN" />
-    <None Include="icc\6221_FS.BIN" />
-    <None Include="icc\6221_LA.BIN" />
-    <None Include="icc\6221_lnda.BIN" />
-    <None Include="icc\6221_lnds.BIN" />
-    <None Include="icc\6221_LS.BIN" />
-    <None Include="icc\6221_NA.BIN" />
-    <None Include="icc\6221_NS.BIN" />
-    <None Include="icc\6221_ntla.BIN" />
-    <None Include="icc\6221_ntls.BIN" />
-    <None Include="icc\6221_PA.BIN" />
-    <None Include="icc\6221_PS.BIN" />
-    <None Include="icc\6221_ptra.BIN" />
-    <None Include="icc\6221_ptrs.BIN" />
-    <None Include="icc\6221_SA.BIN" />
-    <None Include="icc\6221_SS.BIN" />
-    <None Include="icc\6221_stda.BIN" />
-    <None Include="icc\6221_stds.BIN" />
-    <None Include="icc\6231_FA.BIN" />
-    <None Include="icc\6231_fafa.BIN" />
-    <None Include="icc\6231_fafs.BIN" />
-    <None Include="icc\6231_FS.BIN" />
-    <None Include="icc\6231_LA.BIN" />
-    <None Include="icc\6231_lnda.BIN" />
-    <None Include="icc\6231_lnds.BIN" />
-    <None Include="icc\6231_LS.BIN" />
-    <None Include="icc\6231_NA.BIN" />
-    <None Include="icc\6231_NS.BIN" />
-    <None Include="icc\6231_ntla.BIN" />
-    <None Include="icc\6231_ntls.BIN" />
-    <None Include="icc\6231_PA.BIN" />
-    <None Include="icc\6231_PS.BIN" />
-    <None Include="icc\6231_ptra.BIN" />
-    <None Include="icc\6231_ptrs.BIN" />
-    <None Include="icc\6231_SA.BIN" />
-    <None Include="icc\6231_SS.BIN" />
-    <None Include="icc\6231_stda.BIN" />
-    <None Include="icc\6231_stds.BIN" />
-    <None Include="icc\6241_FA.BIN" />
-    <None Include="icc\6241_fafa.BIN" />
-    <None Include="icc\6241_fafs.BIN" />
-    <None Include="icc\6241_FS.BIN" />
-    <None Include="icc\6241_LA.BIN" />
-    <None Include="icc\6241_lnda.BIN" />
-    <None Include="icc\6241_lnds.BIN" />
-    <None Include="icc\6241_LS.BIN" />
-    <None Include="icc\6241_NA.BIN" />
-    <None Include="icc\6241_NS.BIN" />
-    <None Include="icc\6241_ntla.BIN" />
-    <None Include="icc\6241_ntls.BIN" />
-    <None Include="icc\6241_PA.BIN" />
-    <None Include="icc\6241_PS.BIN" />
-    <None Include="icc\6241_ptra.BIN" />
-    <None Include="icc\6241_ptrs.BIN" />
-    <None Include="icc\6241_SA.BIN" />
-    <None Include="icc\6241_SS.BIN" />
-    <None Include="icc\6241_stda.BIN" />
-    <None Include="icc\6241_stds.BIN" />
-    <None Include="icc\6251_FA.BIN" />
-    <None Include="icc\6251_fafa.BIN" />
-    <None Include="icc\6251_fafs.BIN" />
-    <None Include="icc\6251_FS.BIN" />
-    <None Include="icc\6251_LA.BIN" />
-    <None Include="icc\6251_lnda.BIN" />
-    <None Include="icc\6251_lnds.BIN" />
-    <None Include="icc\6251_LS.BIN" />
-    <None Include="icc\6251_NA.BIN" />
-    <None Include="icc\6251_NS.BIN" />
-    <None Include="icc\6251_ntla.BIN" />
-    <None Include="icc\6251_ntls.BIN" />
-    <None Include="icc\6251_PA.BIN" />
-    <None Include="icc\6251_PS.BIN" />
-    <None Include="icc\6251_ptra.BIN" />
-    <None Include="icc\6251_ptrs.BIN" />
-    <None Include="icc\6251_SA.BIN" />
-    <None Include="icc\6251_SS.BIN" />
-    <None Include="icc\6251_stda.BIN" />
-    <None Include="icc\6251_stds.BIN" />
-    <None Include="icc\6261_FA.BIN" />
-    <None Include="icc\6261_fafa.BIN" />
-    <None Include="icc\6261_fafs.BIN" />
-    <None Include="icc\6261_FS.BIN" />
-    <None Include="icc\6261_LA.BIN" />
-    <None Include="icc\6261_lnda.BIN" />
-    <None Include="icc\6261_lnds.BIN" />
-    <None Include="icc\6261_LS.BIN" />
-    <None Include="icc\6261_NA.BIN" />
-    <None Include="icc\6261_NS.BIN" />
-    <None Include="icc\6261_ntla.BIN" />
-    <None Include="icc\6261_ntls.BIN" />
-    <None Include="icc\6261_PA.BIN" />
-    <None Include="icc\6261_PS.BIN" />
-    <None Include="icc\6261_ptra.BIN" />
-    <None Include="icc\6261_ptrs.BIN" />
-    <None Include="icc\6261_SA.BIN" />
-    <None Include="icc\6261_SS.BIN" />
-    <None Include="icc\6261_stda.BIN" />
-    <None Include="icc\6261_stds.BIN" />
-    <None Include="icc\6271_FA.BIN" />
-    <None Include="icc\6271_fafa.BIN" />
-    <None Include="icc\6271_fafs.BIN" />
-    <None Include="icc\6271_FS.BIN" />
-    <None Include="icc\6271_LA.BIN" />
-    <None Include="icc\6271_lnda.BIN" />
-    <None Include="icc\6271_lnds.BIN" />
-    <None Include="icc\6271_LS.BIN" />
-    <None Include="icc\6271_NA.BIN" />
-    <None Include="icc\6271_NS.BIN" />
-    <None Include="icc\6271_ntla.BIN" />
-    <None Include="icc\6271_ntls.BIN" />
-    <None Include="icc\6271_PA.BIN" />
-    <None Include="icc\6271_PS.BIN" />
-    <None Include="icc\6271_ptra.BIN" />
-    <None Include="icc\6271_ptrs.BIN" />
-    <None Include="icc\6271_SA.BIN" />
-    <None Include="icc\6271_SS.BIN" />
-    <None Include="icc\6271_stda.BIN" />
-    <None Include="icc\6271_stds.BIN" />
-    <None Include="icc\AdobeRGB.icc" />
-    <None Include="icc\AppleRGB.icc" />
-    <None Include="icc\CNZEU1A1.icc" />
-    <None Include="icc\CNZEU2A1.icc" />
-    <None Include="icc\CNZEU3A1.icc" />
-    <None Include="icc\CNZEU4A1.icc" />
-    <None Include="icc\CNZEU5A1.icc" />
-    <None Include="icc\CNZJM1A1.icc" />
-    <None Include="icc\CNZJM2A1.icc" />
-    <None Include="icc\CNZJM3A1.icc" />
-    <None Include="icc\CNZJM4A1.icc" />
-    <None Include="icc\CNZJM5A1.icc" />
-    <None Include="icc\CNZJP1C1.icc" />
-    <None Include="icc\CNZJP2C1.icc" />
-    <None Include="icc\CNZJP3C1.icc" />
-    <None Include="icc\CNZJP4C1.icc" />
-    <None Include="icc\CNZJP5C1.icc" />
-    <None Include="icc\CNZUS1A1.icc" />
-    <None Include="icc\CNZUS2A1.icc" />
-    <None Include="icc\CNZUS3A1.icc" />
-    <None Include="icc\CNZUS4A1.icc" />
-    <None Include="icc\CNZUS5A1.icc" />
-    <None Include="icc\ColorMatchRGB.icc" />
-    <None Include="icc\FA.ICC" />
-    <None Include="icc\FS.ICC" />
-    <None Include="icc\LA.ICC" />
-    <None Include="icc\LS.ICC" />
-    <None Include="icc\NA.ICC" />
-    <None Include="icc\NS.ICC" />
-    <None Include="icc\PA.ICC" />
-    <None Include="icc\PS.ICC" />
-    <None Include="icc\SA.ICC" />
-    <None Include="icc\sRGB Color Space Profile.icm" />
-    <None Include="icc\sRGB Profile.icc" />
-    <None Include="icc\SS.ICC" />
-    <None Include="icc\WideGamutRGB.icc" />
+    <None Include="icc\1001_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1001_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1011_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_fa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\1021_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6000.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6001_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6011_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6021_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6031_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6041_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6051_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6061_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_N.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6071_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_F.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_L.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_P.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6081_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6101_faf.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6101_lnd.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6101_ntl.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6101_ptr.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6101_std.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6171_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6171_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6171_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6171_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6181_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6191_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6201_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6211_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6221_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6231_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6241_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6251_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6261_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_FA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_fafa.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_fafs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_FS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_LA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_lnda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_lnds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_LS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_NA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_NS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_ntla.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_ntls.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_PA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_PS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_ptra.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_ptrs.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_SA.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_SS.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_stda.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\6271_stds.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\AdobeRGB.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\AppleRGB.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZEU1A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZEU2A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZEU3A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZEU4A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZEU5A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJM1A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJM2A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJM3A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJM4A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJM5A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJP1C1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJP2C1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJP3C1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJP4C1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZJP5C1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZUS1A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZUS2A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZUS3A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZUS4A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\CNZUS5A1.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\ColorMatchRGB.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\FA.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\FS.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\LA.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\LS.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\NA.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\NS.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\PA.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\PS.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\SA.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\sRGB Color Space Profile.icm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\sRGB Profile.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\SS.ICC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="icc\WideGamutRGB.icc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -473,15 +1175,27 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DPPDLL.dll" />
-    <Content Include="DPPLibCom.dll" />
+    <Content Include="DPPDLL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DPPLibCom.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DPPRSC.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="EDSDK.dll" />
-    <Content Include="EdsImage.dll" />
-    <Content Include="MLib.dll" />
-    <Content Include="Ucs32P.dll" />
+    <Content Include="EDSDK.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EdsImage.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MLib.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ucs32P.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

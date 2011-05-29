@@ -11,25 +11,58 @@ namespace Canon_EOS_Remote.classes
     {
         private bool _sDKState;
 
+        public string stringSdkState = "SDK States";
+
+        public string StringSdkState
+        {
+            get {return stringSdkState; }
+            set {stringSdkState = value;}
+        }
+
         public bool SDKState
         {
-            get { return _sDKState; }
-            set { _sDKState = value; }
+            get { return this._sDKState; }
+            set { _sDKState = value;
+            if (value == true)
+            {
+                this.StringSdkState = StringSdkState = "SDK Initialized";
+                update("StringSdkState");
+            }
+            else
+            {
+                this.StringSdkState = StringSdkState = "SDK not initialized";
+                update("StringSdkState");
+            }
+            }
         }
+
         private EdsError error;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SDK()
         {
             uint tmpError;
-            tmpError=EDSDK.EdsInitializeSDK();
+            tmpError = EDSDK.EdsInitializeSDK();
             if (tmpError != 0)
             {
-                error = new EdsError(tmpError);
-                throw new Exception(error.ToString());
+                this.SDKState = false;
+                //error = new EdsError(tmpError);
+                //throw new Exception(error.ToString());
             }
-            this._sDKState = true;
-            System.Windows.MessageBox.Show("SDK created");
+            else
+            {
+                this.SDKState = true;
+            }
+
+        }
+
+        private void update(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(property));
+                System.Windows.MessageBox.Show("Property has changed from : " + this + " : " + property);
+            }
         }
 
         public void Dispose()

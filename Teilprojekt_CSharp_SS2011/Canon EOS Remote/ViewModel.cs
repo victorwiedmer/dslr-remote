@@ -8,17 +8,25 @@ namespace Canon_EOS_Remote.ViewModel
 {
     class ViewModel :INotifyPropertyChanged, IDisposable
     {
-        Model model;
+        private Model model;
+
+        private string _viewModelBla = "ViewModel";
+
+        public string ViewModelBla
+        {
+            get { return _viewModelBla; }
+            set { _viewModelBla = value; }
+        }
         
         public ViewModel()
         {
-            model = new Model();
+            Model = new Model();
         }
 
-        internal Model Model
+        public Model Model
         {
             get { return model; }
-            set { model = value; }
+            set { model = value;}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,6 +34,15 @@ namespace Canon_EOS_Remote.ViewModel
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        private void update(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                System.Windows.MessageBox.Show("Property has changed : " + property);
+            }
         }
     }
 }

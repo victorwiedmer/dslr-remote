@@ -7,8 +7,7 @@
 	Width="926" Height="591"
     xmlns:locale="clr-namespace:Teilprojekt_SS2011"
     xmlns:vm="clr-namespace:Canon_EOS_Remote.ViewModel"
-    Title=""
-    >
+    Title="" ContentTemplate="{Binding Path=Model.CameraList/}" Loaded="Window_Loaded">
     <Window.DataContext>
         <vm:ViewModel/>
     </Window.DataContext>
@@ -40,14 +39,13 @@
 			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
 					<Label Content="Kamera auswählen : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto"></Label>
-                    <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="120" DataContext="{Binding}">
+                    <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="108" ItemsSource="{Binding Path=CameraListView, UpdateSourceTrigger=PropertyChanged}" Name="CBCameraList" DisplayMemberPath="CameraName" IsSynchronizedWithCurrentItem="True">
                     </ComboBox>
-                    <Label Content="Kameraname" HorizontalAlignment="Left" Margin="0,25.96,0,0" Width="Auto" Height="Auto" VerticalAlignment="Top" />
-					<Label Content="Besitzername" HorizontalAlignment="Left" Margin="0,55.92,0,40.86" Width="Auto" Height="Auto" d:LayoutOverrides="Height"/>
-					<Label Content="Firmware-Version" HorizontalAlignment="Left" Margin="0,0,0,50.86" VerticalAlignment="Bottom" Width="Auto" Height="Auto"/>
+                    <Label Content="{Binding Path=Model.CameraList.CurrentlyCamera.CameraOwner}" HorizontalAlignment="Left" Margin="0,31,0,104" Width="Auto" Height="26" d:LayoutOverrides="Height"/>
+					<Label Content="{Binding Path=Model.CameraList.CurrentlyCamera.CameraFirmware, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="Auto" Height="Auto"/>
 					<Label Content="Gehäuse-ID" Margin="279,25.96,249.006,0" VerticalAlignment="Top" Width="Auto" Height="Auto"/>
 					<Label Content="Freier Speicher" HorizontalAlignment="Left" Margin="279,55.92,0,40.86" d:LayoutOverrides="Height" Width="Auto" Height="Auto"/>
-                    <Label Content="{Binding Path=Model.Sdk.StringSdkState}" Height="28" HorizontalAlignment="Left" Margin="479,26,0,0" Name="label1" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=Model.Sdk.StringSdkState}" Height="28" HorizontalAlignment="Left" Margin="808,127,0,0" Name="label1" VerticalAlignment="Top" />
                 </Grid>
 			</TabItem>
 			<TabItem Header="Objektiv" HorizontalAlignment="Center" VerticalAlignment="Center">

@@ -3,33 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Canon_EOS_Remote.ViewModel
 {
     class ViewModel :INotifyPropertyChanged, IDisposable
     {
+
+        #region Classmembers
         private Model model;
+        private CollectionView cameraListView;
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
-        private string _viewModelBla = "ViewModel";
-
-        public string ViewModelBla
+        #region Setter/Getter of Classmembers
+        public CollectionView CameraListView
         {
-            get { return _viewModelBla; }
-            set { _viewModelBla = value; }
-        }
-        
-        public ViewModel()
-        {
-            Model = new Model();
+            get { return cameraListView; }
+            set { cameraListView = value; }
         }
 
         public Model Model
         {
             get { return model; }
-            set { model = value;}
+            set { model = value; }
+        }
+        #endregion
+
+        public ViewModel()
+        {
+            Model = new Model();
+            cameraListView = new CollectionView(Model.CameraList.CameraList);
+            CameraListView.CurrentChanged += new EventHandler(setCurrentlyCamera);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #region ViewModel Events
+        private void setCurrentlyCamera(object sender, EventArgs e)
+        {
+            model.CameraList.CurrentlyCamera = (Camera)CameraListView.CurrentItem;
+        }
+        #endregion
 
         public void Dispose()
         {

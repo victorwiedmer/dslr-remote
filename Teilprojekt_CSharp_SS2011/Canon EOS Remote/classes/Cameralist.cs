@@ -5,66 +5,100 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
+using EDSDKLib;
+
 namespace Canon_EOS_Remote.classes
 {
-    class Cameralist : INotifyPropertyChanged, IDisposable
+    class Cameralist : INotifyPropertyChanged
     {
-        #region Classmember
 
-        /*
-         * Added on 11-05-2011 22:30
-         * This list hold the connected cameras from the type Camera
-         * */
+        private ObservableCollection<Camera> cameraList;
+        private Camera currentlyCamera;
 
-        private ObservableCollection<Camera> _cameraList;
+        internal Camera CurrentlyCamera
+        {
+            get { return currentlyCamera; }
+            set {
+                update("currentlyCamera");
+                currentlyCamera = value; }
+        }
+        private EDSDK.EdsCameraAddedHandler cameraAddedHandler;
+
+        public EDSDK.EdsCameraAddedHandler CameraAddedHandler
+        {
+            get { return cameraAddedHandler; }
+            set { cameraAddedHandler = value; }
+        }
 
         public ObservableCollection<Camera> CameraList
         {
-            get { return _cameraList; }
-            set { _cameraList = value; }
+            get { return cameraList; }
+            set { cameraList = value; }
+        }
+
+        public uint onCameraAdded(IntPtr inContext)
+        {
+            IntPtr tmpPtr = IntPtr.Zero;
+            int tmpCount = 0;
+            EDSDKLib.EDSDK.EdsDeviceInfo deviceInfo;
+            char[] tmpName = new char[32];
+            uint error = 0;
+            /**
+             * First getting cameralist pointer
+             * */
+            error=EDSDKLib.EDSDK.EdsGetCameraList(out tmpPtr);
+            if (error != EDSDK.EDS_ERR_OK)
+            {
+                System.Windows.MessageBox.Show("Error while getting cameralist : " + error);
+            }
+            /*
+             * Getting count of cameralist childs to choose the last adding on the list
+             * */
+            error=EDSDKLib.EDSDK.EdsGetChildCount(tmpPtr, out tmpCount);
+            if (error != EDSDK.EDS_ERR_OK)
+            {
+                System.Windows.MessageBox.Show("Error while getting count of cameralist childs : " + error);
+            }
+            /*
+             * Get the camera pointer of the last object on the cameralist
+             * */
+            error=EDSDKLib.EDSDK.EdsGetChildAtIndex(tmpPtr, tmpCount - 1, out tmpPtr);
+            if (error != EDSDK.EDS_ERR_OK)
+            {
+                System.Windows.MessageBox.Show("Error while getting camerapointer : " + error);
+            }
+            /*
+             * Getting device info of given camera pointer
+             * */
+            error=EDSDKLib.EDSDK.EdsGetDeviceInfo(tmpPtr, out deviceInfo);
+            if (error != EDSDK.EDS_ERR_OK)
+            {
+                System.Windows.MessageBox.Show("Error while getting deviceinfo : " + error);
+            }
+            this.CameraList.Add(new Camera(tmpPtr,deviceInfo.szDeviceDescription));
+            return 0x0;
+        }
+
+        public Cameralist()
+        {
+            uint error = 0;
+            this.cameraList = new ObservableCollection<Camera>();
+            this.CameraAddedHandler = new EDSDKLib.EDSDK.EdsCameraAddedHandler(onCameraAdded);
+            error = EDSDKLib.EDSDK.EdsSetCameraAddedHandler(cameraAddedHandler, IntPtr.Zero);
+            if (error != EDSDK.EDS_ERR_OK)
+            {
+                System.Windows.MessageBox.Show("Error while adding cameraAddedEvent : " + error);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
-
-        /*
-         * Standard constructor of Cameralist
-         * its initilize the list _cameraList
-         * */
-        public Cameralist()
+        private void update(string property)
         {
-            _cameraList = new ObservableCollection<Camera>();
-        }
-
-        public void addCameraToList(Camera camera){
-            this.CameraList.Add(camera);
-            PropertyChanged(this,new PropertyChangedEventArgs("_cameraList"));
-        }
-
-        public void deleteCameraFromList(Camera camera)
-        {
-            this.CameraList.Remove(camera);
-            PropertyChanged(this, new PropertyChangedEventArgs("_cameraList"));
-        }
-
-        public Camera getCameraFromList(string cameraName)
-        {
-            Camera tmpCamera=null;
-            for (int i = 0; i < this.CameraList.Count; i++)
+            if (PropertyChanged != null)
             {
-                if ((tmpCamera = this.CameraList.ElementAt(i)).CameraName == cameraName)
-                {
-                    return tmpCamera;
-                }
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
-            return tmpCamera;
-        }
-
-        public void Dispose()
-        {
-            this.CameraList = null;
-            PropertyChanged(this, new PropertyChangedEventArgs("_cameraList"));
         }
     }
 }

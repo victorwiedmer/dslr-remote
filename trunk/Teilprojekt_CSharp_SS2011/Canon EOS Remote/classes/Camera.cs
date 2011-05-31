@@ -4,7 +4,8 @@
  * Now, every command , EDSDKLib namespace havent to be written.
  * */
 using EDSDKLib;
-using System.ComponentModel; 
+using System.ComponentModel;
+using System.Collections.Generic; 
 
 namespace Canon_EOS_Remote
 {
@@ -16,7 +17,13 @@ namespace Canon_EOS_Remote
          * basic properties
          * */
         private IntPtr _cameraPtr;
-        private string _cameraName; /* The product name of the camera body*/
+        private string _cameraName;/* The product name of the camera body*/
+
+        public string CameraName
+        {
+            get { return _cameraName; }
+            set { _cameraName = value; }
+        }
         private string _cameraOwner; /*The setted name of the camera owner*/
         private string _cameraBodyID;
         private EdsTime _cameraTime;
@@ -33,9 +40,10 @@ namespace Canon_EOS_Remote
         private string _currentStorage;
         private UInt32 tmpErrorCodeAfterCommand;
         private string tmpErrorString;
-        private string _cameraFirmware;
+        private EDSDK.EdsTime _cameraFirmware;
         private bool _lensAttached;
         public event PropertyChangedEventHandler PropertyChanged;
+        private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
         #endregion
 
         #region Setter and Getter of class member
@@ -45,15 +53,7 @@ namespace Canon_EOS_Remote
             set { _cameraPtr = value;
             update("_cameraPtr");
             }
-        }
-        
-        public string CameraName
-        {
-            get { return _cameraName; }
-            set { _cameraName = value;
-            update("_cameraName");
-            }
-        }        
+        }    
 
         public string CameraOwner
         {
@@ -167,7 +167,7 @@ namespace Canon_EOS_Remote
             }
         }    
 
-        public string CameraFirmware
+        public EDSDK.EdsTime CameraFirmware
         {
             get { return _cameraFirmware; }
             set { _cameraFirmware = value;
@@ -180,8 +180,16 @@ namespace Canon_EOS_Remote
 
         public Camera(IntPtr cameraPtr)
         {
-            if (cameraPtr == IntPtr.Zero) this.CameraPtr = cameraPtr;
-            else throw new Exception("Cant get cameraPointer");
+            uint error = 0;
+                this.CameraPtr = cameraPtr;
+                this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
+                error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, this.CameraPtr);
+        }
+
+        public Camera(IntPtr cameraPtr, String cameraName)
+        {
+            this.CameraPtr = cameraPtr;
+            this.CameraName = cameraName;
         }
 
         #endregion
@@ -201,11 +209,21 @@ namespace Canon_EOS_Remote
 
         private void update(string property)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(property));
-            System.Windows.MessageBox.Show("Property has changed from : " + this + " : " + property);
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                System.Windows.MessageBox.Show("Property has changed from : " + this + " : " + property);
+            }
         }
 
+        
         #region camera methods
+
+        private void updateCameraProperties()
+        {
+            getCameraOwnerFromBody();
+        }
+
         private void getCameraNameFromBody()
         {
             string tmpCameraName="";
@@ -217,7 +235,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                CameraName = tmpCameraName;
+                _cameraName = tmpCameraName;
             }
         }
 
@@ -273,19 +291,10 @@ namespace Canon_EOS_Remote
              */
         }
 
-        private void getCameraFirmwareFromBody()
+        private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
         {
-            string tmpCameraFirmware = "";
-            tmpErrorCodeAfterCommand = 0;
-            tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_FirmwareVersion, 0, out tmpCameraFirmware);
-            if (tmpErrorCodeAfterCommand != 0)
-            {
-                throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
-            }
-            else
-            {
-                this.CameraFirmware = tmpCameraFirmware;
-            }
+            System.Windows.MessageBox.Show("CameraPropertey changed");
+            return 0x0;
         }
         #endregion
 

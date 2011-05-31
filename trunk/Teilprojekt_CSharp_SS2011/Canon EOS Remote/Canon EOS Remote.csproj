@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\Eventhandling.cs" />
     <Compile Include="classes\PropertyChanged.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -1171,7 +1172,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enumerations\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>

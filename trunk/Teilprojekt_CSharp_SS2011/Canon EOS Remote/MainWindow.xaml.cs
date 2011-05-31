@@ -19,13 +19,16 @@ namespace Teilprojekt_SS2011
 	{
 		public MainWindow()
 		{
-			this.InitializeComponent();
-
-			// Fügen Sie Code, der bei der Objekterstellung erforderlich ist, unter diesem Punkt ein.
+			this.InitializeComponent(); 
 		}
 
 		private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 		}
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
 	}
 }

@@ -9,15 +9,18 @@ namespace Canon_EOS_Remote
 {
     class Model : INotifyPropertyChanged
     {
+        #region Members
+
         private SDK _sdk;
+        private Cameralist _cameraList;
 
-        private string _modelBla = "Model";
-
-        public string ModelBla
+        internal Cameralist CameraList
         {
-            get {return _modelBla; }
-            set { _modelBla = value; }
+            get { return _cameraList; }
+            set { _cameraList = value; }
         }
+
+        #endregion
 
         public SDK Sdk
         {
@@ -28,7 +31,7 @@ namespace Canon_EOS_Remote
         public Model()
         {
          Sdk = new SDK();
-         //System.Windows.MessageBox.Show("Model created");
+         CameraList = new Cameralist();
         }
 
         private void update(string property)

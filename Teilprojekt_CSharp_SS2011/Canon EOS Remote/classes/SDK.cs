@@ -11,12 +11,12 @@ namespace Canon_EOS_Remote.classes
     {
         private bool _sDKState;
 
-        public string stringSdkState = "SDK States";
+        public string stringSdkState;
 
         public string StringSdkState
         {
             get {return stringSdkState; }
-            set {stringSdkState = value;}
+            private set {stringSdkState = value;}
         }
 
         public bool SDKState
@@ -46,8 +46,7 @@ namespace Canon_EOS_Remote.classes
             if (tmpError != 0)
             {
                 this.SDKState = false;
-                //error = new EdsError(tmpError);
-                //throw new Exception(error.ToString());
+                System.Windows.MessageBox.Show("SDK can't initilized : " + tmpError);
             }
             else
             {
@@ -67,14 +66,9 @@ namespace Canon_EOS_Remote.classes
 
         public void Dispose()
         {
-            //uint tmpError;
-            //tmpError=EDSDK.EdsTerminateSDK();
-            //if (tmpError != 0)
-            //{
-            //    error = new EdsError(tmpError);
-            //    throw new Exception(error.ToString());
-            //}
-            //this._sDKState = false;
+            uint tmpError;
+            tmpError=EDSDK.EdsTerminateSDK();
+            this.SDKState = false;
         }
     }
 }

@@ -13,20 +13,23 @@ namespace Canon_EOS_Remote
 
         private SDK _sdk;
         private Cameralist _cameraList;
-
-        internal Cameralist CameraList
-        {
-            get { return _cameraList; }
-            set { _cameraList = value; }
-        }
-
         #endregion
+
+        #region Setter/Getter Methods
 
         public SDK Sdk
         {
             get { return _sdk; }
             set { _sdk = value;}
         }
+
+        public Cameralist CameraList
+        {
+            get { return _cameraList; }
+            set { _cameraList = value; }
+        }
+
+        #endregion
 
         public Model()
         {

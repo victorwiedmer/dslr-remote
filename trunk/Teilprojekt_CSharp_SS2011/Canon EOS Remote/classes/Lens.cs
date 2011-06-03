@@ -10,6 +10,7 @@ namespace Canon_EOS_Remote.classes
     {
         private string _lensName;
 
+        #region drive Lens methods
         private void driveLensNear1(IntPtr cameraPtr)
         {
             EDSDK.EdsSendCommand(cameraPtr, EDSDK.EvfDriveLens_Near1, 0);
@@ -34,5 +35,6 @@ namespace Canon_EOS_Remote.classes
         {
             EDSDK.EdsSendCommand(cameraPtr, EDSDK.EvfDriveLens_Far3, 0);
         }
+#endregion
     }
 }

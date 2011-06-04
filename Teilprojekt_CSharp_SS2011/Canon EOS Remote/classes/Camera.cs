@@ -5,7 +5,6 @@
  * */
 using EDSDKLib;
 using System.ComponentModel;
-using System.Collections.Generic;
 using Canon_EOS_Remote.classes; 
 
 namespace Canon_EOS_Remote
@@ -43,12 +42,24 @@ namespace Canon_EOS_Remote
         private string tmpErrorString;
         private string _cameraFirmware;
         private bool _lensAttached;
+
         public event PropertyChangedEventHandler PropertyChanged;
         private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
+        private EDSDK.EdsStateEventHandler cameraStateEventHandler;
+        private EDSDK.EdsObjectEventHandler cameraObjectEventHandler;
+
         private DriveModes driveModes;
         private ISOSpeeds isoList;
         private PropertyCodes propertyCodes;
         private EventCodes eventIDs;
+
+        private EDSDK.EdsPropertyDesc availableISOSpeeds;
+        private EDSDK.EdsPropertyDesc availableAEModes;
+        private EDSDK.EdsPropertyDesc availableMeteringModes;
+        private EDSDK.EdsPropertyDesc availableApertureValues;
+        private EDSDK.EdsPropertyDesc availableShutterspeeds;
+        private EDSDK.EdsPropertyDesc availableExposureCompensation;
+
         #endregion
 
         #region Setter and Getter of class member
@@ -202,9 +213,12 @@ namespace Canon_EOS_Remote
             {
                 System.Windows.MessageBox.Show("Cant register property event handler because : " + error);
             }
+            this.cameraStateEventHandler = new EDSDK.EdsStateEventHandler(onCameraStateChanged);
             error = EDSDK.EdsOpenSession(this.CameraPtr);
             if(error!=0)System.Windows.MessageBox.Show("Cant open session with camera because : " + error);
             error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, _cameraPtr);
+            error = EDSDK.EdsSetCameraStateEventHandler(this.CameraPtr, EDSDK.StateEvent_All, this.cameraStateEventHandler, _cameraPtr);
+            error = EDSDK.EdsSetObjectEventHandler(this.CameraPtr, EDSDK.ObjectEvent_All, this.cameraObjectEventHandler, _cameraPtr);
             getCameraBatteryLevelFromBody();
             getAEModeFromCamera();
             getDriveModeFromCamera();
@@ -218,20 +232,32 @@ namespace Canon_EOS_Remote
             getFirmwareVersion();
             getBodyID();
             getCurrentStorage();
-            System.Windows.MessageBox.Show("Got following properties : \n"+
-                "Batterielevel : " + this.CameraBatteryLevel + "%" + "\n" +
-                "AEMode : " + this.CameraAEMode + "\n" + 
-                "DriveMode : " + this.CameraDriveMode + " = " + this.driveModes.getDriveModeString(this.CameraDriveMode) + "\n" +
-                "AFMode : " + this.CameraAFMode + "\n" +
-                "MeteringMode : " + this.CameraMeteringMode + "\n" +
-                "Tv : " + this.CameraShutterTime + "\n" + 
-                "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed) +"\n"+
-                "Available Shots : " + this.CameraAvailableShots + "\n" +
-                "Firmware Version : " + this.CameraFirmware + "\n" + 
-                "CameraOwner : " + this.CameraOwner + "\n" +
-                "Body ID : " + this.CameraBodyID + "\n" + 
-                "Current Storage : " + this.CurrentStorage
-                );
+            getavailableISOSpeedsFromCamera();
+            getavailableAEModesFromCamera();
+            getavailableApertureValuesFromCamera();
+            getavailableExposureCompensationFromCamera();
+            getavailableMeteringModesFromCamera();
+            getavailableShutterTimesFromCamera();
+            getLensStateOfCamera();
+            System.Windows.MessageBox.Show("Got following properties : \n" +
+            "Batterielevel : " + this.CameraBatteryLevel + "%" + "\n" +
+            "AEMode : " + this.CameraAEMode + "\n" +
+            "DriveMode : " + this.CameraDriveMode + " = " + this.driveModes.getDriveModeString(this.CameraDriveMode) + "\n" +
+            "AFMode : " + this.CameraAFMode + "\n" +
+            "MeteringMode : " + this.CameraMeteringMode + "\n" +
+            "Tv : " + this.CameraShutterTime + "\n" +
+            "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed) + "\n" +
+            "Available Shots : " + this.CameraAvailableShots + "\n" +
+            "Firmware Version : " + this.CameraFirmware + "\n" +
+            "CameraOwner : " + this.CameraOwner + "\n" +
+            "Body ID : " + this.CameraBodyID + "\n" +
+            "Current Storage : " + this.CurrentStorage + "\n" 
+            + "Available ISO Speeds : " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[0]) + " - " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[this.availableISOSpeeds.NumElements-1])
+            //+ "\n Available AEModes : " + this.availableAEModes.PropDesc[0]  + " - " + this.availableAEModes.PropDesc[this.availableAEModes.NumElements-1]
+            + "\n Lens attached : " + this._lensAttached
+            + "\n Lensname : " + this._lensName
+    );
+
         }
 
         #endregion
@@ -261,6 +287,18 @@ namespace Canon_EOS_Remote
             {
                 this.CameraBatteryLevel = tmpCameraBatteryLevel;
             }
+        }
+
+        private uint onCameraStateChanged(uint inEvent, uint inParameter, IntPtr inContext)
+        {
+            System.Windows.MessageBox.Show("State changed : " + this.eventIDs.getEventIDString(inEvent));
+            return 0x0;
+        }
+
+        private uint onCameraObjectChanged(uint inEvent, uint inParameter, IntPtr inContext)
+        {
+            System.Windows.MessageBox.Show("Object changed : " + this.eventIDs.getEventIDString(inEvent));
+            return 0x0;
         }
 
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
@@ -464,6 +502,85 @@ namespace Canon_EOS_Remote
                 System.Windows.MessageBox.Show("Cant get currentstorage from camera because : " + tmpError);
             }
         }
+
+        private void getavailableISOSpeedsFromCamera()
+        {
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_ISOSpeed, out this.availableISOSpeeds);
+            if (tmpError != 0)
+            {
+                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+            }
+        }
+
+        private void getavailableAEModesFromCamera()
+        {
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_AEMode, out this.availableAEModes);
+            if (tmpError != 0)
+            {
+                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+            }
+        }
+
+        private void getavailableMeteringModesFromCamera()
+        {
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_MeteringMode, out this.availableMeteringModes);
+            if (tmpError != 0)
+            {
+                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+            }
+        }
+
+        private void getavailableApertureValuesFromCamera()
+        {
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_Av, out this.availableApertureValues);
+            if (tmpError != 0)
+            {
+                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+            }
+        }
+
+        private void getavailableShutterTimesFromCamera()
+        {
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_Tv, out this.availableShutterspeeds);
+            if (tmpError != 0)
+            {
+                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+            }
+        }
+
+        private void getavailableExposureCompensationFromCamera()
+        {
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_ExposureCompensation, out this.availableExposureCompensation);
+            if (tmpError != 0)
+            {
+                System.Windows.MessageBox.Show("An error has occured : " + tmpError);
+            }
+        }
+
+        private void getLensStateOfCamera()
+        {
+            UInt32 tmpError = 0;
+            UInt32 tmpProperty=0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_LensStatus, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                if (tmpProperty == 0x1)
+                {
+                    this._lensAttached = true;
+                }
+                else
+                {
+                    this._lensAttached = false;
+                }
+            }
+        }
+
         #endregion
 
     }

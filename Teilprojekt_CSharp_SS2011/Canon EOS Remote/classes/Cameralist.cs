@@ -11,23 +11,28 @@ namespace Canon_EOS_Remote.classes
 {
     class Cameralist : INotifyPropertyChanged
     {
-
+        #region classmembers
         private ObservableCollection<Camera> cameraList;
-        private Camera currentlyCamera;
-
-        internal Camera CurrentlyCamera
-        {
-            get { return currentlyCamera; }
-            set {
-                update("currentlyCamera");
-                currentlyCamera = value; }
-        }
+        private Camera currentlyCamera = null;
         private EDSDK.EdsCameraAddedHandler cameraAddedHandler;
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
+        #region setter/getter
         public EDSDK.EdsCameraAddedHandler CameraAddedHandler
         {
             get { return cameraAddedHandler; }
             set { cameraAddedHandler = value; }
+        }
+
+        public Camera CurrentlyCamera
+        {
+            get { return currentlyCamera; }
+            set
+            {
+                update("currentlyCamera");
+                currentlyCamera = value;
+            }
         }
 
         public ObservableCollection<Camera> CameraList
@@ -35,6 +40,7 @@ namespace Canon_EOS_Remote.classes
             get { return cameraList; }
             set { cameraList = value; }
         }
+        #endregion
 
         public uint onCameraAdded(IntPtr inContext)
         {
@@ -76,6 +82,7 @@ namespace Canon_EOS_Remote.classes
                 System.Windows.MessageBox.Show("Error while getting deviceinfo : " + error);
             }
             this.CameraList.Add(new Camera(tmpPtr,deviceInfo.szDeviceDescription));
+            this.CurrentlyCamera = this.CameraList.ElementAt(this.CameraList.Count - 1);
             return 0x0;
         }
 
@@ -90,8 +97,6 @@ namespace Canon_EOS_Remote.classes
                 System.Windows.MessageBox.Show("Error while adding cameraAddedEvent : " + error);
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void update(string property)
         {

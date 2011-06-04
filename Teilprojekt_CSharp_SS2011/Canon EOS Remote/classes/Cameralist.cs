@@ -23,13 +23,6 @@ namespace Canon_EOS_Remote.classes
                 currentlyCamera = value; }
         }
         private EDSDK.EdsCameraAddedHandler cameraAddedHandler;
-        private EDSDK.EdsStateEventHandler cameraStateEventHandler;
-
-        public EDSDK.EdsStateEventHandler CameraStateEventHandler
-        {
-            get { return cameraStateEventHandler; }
-            set { cameraStateEventHandler = value; }
-        }
 
         public EDSDK.EdsCameraAddedHandler CameraAddedHandler
         {
@@ -96,10 +89,7 @@ namespace Canon_EOS_Remote.classes
             {
                 System.Windows.MessageBox.Show("Error while adding cameraAddedEvent : " + error);
             }
-            //this.CameraStateEventHandler = new EDSDK.EdsStateEventHandler();
         }
-
-        //private uint cameraStateEvent(
 
         public event PropertyChangedEventHandler PropertyChanged;
 

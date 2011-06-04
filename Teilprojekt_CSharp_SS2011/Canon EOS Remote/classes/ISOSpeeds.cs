@@ -59,16 +59,14 @@ namespace Canon_EOS_Remote
 
         public UInt32 getISOSpeedFromDec(UInt32 isoDecvalue)
         {
-            UInt32 returnValue = 0;
-            int listLength = _isoSpeeds.Count;
-            for (int i = 0; i <= listLength; i++)
+            for (int i = 0; i < _isoSpeeds.Count; i++)
             {
                 if (_isoSpeeds.ElementAt(i).DecValue == isoDecvalue)
                 {
-                    returnValue = _isoSpeeds.ElementAt(i).HexValue;
+                    return _isoSpeeds.ElementAt(i).HexValue;
                 }
             }
-            return returnValue;
+            return 0x0;
         }
     }
 }

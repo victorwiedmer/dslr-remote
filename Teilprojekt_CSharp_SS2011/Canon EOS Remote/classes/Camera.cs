@@ -5,7 +5,8 @@
  * */
 using EDSDKLib;
 using System.ComponentModel;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using Canon_EOS_Remote.classes; 
 
 namespace Canon_EOS_Remote
 {
@@ -46,6 +47,8 @@ namespace Canon_EOS_Remote
         private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
         private DriveModes driveModes;
         private ISOSpeeds isoList;
+        private PropertyCodes propertyCodes;
+        private EventCodes eventIDs;
         #endregion
 
         #region Setter and Getter of class member
@@ -182,10 +185,7 @@ namespace Canon_EOS_Remote
 
         public Camera(IntPtr cameraPtr)
         {
-            uint error = 0;
-                this.CameraPtr = cameraPtr;
-                this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
-                error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, this.CameraPtr);
+            throw new NotImplementedException();
         }
 
         public Camera(IntPtr cameraPtr, String cameraName)
@@ -196,10 +196,16 @@ namespace Canon_EOS_Remote
             this.CameraName = cameraName;
             this.driveModes = new DriveModes();
             this.isoList = new ISOSpeeds();
+            this.propertyCodes = new PropertyCodes();
+            this.eventIDs = new EventCodes();
+            this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
+            if (error != 0)
+            {
+                System.Windows.MessageBox.Show("Cant register property event handler because : " + error);
+            }
             error = EDSDK.EdsOpenSession(this.CameraPtr);
             System.Windows.MessageBox.Show("Cant open session with camera because : " + error);
-            error = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_BatteryLevel, 0, out tmpProperty);
-            this.CameraBatteryLevel = tmpProperty;
+            getCameraBatteryLevelFromBody();
             error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, out tmpProperty);
             this.CameraAEMode = tmpProperty;
             error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DriveMode, 0, out tmpProperty);
@@ -212,7 +218,7 @@ namespace Canon_EOS_Remote
             this.CameraShutterTime = tmpProperty;
             error = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, out tmpProperty);
             this.CameraISOSpeed = tmpProperty;
-            error = EDSDK.EdsCloseSession(this.CameraPtr);
+            //error = EDSDK.EdsCloseSession(this.CameraPtr);
             System.Windows.MessageBox.Show("Cant close session with camera because : " + error);
             string tmpString = this.driveModes.getDriveModeString(this.CameraDriveMode);
             System.Windows.MessageBox.Show("Got following properties : \n"+
@@ -224,6 +230,9 @@ namespace Canon_EOS_Remote
                 "Tv : " + this.CameraShutterTime + "\n" + 
                 "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed)
                 );
+            //error = EDSDK.EdsSendCommand(this.CameraPtr, EDSDK.CameraState_UILock, 0);
+
+            error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, _cameraPtr);
         }
 
         #endregion
@@ -327,7 +336,8 @@ namespace Canon_EOS_Remote
 
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
         {
-            System.Windows.MessageBox.Show("CameraPropertey changed");
+            System.Windows.MessageBox.Show("CameraPropertey changed : " + 
+                "EventID : " + this.eventIDs.getEventIDString(inEvent) + "\nPropID : " + this.propertyCodes.getPropertyString(inPropertyID) + "\nParameter : " + inParameter + "\nContext : " + inContext);
             return 0x0;
         }
         #endregion

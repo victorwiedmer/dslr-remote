@@ -34,15 +34,15 @@
 		<Label Content="Kameraname" HorizontalAlignment="Left" Margin="0,25,0,15" d:LayoutOverrides="Height" Height="30"/>
 		<Label Content="FreierSpeicher" HorizontalAlignment="Left" Margin="150,25,0,15" Grid.Row="0" d:LayoutOverrides="Height" Height="30"/>
 		<Label Content="Batterie Status : " Margin="300,25,226,15" d:LayoutOverrides="Height" Grid.Row="0" Height="30"/>
-		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Value="{Binding Path=Model.CameraList.CurrentlyCamera.CameraBatteryLevel, UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" Minimum="0" Maximum="100"/>
+		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Minimum="0" Maximum="100"/>
 		<TabControl Grid.Row="1" BorderBrush="{x:Null}">
 			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
 					<Label Content="Kamera auswählen : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto"></Label>
                     <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="128" ItemsSource="{Binding Path=CameraListView, UpdateSourceTrigger=PropertyChanged}" Name="CBCameraList" DisplayMemberPath="CameraName" IsSynchronizedWithCurrentItem="True">
                     </ComboBox>
-                    <Label Content="{Binding Path=Model.CameraList.CurrentlyCamera.CameraOwner, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,31,0,104" Width="Auto" Height="26" d:LayoutOverrides="Height" Name="LCameraOwner" />
-					<Label Content="{Binding Path=Model.CameraList.CurrentlyCamera.CameraFirmware, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="Auto" Height="Auto"/>
+                    <Label Content="CameraOwner" HorizontalAlignment="Left" Margin="0,31,0,104" Width="Auto" Height="26" d:LayoutOverrides="Height" Name="LCameraOwner" />
+					<Label Content="CameraFirmware" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="Auto" Height="Auto"/>
 					<Label Content="Gehäuse-ID" Margin="279,25.96,249.006,0" VerticalAlignment="Top" Width="Auto" Height="Auto"/>
 					<Label Content="Freier Speicher" HorizontalAlignment="Left" Margin="279,55.92,0,40.86" d:LayoutOverrides="Height" Width="Auto" Height="Auto"/>
                     <Label Content="{Binding Path=Model.Sdk.StringSdkState}" Height="28" HorizontalAlignment="Left" Margin="808,127,0,0" Name="label1" VerticalAlignment="Top" />

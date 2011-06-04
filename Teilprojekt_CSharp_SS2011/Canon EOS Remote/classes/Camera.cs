@@ -30,7 +30,7 @@ namespace Canon_EOS_Remote
         private UInt32 _cameraBatteryLevel;
         private UInt32 _cameraAEMode;
         private UInt32 _cameraDriveMode;
-        private ISOSpeed _cameraISOSpeed;
+        private UInt32 _cameraISOSpeed;
         private UInt32 _cameraMeteringMode;
         private UInt32 _cameraAFMode;
         private UInt32 _cameraAperture;
@@ -44,6 +44,8 @@ namespace Canon_EOS_Remote
         private bool _lensAttached;
         public event PropertyChangedEventHandler PropertyChanged;
         private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
+        private DriveModes driveModes;
+        private ISOSpeeds isoList;
         #endregion
 
         #region Setter and Getter of class member
@@ -103,7 +105,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        public ISOSpeed CameraISOSpeed
+        public UInt32 CameraISOSpeed
         {
             get { return _cameraISOSpeed; }
             set { _cameraISOSpeed = value;
@@ -189,20 +191,39 @@ namespace Canon_EOS_Remote
         public Camera(IntPtr cameraPtr, String cameraName)
         {
             UInt32 tmpProperty = 0;
+            UInt32 error = 0;
             this.CameraPtr = cameraPtr;
             this.CameraName = cameraName;
-            EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_BatteryLevel, 0, out tmpProperty);
+            this.driveModes = new DriveModes();
+            this.isoList = new ISOSpeeds();
+            error = EDSDK.EdsOpenSession(this.CameraPtr);
+            System.Windows.MessageBox.Show("Cant open session with camera because : " + error);
+            error = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_BatteryLevel, 0, out tmpProperty);
             this.CameraBatteryLevel = tmpProperty;
-            EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, out tmpProperty);
+            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, out tmpProperty);
             this.CameraAEMode = tmpProperty;
-            EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DriveMode, 0, out tmpProperty);
+            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DriveMode, 0, out tmpProperty);
             this.CameraDriveMode = tmpProperty;
-            EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AFMode, 0, out tmpProperty);
+            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AFMode, 0, out tmpProperty);
             this.CameraAFMode = tmpProperty;
-            EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_MeteringMode, 0, out tmpProperty);
+            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_MeteringMode, 0, out tmpProperty);
             this.CameraMeteringMode = tmpProperty;
-            EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_Tv, 0, out tmpProperty);
+            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_Tv, 0, out tmpProperty);
             this.CameraShutterTime = tmpProperty;
+            error = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, out tmpProperty);
+            this.CameraISOSpeed = tmpProperty;
+            error = EDSDK.EdsCloseSession(this.CameraPtr);
+            System.Windows.MessageBox.Show("Cant close session with camera because : " + error);
+            string tmpString = this.driveModes.getDriveModeString(this.CameraDriveMode);
+            System.Windows.MessageBox.Show("Got following properties : \n"+
+                "Batterielevel : " + this.CameraBatteryLevel + "%" + "\n" +
+                "AEMode : " + this.CameraAEMode + "\n" + 
+                "DriveMode : " + this.CameraDriveMode + " = " + this.driveModes.getDriveModeString(this.CameraDriveMode) + "\n" +
+                "AFMode : " + this.CameraAFMode + "\n" +
+                "MeteringMode : " + this.CameraMeteringMode + "\n" +
+                "Tv : " + this.CameraShutterTime + "\n" + 
+                "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed)
+                );
         }
 
         #endregion

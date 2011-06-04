@@ -10,10 +10,16 @@ namespace Canon_EOS_Remote
     {
         private List<TDriveMode> _driveModes;
 
+        public DriveModes()
+        {
+            this._driveModes = new List<TDriveMode>();
+            init();
+        }
+
         private void init()
         {
-            this._driveModes.Add(new TDriveMode("Single_Frame_Shooting", 0x0));
-            this._driveModes.Add(new TDriveMode("Continuous_Shooting",0x1));
+            this._driveModes.Add(new TDriveMode("Einzelaufnahme", 0x0));
+            this._driveModes.Add(new TDriveMode("Reihenaufnahme",0x1));
             this._driveModes.Add(new TDriveMode("Video",0x2));
             this._driveModes.Add(new TDriveMode("High_Speed_Continuous_Shooting",0x4));
             this._driveModes.Add(new TDriveMode("Low_Speed_Continuous_Shooting",0x5));
@@ -25,6 +31,15 @@ namespace Canon_EOS_Remote
 
         //public uint getDriveModeHex(){
         //}
-        //public string getDriveModeString(){}
+        public string getDriveModeString(UInt32 tmpDriveModeHex){
+            for (int i = 0; i < this._driveModes.Count; i++)
+            {
+                if (this._driveModes.ElementAt(i).DriveModeHex == tmpDriveModeHex)
+                {
+                    return this._driveModes.ElementAt(i).DriveModeName;
+                }
+            }
+            return "unknown";
+        }
     }
 }

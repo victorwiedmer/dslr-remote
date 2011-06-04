@@ -41,6 +41,8 @@ namespace Canon_EOS_Remote.ViewModel
         private void setCurrentlyCamera(object sender, EventArgs e)
         {
             model.CameraList.CurrentlyCamera = (Camera)CameraListView.CurrentItem;
+            System.Windows.MessageBox.Show("Got new currently camera");
+            update("model.CameraList.CurrentlyCamera");
         }
         #endregion
 

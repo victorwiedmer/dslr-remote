@@ -41,7 +41,7 @@ namespace Canon_EOS_Remote
         private string _currentStorage;
         private UInt32 tmpErrorCodeAfterCommand;
         private string tmpErrorString;
-        private EDSDK.EdsTime _cameraFirmware;
+        private string _cameraFirmware;
         private bool _lensAttached;
         public event PropertyChangedEventHandler PropertyChanged;
         private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
@@ -172,7 +172,7 @@ namespace Canon_EOS_Remote
             }
         }    
 
-        public EDSDK.EdsTime CameraFirmware
+        public string CameraFirmware
         {
             get { return _cameraFirmware; }
             set { _cameraFirmware = value;
@@ -190,7 +190,6 @@ namespace Canon_EOS_Remote
 
         public Camera(IntPtr cameraPtr, String cameraName)
         {
-            UInt32 tmpProperty = 0;
             UInt32 error = 0;
             this.CameraPtr = cameraPtr;
             this.CameraName = cameraName;
@@ -204,23 +203,21 @@ namespace Canon_EOS_Remote
                 System.Windows.MessageBox.Show("Cant register property event handler because : " + error);
             }
             error = EDSDK.EdsOpenSession(this.CameraPtr);
-            System.Windows.MessageBox.Show("Cant open session with camera because : " + error);
+            if(error!=0)System.Windows.MessageBox.Show("Cant open session with camera because : " + error);
+            error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, _cameraPtr);
             getCameraBatteryLevelFromBody();
-            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, out tmpProperty);
-            this.CameraAEMode = tmpProperty;
-            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DriveMode, 0, out tmpProperty);
-            this.CameraDriveMode = tmpProperty;
-            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AFMode, 0, out tmpProperty);
-            this.CameraAFMode = tmpProperty;
-            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_MeteringMode, 0, out tmpProperty);
-            this.CameraMeteringMode = tmpProperty;
-            error=EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_Tv, 0, out tmpProperty);
-            this.CameraShutterTime = tmpProperty;
-            error = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, out tmpProperty);
-            this.CameraISOSpeed = tmpProperty;
-            //error = EDSDK.EdsCloseSession(this.CameraPtr);
-            System.Windows.MessageBox.Show("Cant close session with camera because : " + error);
-            string tmpString = this.driveModes.getDriveModeString(this.CameraDriveMode);
+            getAEModeFromCamera();
+            getDriveModeFromCamera();
+            getAFModeFromCamera();
+            getMeteringModeFromCamera();
+            getTvFromCamera();
+            getISOSpeedFromCamera();
+            getAvailableShotsFromCamera();
+            getCameraOwner();
+            getCameraName();
+            getFirmwareVersion();
+            getBodyID();
+            getCurrentStorage();
             System.Windows.MessageBox.Show("Got following properties : \n"+
                 "Batterielevel : " + this.CameraBatteryLevel + "%" + "\n" +
                 "AEMode : " + this.CameraAEMode + "\n" + 
@@ -228,27 +225,16 @@ namespace Canon_EOS_Remote
                 "AFMode : " + this.CameraAFMode + "\n" +
                 "MeteringMode : " + this.CameraMeteringMode + "\n" +
                 "Tv : " + this.CameraShutterTime + "\n" + 
-                "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed)
+                "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed) +"\n"+
+                "Available Shots : " + this.CameraAvailableShots + "\n" +
+                "Firmware Version : " + this.CameraFirmware + "\n" + 
+                "CameraOwner : " + this.CameraOwner + "\n" +
+                "Body ID : " + this.CameraBodyID + "\n" + 
+                "Current Storage : " + this.CurrentStorage
                 );
-            //error = EDSDK.EdsSendCommand(this.CameraPtr, EDSDK.CameraState_UILock, 0);
-
-            error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, _cameraPtr);
         }
 
         #endregion
-
-        /*
-         * Added on 09-05-2011 12:40 to generalize the exception handling,
-         * e.g. to get all eds error code informations
-         * */
-        private string getErrorString(uint errorCodeNumber)
-        {
-            EdsError tmpError = new EdsError(tmpErrorCodeAfterCommand);
-            tmpErrorString = "ErrorNumber : " + tmpError.ErrorCodeNumber + "\n CodeString : " +
-            tmpError.ErrorCodeString + "\n Description : " + tmpError.ErrorDescription;
-            tmpError = null; /* To dispose the garbage collector to delete this allocation */
-            return tmpErrorString;
-        }
 
         private void update(string property)
         {
@@ -262,56 +248,6 @@ namespace Canon_EOS_Remote
         
         #region camera methods
 
-        private void updateCameraProperties()
-        {
-            getCameraOwnerFromBody();
-        }
-
-        private void getCameraNameFromBody()
-        {
-            string tmpCameraName="";
-            tmpErrorCodeAfterCommand = 0;
-            tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_ProductName, 0, out tmpCameraName);
-            if (tmpErrorCodeAfterCommand != 0)
-            {
-                throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
-            }
-            else
-            {
-                _cameraName = tmpCameraName;
-            }
-        }
-
-        private void getCameraOwnerFromBody()
-        {
-            string tmpCameraOwner = "";
-            tmpErrorCodeAfterCommand = 0;
-            tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_OwnerName, 0, out tmpCameraOwner);
-            if (tmpErrorCodeAfterCommand != 0)
-            {
-                throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
-            }
-            else
-            {
-                this.CameraOwner = tmpCameraOwner;
-            }
-        }
-
-        private void getCameraBodyIDFromBody()
-        {
-            string tmpCameraBodyID="";
-            tmpErrorCodeAfterCommand = 0;
-            tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BodyIDEx, 0, out tmpCameraBodyID);
-            if (tmpErrorCodeAfterCommand != 0)
-            {
-                throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
-            }
-            else
-            {
-                this.CameraBodyID = tmpCameraBodyID;
-            }
-        }
-
         private void getCameraBatteryLevelFromBody()
         {
             UInt32 tmpCameraBatteryLevel = 0;
@@ -319,7 +255,7 @@ namespace Canon_EOS_Remote
             tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BatteryLevel, 0, out tmpCameraBatteryLevel);
             if (tmpErrorCodeAfterCommand != 0)
             {
-                throw new Exception("Command execution not succesfull because :" + getErrorString(tmpErrorCodeAfterCommand));
+                
             }
             else
             {
@@ -327,18 +263,206 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getCameraTime()
-        {
-            /*
-             * @TODO 
-             */
-        }
-
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
         {
             System.Windows.MessageBox.Show("CameraPropertey changed : " + 
                 "EventID : " + this.eventIDs.getEventIDString(inEvent) + "\nPropID : " + this.propertyCodes.getPropertyString(inPropertyID) + "\nParameter : " + inParameter + "\nContext : " + inContext);
+            if (inEvent == EDSDK.PropertyEvent_PropertyChanged)
+            {
+                switch (inPropertyID)
+                {
+                    case EDSDK.PropID_ISOSpeed: { getISOSpeedFromCamera();
+                    System.Windows.MessageBox.Show("New ISO Speed is : " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed));
+                        break; }
+                    case EDSDK.PropID_Tv:
+                        {
+                            getTvFromCamera();
+                            System.Windows.MessageBox.Show("New Tv is : " + this.CameraShutterTime);
+                            break;
+                        }
+                }
+            }
             return 0x0;
+        }
+
+        private void getAEModeFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraAEMode = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get AEMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
+            }
+        }
+
+        private void getDriveModeFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DriveMode, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraDriveMode = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cnat get DriveMode from Camera because : " + tmpError);
+            }
+        }
+
+        private void getAFModeFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AFMode, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraAFMode = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cnat get AFMode from Camera because : " + tmpError);
+            }
+        }
+
+        private void getMeteringModeFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_MeteringMode, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraMeteringMode = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cnat get MeteringMode from Camera because : " + tmpError);
+            }
+        }
+
+        private void getTvFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_Tv, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraShutterTime = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cnat get Shuttertime from Camera because : " + tmpError);
+            }
+        }
+
+        private void getISOSpeedFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraISOSpeed = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cnat get ISOSpeed from Camera because : " + tmpError);
+            }
+        }
+
+        private void getAvailableShotsFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AvailableShots, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraAvailableShots = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get available shots from camera because : " + tmpError);
+            }
+        }
+
+        private void getCameraOwner()
+        {
+            string tmpProperty="";
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_OwnerName, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraOwner = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get cameraowner from camera because : " + tmpError);
+            }
+        }
+
+        private void getCameraName()
+        {
+            string tmpProperty = "";
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_ProductName, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraName = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get cameraname from camera because : " + tmpError);
+            }
+        }
+
+        private void getFirmwareVersion()
+        {
+            string tmpProperty = "";
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_FirmwareVersion, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraFirmware = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get firmware from camera because : " + tmpError);
+            }
+        }
+
+        private void getBodyID()
+        {
+            string tmpProperty = "";
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_BodyIDEx, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraBodyID = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get bodyID from camera because : " + tmpError);
+            }
+        }
+
+        private void getCurrentStorage()
+        {
+            string tmpProperty = "";
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.kEdsPropID_CurrentStorage, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CurrentStorage = tmpProperty;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Cant get currentstorage from camera because : " + tmpError);
+            }
         }
         #endregion
 

@@ -11,12 +11,12 @@ namespace Canon_EOS_Remote.classes
     {
         private bool _sDKState;
 
-        public string stringSdkState;
+        public string _stringSdkState;
 
         public string StringSdkState
         {
-            get {return stringSdkState; }
-            private set {stringSdkState = value;}
+            get {return _stringSdkState; }
+            private set {_stringSdkState = value;}
         }
 
         public bool SDKState
@@ -25,12 +25,12 @@ namespace Canon_EOS_Remote.classes
             set { _sDKState = value;
             if (value == true)
             {
-                this.StringSdkState = StringSdkState = "SDK Initialized";
+                this.StringSdkState = "SDK Initialized";
                 update("StringSdkState");
             }
             else
             {
-                this.StringSdkState = StringSdkState = "SDK not initialized";
+                this.StringSdkState = "SDK not initialized";
                 update("StringSdkState");
             }
             }

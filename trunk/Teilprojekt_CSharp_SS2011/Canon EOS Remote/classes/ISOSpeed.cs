@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Canon_EOS_Remote.Enumerations;
+
 
 namespace Canon_EOS_Remote
 {

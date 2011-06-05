@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 
 using EDSDKLib;
+using System.Collections.Specialized;
 
 namespace Canon_EOS_Remote.classes
 {
@@ -13,9 +14,18 @@ namespace Canon_EOS_Remote.classes
     {
         #region classmembers
         private ObservableCollection<Camera> cameraList;
-        private Camera currentlyCamera = null;
         private EDSDK.EdsCameraAddedHandler cameraAddedHandler;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
+        private EDSDK.EdsStateEventHandler cameraStateEventHandler;
+        private EDSDK.EdsObjectEventHandler cameraObjectEventHandler;
+
+        private EventCodes eventIDs;
+        private PropertyCodes propertyCodes;
+
+        public delegate void OnCameraPropertyChangedEventHandler();
+        public event OnCameraPropertyChangedEventHandler onCameraPropertyChangedEvent;
         #endregion
 
         #region setter/getter
@@ -23,16 +33,6 @@ namespace Canon_EOS_Remote.classes
         {
             get { return cameraAddedHandler; }
             set { cameraAddedHandler = value; }
-        }
-
-        public Camera CurrentlyCamera
-        {
-            get { return currentlyCamera; }
-            set
-            {
-                update("currentlyCamera");
-                currentlyCamera = value;
-            }
         }
 
         public ObservableCollection<Camera> CameraList
@@ -55,7 +55,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetCameraList(out tmpPtr);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                System.Windows.MessageBox.Show("Error while getting cameralist : " + error);
+                Console.WriteLine("Error while getting cameralist : " + error);
             }
             /*
              * Getting count of cameralist childs to choose the last adding on the list
@@ -63,7 +63,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetChildCount(tmpPtr, out tmpCount);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                System.Windows.MessageBox.Show("Error while getting count of cameralist childs : " + error);
+                Console.WriteLine("Error while getting count of cameralist childs : " + error);
             }
             /*
              * Get the camera pointer of the last object on the cameralist
@@ -71,7 +71,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetChildAtIndex(tmpPtr, tmpCount - 1, out tmpPtr);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                System.Windows.MessageBox.Show("Error while getting camerapointer : " + error);
+                Console.WriteLine("Error while getting camerapointer : " + error);
             }
             /*
              * Getting device info of given camera pointer
@@ -79,10 +79,10 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetDeviceInfo(tmpPtr, out deviceInfo);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                System.Windows.MessageBox.Show("Error while getting deviceinfo : " + error);
+                Console.WriteLine("Error while getting deviceinfo : " + error);
             }
             this.CameraList.Add(new Camera(tmpPtr,deviceInfo.szDeviceDescription));
-            this.CurrentlyCamera = this.CameraList.ElementAt(this.CameraList.Count - 1);
+            EDSDK.EdsSetPropertyEventHandler(tmpPtr, EDSDK.PropertyEvent_All, cameraPropertyEventHandler, tmpPtr);
             return 0x0;
         }
 
@@ -92,10 +92,38 @@ namespace Canon_EOS_Remote.classes
             this.cameraList = new ObservableCollection<Camera>();
             this.CameraAddedHandler = new EDSDKLib.EDSDK.EdsCameraAddedHandler(onCameraAdded);
             error = EDSDKLib.EDSDK.EdsSetCameraAddedHandler(cameraAddedHandler, IntPtr.Zero);
+            this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                System.Windows.MessageBox.Show("Error while adding cameraAddedEvent : " + error);
+                Console.WriteLine("Error while adding cameraAddedEvent : " + ErrorCodes.getErrorDataWithCodeNumber(error));
             }
+            this.eventIDs = new EventCodes();
+            this.propertyCodes = new PropertyCodes();
+        }
+
+        private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
+        {
+            Console.WriteLine("Cameralist meldet, in einer Kamera hat sich was geaendert : \n" +
+                this.CameraList.ElementAt(getCameraIndexFromList(inContext)).CameraName + "\nEventID:" +
+                this.eventIDs.getEventIDString(inEvent) +"\nPropertyID : " + this.propertyCodes.getPropertyString(inPropertyID));
+                if(onCameraPropertyChangedEvent!=null){
+                    onCameraPropertyChangedEvent();
+                    Console.WriteLine("Event onCameraPropertyChangedEvent() fired");
+                }
+            
+            return 0x0;
+        }
+
+        private int getCameraIndexFromList(IntPtr cameraPtr)
+        {
+            for (int i = 0; i < this.CameraList.Count; i++)
+            {
+                if (this.CameraList.ElementAt(i).CameraPtr == cameraPtr)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         private void update(string property)
@@ -103,7 +131,9 @@ namespace Canon_EOS_Remote.classes
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
+                Console.WriteLine("Cameralist say : PropertyChanged : " + property);
             }
         }
+
     }
 }

@@ -22,7 +22,9 @@ namespace Canon_EOS_Remote
         public string CameraName
         {
             get { return _cameraName; }
-            set { _cameraName = value; }
+            set {
+                update("CameraName");
+                _cameraName = value; }
         }
         private string _cameraOwner; /*The setted name of the camera owner*/
         private string _cameraBodyID;
@@ -171,7 +173,7 @@ namespace Canon_EOS_Remote
         {
             get { return _cameraAvailableShots; }
             set { _cameraAvailableShots = value;
-            update("_cameraAvailableShots");
+            update("CameraAvailableShots");
             }
         }
 
@@ -211,11 +213,17 @@ namespace Canon_EOS_Remote
             this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
             if (error != 0)
             {
-                System.Windows.MessageBox.Show("Cant register property event handler because : " + error);
+                Console.WriteLine("Cant register property event handler because : " + ErrorCodes.getErrorDataWithCodeNumber(error));
             }
             this.cameraStateEventHandler = new EDSDK.EdsStateEventHandler(onCameraStateChanged);
             error = EDSDK.EdsOpenSession(this.CameraPtr);
-            if(error!=0)System.Windows.MessageBox.Show("Cant open session with camera because : " + error);
+            if (error != 0)
+            {
+                Console.WriteLine("Cant open session with camera because : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+                EDSDK.EdsCloseSession(this.CameraPtr);
+                EDSDK.EdsTerminateSDK();
+                Console.WriteLine("Please restart the application.");
+            }
             error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, _cameraPtr);
             error = EDSDK.EdsSetCameraStateEventHandler(this.CameraPtr, EDSDK.StateEvent_All, this.cameraStateEventHandler, _cameraPtr);
             error = EDSDK.EdsSetObjectEventHandler(this.CameraPtr, EDSDK.ObjectEvent_All, this.cameraObjectEventHandler, _cameraPtr);
@@ -239,7 +247,7 @@ namespace Canon_EOS_Remote
             getavailableMeteringModesFromCamera();
             getavailableShutterTimesFromCamera();
             getLensStateOfCamera();
-            System.Windows.MessageBox.Show("Got following properties : \n" +
+            Console.WriteLine("Got following properties : \n" +
             "Batterielevel : " + this.CameraBatteryLevel + "%" + "\n" +
             "AEMode : " + this.CameraAEMode + "\n" +
             "DriveMode : " + this.CameraDriveMode + " = " + this.driveModes.getDriveModeString(this.CameraDriveMode) + "\n" +
@@ -255,7 +263,6 @@ namespace Canon_EOS_Remote
             + "Available ISO Speeds : " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[0]) + " - " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[this.availableISOSpeeds.NumElements-1])
             //+ "\n Available AEModes : " + this.availableAEModes.PropDesc[0]  + " - " + this.availableAEModes.PropDesc[this.availableAEModes.NumElements-1]
             + "\n Lens attached : " + this._lensAttached
-            + "\n Lensname : " + this._lensName
     );
 
         }
@@ -267,7 +274,7 @@ namespace Canon_EOS_Remote
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                System.Windows.MessageBox.Show("Property has changed from : " + this + " : " + property);
+                Console.WriteLine("Property has changed from : " + this + " : " + property);
             }
         }
 
@@ -291,33 +298,43 @@ namespace Canon_EOS_Remote
 
         private uint onCameraStateChanged(uint inEvent, uint inParameter, IntPtr inContext)
         {
-            System.Windows.MessageBox.Show("State changed : " + this.eventIDs.getEventIDString(inEvent));
+            Console.WriteLine("State changed : " + this.eventIDs.getEventIDString(inEvent));
+            if (inEvent == EDSDK.StateEvent_Shutdown)
+            {
+                EDSDK.EdsCloseSession(this.CameraPtr);
+                Console.WriteLine("Close camera session because : " + this.eventIDs.getEventIDString(inEvent));
+                EDSDK.EdsTerminateSDK();
+                Console.WriteLine("SDK terminated ....");
+            }
             return 0x0;
         }
 
         private uint onCameraObjectChanged(uint inEvent, uint inParameter, IntPtr inContext)
         {
-            System.Windows.MessageBox.Show("Object changed : " + this.eventIDs.getEventIDString(inEvent));
+            Console.WriteLine("Object changed : " + this.eventIDs.getEventIDString(inEvent));
             return 0x0;
         }
 
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
         {
-            System.Windows.MessageBox.Show("CameraPropertey changed : " + 
+            Console.WriteLine("CameraPropertey changed : " + 
                 "EventID : " + this.eventIDs.getEventIDString(inEvent) + "\nPropID : " + this.propertyCodes.getPropertyString(inPropertyID) + "\nParameter : " + inParameter + "\nContext : " + inContext);
             if (inEvent == EDSDK.PropertyEvent_PropertyChanged)
             {
                 switch (inPropertyID)
                 {
                     case EDSDK.PropID_ISOSpeed: { getISOSpeedFromCamera();
-                    System.Windows.MessageBox.Show("New ISO Speed is : " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed));
+                    Console.WriteLine("New ISO Speed is : " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed));
                         break; }
                     case EDSDK.PropID_Tv:
                         {
                             getTvFromCamera();
-                            System.Windows.MessageBox.Show("New Tv is : " + this.CameraShutterTime);
+                            Console.WriteLine("New Tv is : " + this.CameraShutterTime);
                             break;
                         }
+                    case EDSDK.PropID_AvailableShots: {
+                        Console.WriteLine("Refresh available Shots from Camera");
+                        getAvailableShotsFromCamera();break ; }
                 }
             }
             return 0x0;
@@ -334,7 +351,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get AEMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
+                Console.WriteLine("Cant get AEMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
             }
         }
 
@@ -349,7 +366,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cnat get DriveMode from Camera because : " + tmpError);
+                Console.WriteLine("Cant get DriveMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -364,7 +381,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cnat get AFMode from Camera because : " + tmpError);
+                Console.WriteLine("Cant get AFMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -379,7 +396,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cnat get MeteringMode from Camera because : " + tmpError);
+                Console.WriteLine("Cant get MeteringMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -394,7 +411,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cnat get Shuttertime from Camera because : " + tmpError);
+                Console.WriteLine("Cant get Shuttertime from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -409,11 +426,11 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cnat get ISOSpeed from Camera because : " + tmpError);
+                Console.WriteLine("Cant get ISOSpeed from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
-        private void getAvailableShotsFromCamera()
+        public void getAvailableShotsFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -424,7 +441,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get available shots from camera because : " + tmpError);
+                Console.WriteLine("Cant get available shots from camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -439,7 +456,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get cameraowner from camera because : " + tmpError);
+                Console.WriteLine("Cant get cameraowner from camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -454,7 +471,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get cameraname from camera because : " + tmpError);
+                Console.WriteLine("Cant get cameraname from camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -469,7 +486,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get firmware from camera because : " + tmpError);
+                Console.WriteLine("Cant get firmware from camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -484,7 +501,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get bodyID from camera because : " + tmpError);
+                Console.WriteLine("Cant get bodyID from camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -499,7 +516,7 @@ namespace Canon_EOS_Remote
             }
             else
             {
-                System.Windows.MessageBox.Show("Cant get currentstorage from camera because : " + tmpError);
+                Console.WriteLine("Cant get currentstorage from camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -509,7 +526,7 @@ namespace Canon_EOS_Remote
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_ISOSpeed, out this.availableISOSpeeds);
             if (tmpError != 0)
             {
-                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+                Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -519,7 +536,7 @@ namespace Canon_EOS_Remote
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_AEMode, out this.availableAEModes);
             if (tmpError != 0)
             {
-                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+                Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -529,7 +546,7 @@ namespace Canon_EOS_Remote
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_MeteringMode, out this.availableMeteringModes);
             if (tmpError != 0)
             {
-                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+                Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -539,7 +556,7 @@ namespace Canon_EOS_Remote
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_Av, out this.availableApertureValues);
             if (tmpError != 0)
             {
-                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+                Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -549,7 +566,7 @@ namespace Canon_EOS_Remote
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_Tv, out this.availableShutterspeeds);
             if (tmpError != 0)
             {
-                System.Windows.MessageBox.Show("An error has oocured : " + tmpError);
+                Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 
@@ -559,7 +576,7 @@ namespace Canon_EOS_Remote
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_ExposureCompensation, out this.availableExposureCompensation);
             if (tmpError != 0)
             {
-                System.Windows.MessageBox.Show("An error has occured : " + tmpError);
+                Console.WriteLine("An error has occured : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
             }
         }
 

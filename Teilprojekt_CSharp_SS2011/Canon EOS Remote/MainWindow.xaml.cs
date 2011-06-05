@@ -22,10 +22,6 @@ namespace Teilprojekt_SS2011
 			this.InitializeComponent(); 
 		}
 
-		private void OnMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-		}
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 

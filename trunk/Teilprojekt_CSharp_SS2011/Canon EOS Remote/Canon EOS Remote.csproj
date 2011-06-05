@@ -69,6 +69,8 @@
     <Compile Include="classes\PropertyCodes.cs" />
     <Compile Include="classes\PropertyID.cs" />
     <Compile Include="ViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelCameralist.cs" />
+    <Compile Include="ViewModelCurrentCamera.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1178,9 +1180,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DPPDLL.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

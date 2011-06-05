@@ -119,7 +119,7 @@ namespace Canon_EOS_Remote.classes
             Console.WriteLine("State changed : " + this.eventIDs.getEventIDString(inEvent));
             if (inEvent == EDSDK.StateEvent_Shutdown)
             {
-                EDSDK.EdsCloseSession(this.CameraPtr);
+                EDSDK.EdsCloseSession(inContext);
                 Console.WriteLine("Close camera session because : " + this.eventIDs.getEventIDString(inEvent));
                 EDSDK.EdsTerminateSDK();
                 Console.WriteLine("SDK terminated ....");

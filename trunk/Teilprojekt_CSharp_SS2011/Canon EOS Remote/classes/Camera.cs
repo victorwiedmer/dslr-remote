@@ -56,6 +56,12 @@ namespace Canon_EOS_Remote
         private EventCodes eventIDs;
 
         private EDSDK.EdsPropertyDesc availableISOSpeeds;
+
+        public EDSDK.EdsPropertyDesc AvailableISOSpeeds
+        {
+            get { return availableISOSpeeds; }
+            set { availableISOSpeeds = value; }
+        }
         private EDSDK.EdsPropertyDesc availableAEModes;
         private EDSDK.EdsPropertyDesc availableMeteringModes;
         private EDSDK.EdsPropertyDesc availableApertureValues;
@@ -553,6 +559,10 @@ namespace Canon_EOS_Remote
             }
         }
 
+        public void setISOSpeedToCamera(int isoSpeed)
+        {
+            EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, sizeof(int), isoSpeed);
+        }
         #endregion
 
     }

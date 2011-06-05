@@ -35,13 +35,13 @@ namespace Canon_EOS_Remote
             /*-----------------------------------------------------------------------
                ED-SDK Functin Success Code
             ------------------------------------------------------------------------*/
-            _errorCodes.Add(new EdsError(0x00000000, "EDS_ERR_OK", "Kein Fhler aufgetreten"));
+            _errorCodes.Add(new EdsError(0x00000000, "EDS_ERR_OK", "Kein Fehler aufgetreten"));
 
             /*-----------------------------------------------------------------------
                ED-SDK Generic Error IDs
             ------------------------------------------------------------------------*/
             /* Miscellaneous errors */
-            _errorCodes.Add(new EdsError(0x00000001, "EDS_ERR_UNIMPLEMENTED", ""));
+            _errorCodes.Add(new EdsError(0x00000001, "EDS_ERR_UNIMPLEMENTED", "Nicht implementiert"));
             _errorCodes.Add(new EdsError(0x00000002, "EDS_ERR_INTERNAL_ERROR", ""));
             _errorCodes.Add(new EdsError(0x00000003, "EDS_ERR_MEM_ALLOC_FAILED", ""));
             _errorCodes.Add(new EdsError(0x00000004, "EDS_ERR_MEM_FREE_FAILED", ""));

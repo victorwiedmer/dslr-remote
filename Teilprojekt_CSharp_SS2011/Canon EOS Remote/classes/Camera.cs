@@ -66,6 +66,12 @@ namespace Canon_EOS_Remote
         private EDSDK.EdsPropertyDesc availableMeteringModes;
         private EDSDK.EdsPropertyDesc availableApertureValues;
         private EDSDK.EdsPropertyDesc availableShutterspeeds;
+
+        public EDSDK.EdsPropertyDesc AvailableShutterspeeds
+        {
+            get { return availableShutterspeeds; }
+            set { availableShutterspeeds = value; }
+        }
         private EDSDK.EdsPropertyDesc availableExposureCompensation;
 
         #endregion
@@ -562,6 +568,11 @@ namespace Canon_EOS_Remote
         public void setISOSpeedToCamera(int isoSpeed)
         {
             EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, sizeof(int), isoSpeed);
+        }
+
+        public void setShutterTimeToCamera(int shutterTime)
+        {
+            EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_Tv, 0, sizeof(int), shutterTime);
         }
         #endregion
 

@@ -199,19 +199,17 @@ namespace Canon_EOS_Remote
         public static EdsError getErrorDataWithCodeNumber(uint errorCodeNumber){
             EdsError tmpError = new EdsError() ;
             tmpError.ErrorCodeNumber = errorCodeNumber;
-            for (int i = 0; i <= _errorCodes.Count; i++)
+            for (int i = 0; i < _errorCodes.Count; i++)
             {
                 if (_errorCodes.ElementAt(i).ErrorCodeNumber == tmpError.ErrorCodeNumber)
                 {
                     tmpError.ErrorCodeString = _errorCodes.ElementAt(i).ErrorCodeString;
                     tmpError.ErrorDescription = _errorCodes.ElementAt(i).ErrorDescription;
-                }
-                else
-                {
-                    tmpError.ErrorCodeString = "ErrorCodeString not found";
-                    tmpError.ErrorDescription = "ErrorDescription not found";
+                    return tmpError;
                 }
             }
+            tmpError.ErrorCodeString = "ErrorCodeString not found";
+            tmpError.ErrorDescription = "ErrorDescription not found";
             return tmpError;
         }
 

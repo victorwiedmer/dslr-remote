@@ -10,7 +10,7 @@
   <Class Name="Teilprojekt_SS2011.MainWindow" Collapsed="true">
     <Position X="7.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -24,7 +24,7 @@
   <Class Name="Canon_EOS_Remote.Camera" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>FQAggBAACCAAAAEIAggAACTAgCkgzSAwIRGACKgkAAg=</HashCode>
+      <HashCode>FOghggACKGAAQIkJIooRECTAkCkA1zAroREACqgkAAo=</HashCode>
       <FileName>classes\Camera.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -60,7 +60,7 @@
   <Class Name="Canon_EOS_Remote.EdsError" Collapsed="true">
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIEAAAAAAAAGAAAAIAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAAAEAAAAIEAAAAAAAAGAAAAIAAAAAIA=</HashCode>
       <FileName>ErrorHandling\EdsError.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -74,14 +74,15 @@
   <Class Name="Canon_EOS_Remote.Model" Collapsed="true">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAAAACAAAAAAAAAAAQgAAAAAAAAAAAAAAEQAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Canon_EOS_Remote.classes.Cameralist" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAACgAAAAAAAAAAAAQgAAAAAAIAAAAAAAAQAA=</HashCode>
+      <HashCode>AEAAAAAAAAgAAEgAIAAAAAAAgAAAAAAIAAAAAgAEQAE=</HashCode>
       <FileName>classes\Cameralist.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -103,19 +104,12 @@
   <Class Name="Canon_EOS_Remote.classes.SDK" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAEAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAEAoAACAAAAAAAAEAAAAAgAAgAAAAAAAAAAAEAAA=</HashCode>
       <FileName>classes\SDK.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Canon_EOS_Remote.Enumerations.DriveModes" Collapsed="true">
-    <Position X="7.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>classes\DriveModes.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Canon_EOS_Remote.Enumerations.ISOSpeeds" Collapsed="true">
+  <Class Name="Canon_EOS_Remote.ISOSpeeds" Collapsed="true">
     <Position X="2.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIABEAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>

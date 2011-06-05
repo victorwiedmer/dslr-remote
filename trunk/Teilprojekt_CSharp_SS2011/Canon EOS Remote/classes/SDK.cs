@@ -51,6 +51,7 @@ namespace Canon_EOS_Remote.classes
             else
             {
                 this.SDKState = true;
+                Console.WriteLine("SDK initialized");
             }
 
         }

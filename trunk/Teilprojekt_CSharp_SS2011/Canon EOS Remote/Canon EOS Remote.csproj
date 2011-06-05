@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\AEModes.cs" />
     <Compile Include="classes\EventCodes.cs" />
     <Compile Include="classes\Eventhandling.cs" />
     <Compile Include="classes\EventID.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="classes\PropertyCodes.cs" />
     <Compile Include="classes\PropertyID.cs" />
     <Compile Include="classes\ShutterTimes.cs" />
+    <Compile Include="classes\TAEMode.cs" />
     <Compile Include="classes\TShutterTime.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />

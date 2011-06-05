@@ -72,7 +72,7 @@
 					<Label Content="EBV" HorizontalAlignment="Left" Margin="269.596,0,0,0" VerticalAlignment="Top"/>
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,4,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableISOListView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,29.96,0,0" Width="120" VerticalAlignment="Top" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableShutterTimesView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
-					<ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height" ItemsSource="{Binding Path=ViewModelCurrentCamera.AEView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
 					<ComboBox HorizontalAlignment="Left" Margin="116.787,0,0,18.9" VerticalAlignment="Bottom" Width="120"/>
 					<ComboBox HorizontalAlignment="Right" Margin="0,4,167,0" Width="120" VerticalAlignment="Top"/>
 					</Grid>

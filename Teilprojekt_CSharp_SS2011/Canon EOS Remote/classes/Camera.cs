@@ -210,12 +210,11 @@ namespace Canon_EOS_Remote
             this.isoList = new ISOSpeeds();
             this.propertyCodes = new PropertyCodes();
             this.eventIDs = new EventCodes();
-            this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
             if (error != 0)
             {
                 Console.WriteLine("Cant register property event handler because : " + ErrorCodes.getErrorDataWithCodeNumber(error));
             }
-            this.cameraStateEventHandler = new EDSDK.EdsStateEventHandler(onCameraStateChanged);
+            
             error = EDSDK.EdsOpenSession(this.CameraPtr);
             if (error != 0)
             {
@@ -224,9 +223,7 @@ namespace Canon_EOS_Remote
                 EDSDK.EdsTerminateSDK();
                 Console.WriteLine("Please restart the application.");
             }
-            error = EDSDK.EdsSetPropertyEventHandler(this.CameraPtr, EDSDK.PropertyEvent_All, this.cameraPropertyEventHandler, _cameraPtr);
-            error = EDSDK.EdsSetCameraStateEventHandler(this.CameraPtr, EDSDK.StateEvent_All, this.cameraStateEventHandler, _cameraPtr);
-            error = EDSDK.EdsSetObjectEventHandler(this.CameraPtr, EDSDK.ObjectEvent_All, this.cameraObjectEventHandler, _cameraPtr);
+
             getCameraBatteryLevelFromBody();
             getAEModeFromCamera();
             getDriveModeFromCamera();
@@ -296,49 +293,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private uint onCameraStateChanged(uint inEvent, uint inParameter, IntPtr inContext)
-        {
-            Console.WriteLine("State changed : " + this.eventIDs.getEventIDString(inEvent));
-            if (inEvent == EDSDK.StateEvent_Shutdown)
-            {
-                EDSDK.EdsCloseSession(this.CameraPtr);
-                Console.WriteLine("Close camera session because : " + this.eventIDs.getEventIDString(inEvent));
-                EDSDK.EdsTerminateSDK();
-                Console.WriteLine("SDK terminated ....");
-            }
-            return 0x0;
-        }
 
-        private uint onCameraObjectChanged(uint inEvent, uint inParameter, IntPtr inContext)
-        {
-            Console.WriteLine("Object changed : " + this.eventIDs.getEventIDString(inEvent));
-            return 0x0;
-        }
-
-        private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
-        {
-            Console.WriteLine("CameraPropertey changed : " + 
-                "EventID : " + this.eventIDs.getEventIDString(inEvent) + "\nPropID : " + this.propertyCodes.getPropertyString(inPropertyID) + "\nParameter : " + inParameter + "\nContext : " + inContext);
-            if (inEvent == EDSDK.PropertyEvent_PropertyChanged)
-            {
-                switch (inPropertyID)
-                {
-                    case EDSDK.PropID_ISOSpeed: { getISOSpeedFromCamera();
-                    Console.WriteLine("New ISO Speed is : " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed));
-                        break; }
-                    case EDSDK.PropID_Tv:
-                        {
-                            getTvFromCamera();
-                            Console.WriteLine("New Tv is : " + this.CameraShutterTime);
-                            break;
-                        }
-                    case EDSDK.PropID_AvailableShots: {
-                        Console.WriteLine("Refresh available Shots from Camera");
-                        getAvailableShotsFromCamera();break ; }
-                }
-            }
-            return 0x0;
-        }
 
         private void getAEModeFromCamera()
         {

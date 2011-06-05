@@ -19,8 +19,6 @@ namespace Canon_EOS_Remote.classes
 
         private EDSDK.EdsPropertyEventHandler cameraPropertyEventHandler;
         private EDSDK.EdsStateEventHandler cameraStateEventHandler;
-        private EDSDK.EdsObjectEventHandler cameraObjectEventHandler;
-
         private EventCodes eventIDs;
         private PropertyCodes propertyCodes;
 
@@ -82,7 +80,8 @@ namespace Canon_EOS_Remote.classes
                 Console.WriteLine("Error while getting deviceinfo : " + error);
             }
             this.CameraList.Add(new Camera(tmpPtr,deviceInfo.szDeviceDescription));
-            EDSDK.EdsSetPropertyEventHandler(tmpPtr, EDSDK.PropertyEvent_All, cameraPropertyEventHandler, tmpPtr);
+            error = EDSDK.EdsSetPropertyEventHandler(tmpPtr, EDSDK.PropertyEvent_All, cameraPropertyEventHandler, tmpPtr);
+            error = EDSDK.EdsSetCameraStateEventHandler(tmpPtr, EDSDK.StateEvent_All, this.cameraStateEventHandler, tmpPtr);
             return 0x0;
         }
 
@@ -93,6 +92,7 @@ namespace Canon_EOS_Remote.classes
             this.CameraAddedHandler = new EDSDKLib.EDSDK.EdsCameraAddedHandler(onCameraAdded);
             error = EDSDKLib.EDSDK.EdsSetCameraAddedHandler(cameraAddedHandler, IntPtr.Zero);
             this.cameraPropertyEventHandler = new EDSDK.EdsPropertyEventHandler(onCameraPropertyChanged);
+            this.cameraStateEventHandler = new EDSDK.EdsStateEventHandler(onCameraStateChanged);
             if (error != EDSDK.EDS_ERR_OK)
             {
                 Console.WriteLine("Error while adding cameraAddedEvent : " + ErrorCodes.getErrorDataWithCodeNumber(error));
@@ -113,6 +113,20 @@ namespace Canon_EOS_Remote.classes
             
             return 0x0;
         }
+
+        private uint onCameraStateChanged(uint inEvent, uint inParameter, IntPtr inContext)
+        {
+            Console.WriteLine("State changed : " + this.eventIDs.getEventIDString(inEvent));
+            if (inEvent == EDSDK.StateEvent_Shutdown)
+            {
+                EDSDK.EdsCloseSession(this.CameraPtr);
+                Console.WriteLine("Close camera session because : " + this.eventIDs.getEventIDString(inEvent));
+                EDSDK.EdsTerminateSDK();
+                Console.WriteLine("SDK terminated ....");
+            }
+            return 0x0;
+        }
+
 
         private int getCameraIndexFromList(IntPtr cameraPtr)
         {

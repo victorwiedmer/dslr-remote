@@ -68,6 +68,8 @@
     <Compile Include="classes\PropertyChanged.cs" />
     <Compile Include="classes\PropertyCodes.cs" />
     <Compile Include="classes\PropertyID.cs" />
+    <Compile Include="classes\ShutterTimes.cs" />
+    <Compile Include="classes\TShutterTime.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />
     <Compile Include="ViewModelCurrentCamera.cs" />

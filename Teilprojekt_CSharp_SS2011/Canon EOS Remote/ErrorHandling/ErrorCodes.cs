@@ -35,7 +35,7 @@ namespace Canon_EOS_Remote
             /*-----------------------------------------------------------------------
                ED-SDK Functin Success Code
             ------------------------------------------------------------------------*/
-            _errorCodes.Add(new EdsError(0x00000000, "EDS_ERR_OK", ""));
+            _errorCodes.Add(new EdsError(0x00000000, "EDS_ERR_OK", "Kein Fhler aufgetreten"));
 
             /*-----------------------------------------------------------------------
                ED-SDK Generic Error IDs
@@ -92,7 +92,7 @@ namespace Canon_EOS_Remote
             _errorCodes.Add(new EdsError(0x00000066, "EDS_ERR_INVALID_SORT_FN", ""));
 
             /* Device errors */
-            _errorCodes.Add(new EdsError(0x00000080, "EDS_ERR_DEVICE_NOT_FOUND", "Device not found"));
+            _errorCodes.Add(new EdsError(0x00000080, "EDS_ERR_DEVICE_NOT_FOUND", "Gerät nicht gefunden"));
             _errorCodes.Add(new EdsError(0x00000081, "EDS_ERR_DEVICE_BUSY", "Device is busy or will get in unstable mode"));
             _errorCodes.Add(new EdsError(0x00000082, "EDS_ERR_DEVICE_INVALID", ""));
             _errorCodes.Add(new EdsError(0x00000083, "EDS_ERR_DEVICE_EMERGENCY", ""));
@@ -123,7 +123,7 @@ namespace Canon_EOS_Remote
             _errorCodes.Add(new EdsError(0x000000AC, "EDS_ERR_STREAM_END_OF_STREAM", ""));
 
             /* Communications errors */
-            _errorCodes.Add(new EdsError(0x000000C0, "EDS_ERR_COMM_PORT_IS_IN_USE", ""));
+            _errorCodes.Add(new EdsError(0x000000C0, "EDS_ERR_COMM_PORT_IS_IN_USE", "Port wird benutzt"));
             _errorCodes.Add(new EdsError(0x000000C1, "EDS_ERR_COMM_DISCONNECTED", ""));
             _errorCodes.Add(new EdsError(0x000000C2, "EDS_ERR_COMM_DEVICE_INCOMPATIBLE", ""));
             _errorCodes.Add(new EdsError(0x000000C3, "EDS_ERR_COMM_BUFFER_FULL", ""));
@@ -147,7 +147,7 @@ namespace Canon_EOS_Remote
             _errorCodes.Add(new EdsError(0x000000F4, "EDS_ERR_WAIT_TIMEOUT_ERROR", ""));
 
             /* PTP */
-            _errorCodes.Add(new EdsError(0x00002003, "EDS_ERR_SESSION_NOT_OPEN", ""));
+            _errorCodes.Add(new EdsError(0x00002003, "EDS_ERR_SESSION_NOT_OPEN", "Session mit der Kamera ist nicht offen"));
             _errorCodes.Add(new EdsError(0x00002004, "EDS_ERR_INVALID_TRANSACTIONID", ""));
             _errorCodes.Add(new EdsError(0x00002007, "EDS_ERR_INCOMPLETE_TRANSFER", ""));
             _errorCodes.Add(new EdsError(0x00002008, "EDS_ERR_INVALID_STRAGEID", ""));

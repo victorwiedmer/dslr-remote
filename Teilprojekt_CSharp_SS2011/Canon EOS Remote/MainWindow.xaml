@@ -31,21 +31,22 @@
 			</MenuItem>
 			<MenuItem Header="Info" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"/>
 		</Menu>
-		<Label Content="Kameraname" HorizontalAlignment="Left" Margin="0,25,0,15" d:LayoutOverrides="Height" Height="30"/>
-		<Label Content="FreierSpeicher" HorizontalAlignment="Left" Margin="150,25,0,15" Grid.Row="0" d:LayoutOverrides="Height" Height="30"/>
+		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName}" HorizontalAlignment="Left" Margin="0,25,0,15" d:LayoutOverrides="Height" Height="30"/>
+		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAvailableShots}" HorizontalAlignment="Left" Margin="150,25,0,15" d:LayoutOverrides="Height" Height="30" Width="35" />
 		<Label Content="Batterie Status : " Margin="300,25,226,15" d:LayoutOverrides="Height" Grid.Row="0" Height="30"/>
-		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Minimum="0" Maximum="100" Value="{Binding Path=CurrentBatteryLevel, UpdateSourceTrigger=PropertyChanged}"/>
+		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Minimum="0" Maximum="100" Value="{Binding Path=CurrentBatteryLevel, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Path=ViewModelCurrentCamera}" />
 		<TabControl Grid.Row="1" BorderBrush="{x:Null}">
 			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
 					<Label Content="Kamera auswählen : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto"></Label>
                     <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="128" ItemsSource="{Binding Path=CameraListView, UpdateSourceTrigger=PropertyChanged}" Name="CBCameraList" DisplayMemberPath="CameraName" IsSynchronizedWithCurrentItem="True">
                     </ComboBox>
-                    <Label Content="CameraFirmware" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="Auto" Height="Auto"/>
-					<Label Content="{Binding Path=CurrentBodyID, UpdateSourceTrigger=PropertyChanged}" Margin="279,25.96,249.006,0" VerticalAlignment="Top" Width="Auto" Height="Auto" Name="lBodyID" />
-					<Label Content="{Binding Path=CurrentAvailableShots}" HorizontalAlignment="Left" Margin="279,55.92,0,40.86" d:LayoutOverrides="Height" Width="Auto" Height="Auto" Name="lAvailableShots" />
-                    <Label Content="{Binding Path=Model.Sdk.StringSdkState}" Height="28" HorizontalAlignment="Left" Margin="808,127,0,0" Name="label1" VerticalAlignment="Top" />
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="6,32,0,0" Name="tBCameraName" VerticalAlignment="Top" Width="120" Text="{Binding Path=CurrentCameraName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                    <Label Content="Kameraname : " Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="lKameraName" VerticalAlignment="Top" Width="112" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="122,40,0,0" Name="lKameraNameShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Kamerabesitzer : " Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" Name="lOwner" VerticalAlignment="Top" Width="112" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="122,74,0,0" Name="lOwnerShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraOwner, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="Kamerafirmware :   " Height="28" HorizontalAlignment="Left" Margin="6,108,0,0" Name="lCameraFirmware" VerticalAlignment="Top" Width="112" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraFirmware}" Height="28" HorizontalAlignment="Right" Margin="0,108,630,0" Name="lCameraFirmwareShow" VerticalAlignment="Top" Width="142" />
                 </Grid>
 			</TabItem>
 			<TabItem Header="Objektiv" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -69,7 +70,7 @@
 					<Label Content="Belichtungszeit" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
 					<Label Content="Programm" HorizontalAlignment="Left" Margin="0,51.92,0,44.86" d:LayoutOverrides="Height"/>
 					<Label Content="EBV" HorizontalAlignment="Left" Margin="269.596,0,0,0" VerticalAlignment="Top"/>
-					<ComboBox HorizontalAlignment="Left" Margin="116.787,4,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="116.787,4,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableISOListView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="{Binding Path=ViewModelCurrentCamera.AvailableISOListView/}" />
 					<ComboBox HorizontalAlignment="Left" Margin="116.787,29.96,0,0" Width="120" VerticalAlignment="Top"/>
 					<ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height"/>
 					<ComboBox HorizontalAlignment="Left" Margin="116.787,0,0,18.9" VerticalAlignment="Bottom" Width="120"/>

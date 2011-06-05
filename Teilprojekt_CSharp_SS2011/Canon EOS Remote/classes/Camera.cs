@@ -63,6 +63,12 @@ namespace Canon_EOS_Remote
             set { availableISOSpeeds = value; }
         }
         private EDSDK.EdsPropertyDesc availableAEModes;
+
+        public EDSDK.EdsPropertyDesc AvailableAEModes
+        {
+            get { return availableAEModes; }
+            set { availableAEModes = value; }
+        }
         private EDSDK.EdsPropertyDesc availableMeteringModes;
         private EDSDK.EdsPropertyDesc availableApertureValues;
         private EDSDK.EdsPropertyDesc availableShutterspeeds;
@@ -271,7 +277,8 @@ namespace Canon_EOS_Remote
             "Current Storage : " + this.CurrentStorage + "\n" 
             + "Available ISO Speeds : " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[0]) + " - " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[this.availableISOSpeeds.NumElements-1])
             //+ "\n Available AEModes : " + this.availableAEModes.PropDesc[0]  + " - " + this.availableAEModes.PropDesc[this.availableAEModes.NumElements-1]
-            + "\n Lens attached : " + this._lensAttached
+            + "\n Lens attached : " + this._lensAttached +
+            "\n Available AE Modes Count : " + this.availableAEModes.NumElements
     );
 
         }
@@ -573,6 +580,11 @@ namespace Canon_EOS_Remote
         public void setShutterTimeToCamera(int shutterTime)
         {
             EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_Tv, 0, sizeof(int), shutterTime);
+        }
+
+        public void setAEModeToCamera(int aeMode)
+        {
+            EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, sizeof(int), aeMode);
         }
         #endregion
 

@@ -279,6 +279,7 @@ namespace Canon_EOS_Remote
             //+ "\n Available AEModes : " + this.availableAEModes.PropDesc[0]  + " - " + this.availableAEModes.PropDesc[this.availableAEModes.NumElements-1]
             + "\n Lens attached : " + this._lensAttached +
             "\n Available AE Modes Count : " + this.availableAEModes.NumElements
+            
     );
 
         }
@@ -297,7 +298,7 @@ namespace Canon_EOS_Remote
         
         #region camera methods
 
-        private void getCameraBatteryLevelFromBody()
+        public void getCameraBatteryLevelFromBody()
         {
             UInt32 tmpCameraBatteryLevel = 0;
             tmpErrorCodeAfterCommand = 0;
@@ -314,7 +315,7 @@ namespace Canon_EOS_Remote
 
 
 
-        private void getAEModeFromCamera()
+        public void getAEModeFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -329,7 +330,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getDriveModeFromCamera()
+        public void getDriveModeFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -344,7 +345,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getAFModeFromCamera()
+        public void getAFModeFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -359,7 +360,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getMeteringModeFromCamera()
+        public void getMeteringModeFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -374,7 +375,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getTvFromCamera()
+        public void getTvFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -389,7 +390,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getISOSpeedFromCamera()
+        public void getISOSpeedFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
@@ -419,7 +420,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getCameraOwner()
+        public void getCameraOwner()
         {
             string tmpProperty="";
             UInt32 tmpError = 0;
@@ -434,7 +435,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getCameraName()
+        public void getCameraName()
         {
             string tmpProperty = "";
             UInt32 tmpError = 0;
@@ -449,7 +450,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getFirmwareVersion()
+        public void getFirmwareVersion()
         {
             string tmpProperty = "";
             UInt32 tmpError = 0;
@@ -464,7 +465,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getBodyID()
+        public void getBodyID()
         {
             string tmpProperty = "";
             UInt32 tmpError = 0;
@@ -479,7 +480,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getCurrentStorage()
+        public void getCurrentStorage()
         {
             string tmpProperty = "";
             UInt32 tmpError = 0;
@@ -494,7 +495,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getavailableISOSpeedsFromCamera()
+        public void getavailableISOSpeedsFromCamera()
         {
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_ISOSpeed, out this.availableISOSpeeds);
@@ -504,7 +505,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getavailableAEModesFromCamera()
+        public void getavailableAEModesFromCamera()
         {
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyDesc(this.CameraPtr, EDSDK.PropID_AEMode, out this.availableAEModes);

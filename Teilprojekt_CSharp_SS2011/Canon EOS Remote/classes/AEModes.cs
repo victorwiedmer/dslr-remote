@@ -17,24 +17,24 @@ namespace Canon_EOS_Remote.classes
 
         private void init()
         {
-            this.aeModes.Add(new TAEMode("Programm AE",0x0));
-            this.aeModes.Add(new TAEMode("Shutter-Speed Priority AE",0x1));
-            this.aeModes.Add(new TAEMode("Aperture-Priority AE",0x2));
-            this.aeModes.Add(new TAEMode("Manual Exposure",0x3));
-            this.aeModes.Add(new TAEMode("Bulb",0x4));
-            this.aeModes.Add(new TAEMode("Auto Depth-of-Field AE",0x5));
-            this.aeModes.Add(new TAEMode("Depth-of Field AE",0x6));
-            this.aeModes.Add(new TAEMode("Camera settings registered",0x7));
-            this.aeModes.Add(new TAEMode("Lock",0x8));
-            this.aeModes.Add(new TAEMode("Auto",0x9));
-            this.aeModes.Add(new TAEMode("Night Scene Portrait",0x10));
-            this.aeModes.Add(new TAEMode("Sports",0x11));
-            this.aeModes.Add(new TAEMode("Portrait",0x12));
-            this.aeModes.Add(new TAEMode("Landscape",0x13));
-            this.aeModes.Add(new TAEMode("Close-Up",0x14));
-            this.aeModes.Add(new TAEMode("Flash Off",0x15));
-            this.aeModes.Add(new TAEMode("Creative Auto",0x19));
-            this.aeModes.Add(new TAEMode("Photo In Movie",0x21));
+            this.aeModes.Add(new TAEMode("Programm AE",0));
+            this.aeModes.Add(new TAEMode("Shutter-Speed Priority AE",1));
+            this.aeModes.Add(new TAEMode("Aperture-Priority AE",2));
+            this.aeModes.Add(new TAEMode("Manual Exposure",3));
+            this.aeModes.Add(new TAEMode("Bulb",4));
+            this.aeModes.Add(new TAEMode("Auto Depth-of-Field AE",5));
+            this.aeModes.Add(new TAEMode("Depth-of Field AE",6));
+            this.aeModes.Add(new TAEMode("Camera settings registered",7));
+            this.aeModes.Add(new TAEMode("Lock",8));
+            this.aeModes.Add(new TAEMode("Auto",9));
+            this.aeModes.Add(new TAEMode("Night Scene Portrait",10));
+            this.aeModes.Add(new TAEMode("Sports",11));
+            this.aeModes.Add(new TAEMode("Portrait",12));
+            this.aeModes.Add(new TAEMode("Landscape",13));
+            this.aeModes.Add(new TAEMode("Close-Up",14));
+            this.aeModes.Add(new TAEMode("Flash Off",15));
+            this.aeModes.Add(new TAEMode("Creative Auto",19));
+            this.aeModes.Add(new TAEMode("Photo In Movie",21));
             this.aeModes.Add(new TAEMode("Not Valid or No settings changes",0xff));
         }
 
@@ -60,7 +60,7 @@ namespace Canon_EOS_Remote.classes
                 }
             }
 
-            return "unkown";
+            return "unkown : " + aeHex;
         }
     }
 }

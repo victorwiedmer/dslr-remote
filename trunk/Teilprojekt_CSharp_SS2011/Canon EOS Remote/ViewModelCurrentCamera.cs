@@ -36,12 +36,26 @@ namespace Canon_EOS_Remote.ViewModel
         private IntPtr imageref;
         private classes.PropertyCodes propertyCodes;
         private string currentProgramm;
+        private string currentAperture;
+        private classes.Apertures apertures;
+
+        public string CurrentAperture
+        {
+            get { return currentAperture; }
+            set
+            {
+                currentAperture = value;
+                update("CurrentAperture");
+            }
+        }
 
         public string CurrentProgramm
         {
             get { return currentProgramm; }
-            set { currentProgramm = value;
-            update("CurrentProgramm");
+            set
+            {
+                currentProgramm = value;
+                update("CurrentProgramm");
             }
         }
 
@@ -192,6 +206,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentCameraOwner = "CurrentCameraOwner";
             this.CurrentCameraFirmware = "CurrentCameraFirmware";
             this.currentProgramm = "CurrentProgramm";
+            this.CurrentAperture = "CurrentAperture";
             this.CurrentBatteryLevel = 50;
             this.AvailableISOListCollection = new ObservableCollection<int>();
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
@@ -210,6 +225,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandTakePhoto = new Command_TakePhoto();
             this.CommandTakePhoto.Camera = IntPtr.Zero;
             this.propertyCodes = new classes.PropertyCodes();
+            this.apertures = new classes.Apertures();
         }
 
         public string CurrentCameraFirmware
@@ -268,7 +284,6 @@ namespace Canon_EOS_Remote.ViewModel
             set
             {
                 currentCameraName = value;
-                Console.WriteLine("Setter CurrentCameraName called ...");
                 update("CurrentCameraName");
             }
         }
@@ -280,13 +295,12 @@ namespace Canon_EOS_Remote.ViewModel
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("ViewModelCurrentCamera Property has changed : " + property);
+                Console.WriteLine("\n\nViewModelCurrentCamera Property has changed : " + property+"\n\n");
             }
         }
 
         public void setCurrentlyCamera()
         {
-            Console.WriteLine("Got Event to setCurrentlyCamera()");
             this.CurrentCameraName = this.currentCamera.CameraName;
             this.CurrentBatteryLevel = (int)this.currentCamera.CameraBatteryLevel;
             this.CurrentBodyID = this.currentCamera.CameraBodyID;
@@ -308,11 +322,11 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentCamera.getTvFromCamera();
             this.CurrentTv = this.shutterTimes.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
             this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
+            this.CurrentAperture = this.apertures.getApertureString(this.CurrentCamera.CameraAperture);
         }
 
         public void updateCurrentlyCamera(classes.PropertyEventArgs p)
         {
-            Console.WriteLine("Got Event to updateCurrentlyCamera() to update following property from camera " + this.PropertyCodes.getPropertyString(p.PropertyName));
             switch (p.PropertyName)
             {
                 case EDSDK.PropID_Tv:
@@ -370,6 +384,12 @@ namespace Canon_EOS_Remote.ViewModel
                         this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
                         break;
                     }
+                case EDSDK.PropID_Av:
+                    {
+                        this.currentCamera.getApertureFromCamera();
+                        this.CurrentAperture = this.apertures.getApertureString(this.CurrentCamera.CameraAperture);
+                        break;
+                    }
                 default:
                     {
                         Console.WriteLine("Cant identify PropertyID");
@@ -391,7 +411,6 @@ namespace Canon_EOS_Remote.ViewModel
         private void sendISOSpeedToCamera(object sender, EventArgs e)
         {
             int tmpProperty = 0;
-            Console.WriteLine("Got currentItem from ISO Combobox : " + this.AvailableISOListView.CurrentItem);
             if (this.AvailableISOListView.CurrentItem != null)
             {
                 tmpProperty = (int)this.AvailableISOListView.CurrentItem;
@@ -403,18 +422,15 @@ namespace Canon_EOS_Remote.ViewModel
         {
             this.shuttertimeslistempty = false;
             this.AvailableShutterTimesCollection.Clear();
-            Console.WriteLine("Copy all PropertyDesc values from ShutterTimes to CollectionView");
             for (int i = 0; i < this.propertyDescTv.NumElements; i++)
             {
                 this.AvailableShutterTimesCollection.Add(this.shutterTimes.getShutterTimeStringFromHex((uint)this.propertyDescTv.PropDesc[i]));
             }
-            Console.WriteLine("Copy Finished (" + this.AvailableShutterTimesCollection.Count + ") items");
         }
 
         private void sendShutterTimeToCamera(object sender, EventArgs e)
         {
             string tmpProperty = "";
-            Console.WriteLine("Got currentItem from ShutterTime Combobox : " + this.AvailableShutterTimesView.CurrentItem);
             if (this.AvailableShutterTimesView.CurrentItem != null)
             {
                 tmpProperty = (string)this.AvailableShutterTimesView.CurrentItem;
@@ -426,18 +442,15 @@ namespace Canon_EOS_Remote.ViewModel
         {
             this.aelistempty = false;
             this.AECollection.Clear();
-            Console.WriteLine("Copy all PropertyDesc values from AEModes to CollectionView");
             for (int i = 0; i < this.propertyDescAE.NumElements; i++)
             {
                 this.AECollection.Add("value" + i);
             }
-            Console.WriteLine("Copy Finished (" + this.AECollection.Count + ") items");
         }
 
         private void sendAEModeToCamera(object sender, EventArgs e)
         {
             string tmpProperty = "";
-            Console.WriteLine("Got currentItem from ShutterTime Combobox : " + this.AEView.CurrentItem);
             if (this.AEView.CurrentItem != null)
             {
                 tmpProperty = (string)this.AEView.CurrentItem;

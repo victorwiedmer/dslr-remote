@@ -53,6 +53,10 @@ namespace Canon_EOS_Remote.classes
             this.shutterTimes.Add(new TShutterTime("1/8", 0x50));
             this.shutterTimes.Add(new TShutterTime("1/10", 0x53));
             this.shutterTimes.Add(new TShutterTime("1/10", 0x54));
+            this.shutterTimes.Add(new TShutterTime("1/13", 0x55));
+            this.shutterTimes.Add(new TShutterTime("1/15", 0x58));
+            this.shutterTimes.Add(new TShutterTime("1/20", 0x5B));
+            this.shutterTimes.Add(new TShutterTime("1/20", 0x5C));
             this.shutterTimes.Add(new TShutterTime("1/25", 0x5D));
             this.shutterTimes.Add(new TShutterTime("1/30", 0x60));
             this.shutterTimes.Add(new TShutterTime("1/40", 0x63));
@@ -98,7 +102,7 @@ namespace Canon_EOS_Remote.classes
                     return this.shutterTimes.ElementAt(i).ShutterTimeDec;
                 }
             }
-            return "unknown";
+            return "unknown" + hexvalue;
         }
 
         public uint getShutterTimeStringFromDec(string decvalue)

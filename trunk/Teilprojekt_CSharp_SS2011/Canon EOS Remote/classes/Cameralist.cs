@@ -120,9 +120,14 @@ namespace Canon_EOS_Remote.classes
             if (inEvent == EDSDK.StateEvent_Shutdown)
             {
                 EDSDK.EdsCloseSession(inContext);
-                Console.WriteLine("Close camera session because : " + this.eventIDs.getEventIDString(inEvent));
-                EDSDK.EdsTerminateSDK();
-                Console.WriteLine("SDK terminated ....");
+                for (int i = 0; i < this.CameraList.Count; i++)
+                {
+                    if (this.CameraList.ElementAt(i).CameraPtr == inContext)
+                    {
+                        this.CameraList.RemoveAt(i);
+                    }
+                }
+                Console.WriteLine("Cant delete camera from list");
             }
             return 0x0;
         }

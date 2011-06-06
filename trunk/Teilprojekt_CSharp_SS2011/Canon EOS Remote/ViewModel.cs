@@ -44,8 +44,7 @@ namespace Canon_EOS_Remote.ViewModel
             viewModelCurrentCamera = new ViewModelCurrentCamera();
             cameraListView = new CollectionView(Model.CameraList.CameraList);
             CameraListView.CurrentChanged += new EventHandler(setCurrentlyCamera);
-            Model.CameraList.onCameraPropertyChangedEvent += viewModelCurrentCamera.updateCurrentlyCamera;
-            
+            Model.CameraList.onCameraPropertyChangedEvent += ViewModelCurrentCamera.updateCurrentlyCamera;
         }
 
         #region ViewModel Events
@@ -57,7 +56,7 @@ namespace Canon_EOS_Remote.ViewModel
                     Console.WriteLine("Got new currently camera : " + tmpCamera.CameraName);
                     Console.WriteLine("He index in the cameralist is : " + Model.CameraList.CameraList.IndexOf(tmpCamera));
                     this.ViewModelCurrentCamera.CurrentCamera = model.CameraList.CameraList.ElementAt(Model.CameraList.CameraList.IndexOf(tmpCamera));
-                    this.ViewModelCurrentCamera.updateCurrentlyCamera();
+                    this.ViewModelCurrentCamera.setCurrentlyCamera();
                 }
         }
         #endregion

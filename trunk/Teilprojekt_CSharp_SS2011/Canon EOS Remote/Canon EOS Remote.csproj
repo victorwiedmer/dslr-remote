@@ -68,10 +68,12 @@
     <Compile Include="classes\EventID.cs" />
     <Compile Include="classes\PropertyChanged.cs" />
     <Compile Include="classes\PropertyCodes.cs" />
+    <Compile Include="classes\PropertyEventArgs.cs" />
     <Compile Include="classes\PropertyID.cs" />
     <Compile Include="classes\ShutterTimes.cs" />
     <Compile Include="classes\TAEMode.cs" />
     <Compile Include="classes\TShutterTime.cs" />
+    <Compile Include="Command_TakePhoto.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />
     <Compile Include="ViewModelCurrentCamera.cs" />
@@ -79,7 +81,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="classes\AEMode.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

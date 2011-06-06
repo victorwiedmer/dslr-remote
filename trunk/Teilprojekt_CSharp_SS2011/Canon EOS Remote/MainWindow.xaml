@@ -34,7 +34,7 @@
 		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName}" HorizontalAlignment="Left" Margin="0,25,0,15" d:LayoutOverrides="Height" Height="30"/>
 		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAvailableShots}" HorizontalAlignment="Left" Margin="150,25,0,15" d:LayoutOverrides="Height" Height="30" Width="35" />
 		<Label Content="Batterie Status : " Margin="300,25,226,15" d:LayoutOverrides="Height" Grid.Row="0" Height="30"/>
-		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Minimum="0" Maximum="100" Value="{Binding Path=CurrentBatteryLevel, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Path=ViewModelCurrentCamera}" />
+		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Minimum="0" Maximum="100" Value="{Binding Path=ViewModelCurrentCamera.CurrentBatteryLevel, UpdateSourceTrigger=PropertyChanged}" />
 		<TabControl Grid.Row="1" BorderBrush="{x:Null}">
 			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
@@ -47,6 +47,12 @@
                     <Label Height="28" HorizontalAlignment="Left" Margin="122,74,0,0" Name="lOwnerShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraOwner, UpdateSourceTrigger=PropertyChanged}" />
                     <Label Content="Kamerafirmware :   " Height="28" HorizontalAlignment="Left" Margin="6,108,0,0" Name="lCameraFirmware" VerticalAlignment="Top" Width="112" />
                     <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraFirmware}" Height="28" HorizontalAlignment="Right" Margin="0,108,630,0" Name="lCameraFirmwareShow" VerticalAlignment="Top" Width="142" />
+                    <Label Content="ISO : " Height="28" HorizontalAlignment="Left" Margin="340,0,0,0" Name="lISO" VerticalAlignment="Top" Width="99" />
+                    <Label Height="28" HorizontalAlignment="Right" Margin="0,40,386,0" Name="lBelichtungszeitShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentTv, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="466,0,0,0" Name="lISOShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentISO, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="Belichtungszeit : " Height="28" HorizontalAlignment="Left" Margin="340,40,0,0" Name="lBelichtungszeit" VerticalAlignment="Top" />
+                    <Label Content="Programmmodus : " Height="28" HorizontalAlignment="Left" Margin="340,74,0,0" Name="lAEMode" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentProgramm, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Right" Margin="0,74,311,0" Name="lAEModeShow" VerticalAlignment="Top" />
                 </Grid>
 			</TabItem>
 			<TabItem Header="Objektiv" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -75,7 +81,8 @@
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height" ItemsSource="{Binding Path=ViewModelCurrentCamera.AEView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
 					<ComboBox HorizontalAlignment="Left" Margin="116.787,0,0,18.9" VerticalAlignment="Bottom" Width="120"/>
 					<ComboBox HorizontalAlignment="Right" Margin="0,4,167,0" Width="120" VerticalAlignment="Top"/>
-					</Grid>
+                    <Button Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="607,56,0,0" Name="bTakePhoto" VerticalAlignment="Top" Width="96" Command="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
 			</TabItem>
 			<TabItem Header="Script">
 				<Grid>
@@ -87,5 +94,6 @@
 					</Grid>
 			</TabItem>
 		</TabControl>
+        <Image Grid.Row="2" Height="150" HorizontalAlignment="Left" Margin="704,0,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="200" Source="{Binding Path=ViewModelCurrentCamera.Imageref}" />
     </Grid>
 </Window>

@@ -22,7 +22,7 @@ namespace Canon_EOS_Remote.classes
         private EventCodes eventIDs;
         private PropertyCodes propertyCodes;
 
-        public delegate void OnCameraPropertyChangedEventHandler();
+        public delegate void OnCameraPropertyChangedEventHandler(PropertyEventArgs p);
         public event OnCameraPropertyChangedEventHandler onCameraPropertyChangedEvent;
         #endregion
 
@@ -107,7 +107,7 @@ namespace Canon_EOS_Remote.classes
                 this.CameraList.ElementAt(getCameraIndexFromList(inContext)).CameraName + "\nEventID:" +
                 this.eventIDs.getEventIDString(inEvent) +"\nPropertyID : " + this.propertyCodes.getPropertyString(inPropertyID));
                 if(onCameraPropertyChangedEvent!=null){
-                    onCameraPropertyChangedEvent();
+                    onCameraPropertyChangedEvent(new PropertyEventArgs(inPropertyID));
                     Console.WriteLine("Event onCameraPropertyChangedEvent() fired");
                 }
             

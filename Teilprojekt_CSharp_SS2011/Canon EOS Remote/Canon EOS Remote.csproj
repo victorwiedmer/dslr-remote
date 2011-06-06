@@ -65,9 +65,7 @@
     <Compile Include="classes\AEModes.cs" />
     <Compile Include="classes\Apertures.cs" />
     <Compile Include="classes\EventCodes.cs" />
-    <Compile Include="classes\Eventhandling.cs" />
     <Compile Include="classes\EventID.cs" />
-    <Compile Include="classes\PropertyChanged.cs" />
     <Compile Include="classes\PropertyCodes.cs" />
     <Compile Include="classes\PropertyEventArgs.cs" />
     <Compile Include="classes\PropertyID.cs" />
@@ -93,11 +91,9 @@
     </Compile>
     <Compile Include="classes\TDriveMode.cs" />
     <Compile Include="classes\Lens.cs" />
-    <Compile Include="classes\ProgrammProperties.cs" />
     <Compile Include="classes\SDK.cs" />
     <Compile Include="EDSDK.cs" />
     <Compile Include="ErrorHandling\EdsError.cs" />
-    <Compile Include="classes\EdsGetPropertyData.cs" />
     <Compile Include="classes\EdsTime.cs" />
     <Compile Include="classes\DriveModes.cs" />
     <Compile Include="ErrorHandling\ErrorCodes.cs" />

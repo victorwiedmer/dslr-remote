@@ -5,7 +5,7 @@
  * */
 using EDSDKLib;
 using System.ComponentModel;
-using Canon_EOS_Remote.classes; 
+using Canon_EOS_Remote.classes;
 
 namespace Canon_EOS_Remote
 {
@@ -18,14 +18,6 @@ namespace Canon_EOS_Remote
          * */
         private IntPtr _cameraPtr;
         private string _cameraName;/* The product name of the camera body*/
-
-        public string CameraName
-        {
-            get { return _cameraName; }
-            set {
-                update("CameraName");
-                _cameraName = value; }
-        }
         private string _cameraOwner; /*The setted name of the camera owner*/
         private string _cameraBodyID;
         private EdsTime _cameraTime;
@@ -83,131 +75,175 @@ namespace Canon_EOS_Remote
         #endregion
 
         #region Setter and Getter of class member
+        public string CameraName
+        {
+            get { return _cameraName; }
+            set
+            {
+                update("CameraName");
+                _cameraName = value;
+            }
+        }
+
         public IntPtr CameraPtr
         {
             get { return _cameraPtr; }
-            set { _cameraPtr = value;
-            update("_cameraPtr");
+            set
+            {
+                _cameraPtr = value;
+                update("CameraPtr");
             }
-        }    
+        }
 
         public string CameraOwner
         {
             get { return _cameraOwner; }
-            set { _cameraOwner = value;
-            update("_cameraOwner");
+            set
+            {
+                _cameraOwner = value;
+                update("CameraOwner");
             }
-        }        
+        }
 
         public string CameraBodyID
         {
             get { return _cameraBodyID; }
-            set { _cameraBodyID = value;
-            update("_cameraBodyID");
+            set
+            {
+                _cameraBodyID = value;
+                update("CameraBodyID");
             }
         }
 
         public EdsTime CameraTime
         {
             get { return _cameraTime; }
-            set { _cameraTime = value;
-            update("_cameraTime");
+            set
+            {
+                _cameraTime = value;
+                update("CameraTime");
             }
         }
 
         public UInt32 CameraBatteryLevel
         {
             get { return _cameraBatteryLevel; }
-            set { _cameraBatteryLevel = value;
-            update("_cameraBatteryLeveL");
+            set
+            {
+                _cameraBatteryLevel = value;
+                update("CameraBatteryLevel");
             }
         }
 
         public UInt32 CameraAEMode
         {
             get { return _cameraAEMode; }
-            set { _cameraAEMode = value;
-            update("_cameraAEMode");
+            set
+            {
+                _cameraAEMode = value;
+                update("CameraAEMode");
             }
         }
 
         public UInt32 CameraDriveMode
         {
             get { return _cameraDriveMode; }
-            set { _cameraDriveMode = value;
-            update("_cameraDriveMode");
+            set
+            {
+                _cameraDriveMode = value;
+                update("CameraDriveMode");
             }
         }
 
         public UInt32 CameraISOSpeed
         {
             get { return _cameraISOSpeed; }
-            set { _cameraISOSpeed = value;
-            update("_cameraISOSpeed");
+            set
+            {
+                _cameraISOSpeed = value;
+                Console.WriteLine("CameraISOSpeed new value " + value);
+                update("CameraISOSpeed");
             }
         }
 
         public UInt32 CameraMeteringMode
         {
             get { return _cameraMeteringMode; }
-            set { _cameraMeteringMode = value;
-            update("_cameraMeteringMode");
+            set
+            {
+                _cameraMeteringMode = value;
+                update("CameraMeteringMode");
             }
         }
 
         public UInt32 CameraAFMode
         {
             get { return _cameraAFMode; }
-            set { _cameraAFMode = value;
-            update("_cameraAFMode");
+            set
+            {
+                _cameraAFMode = value;
+                update("CameraAFMode");
             }
         }
 
         public UInt32 CameraAperture
         {
             get { return _cameraAperture; }
-            set { _cameraAperture = value;
-            update("_cameraAperture");
+            set
+            {
+                _cameraAperture = value;
+                Console.WriteLine("CameraAperture new value " + value);
+                update("CameraAperture");
             }
         }
 
         public UInt32 CameraShutterTime
         {
             get { return _cameraShutterTime; }
-            set { _cameraShutterTime = value;
-            update("_cameraShutterTime");
+            set
+            {
+                _cameraShutterTime = value;
+                update("CameraShutterTime");
             }
         }
 
         public UInt32 CameraExposureCompensation
         {
             get { return _cameraExposureCompensation; }
-            set { _cameraExposureCompensation = value;
-            update("_cameraExposureCompensation");
+            set
+            {
+                _cameraExposureCompensation = value;
+                update("CameraExposureCompensation");
             }
         }
 
         public UInt32 CameraAvailableShots
         {
             get { return _cameraAvailableShots; }
-            set { _cameraAvailableShots = value;
-            update("CameraAvailableShots");
+            set
+            {
+                _cameraAvailableShots = value;
+                update("CameraAvailableShots");
             }
         }
 
         public string CurrentStorage
         {
             get { return _currentStorage; }
-            set { _currentStorage = value;
-            update("_currentStorage");
+            set
+            {
+                _currentStorage = value;
+                update("CurrentStorage");
             }
-        }    
+        }
 
         public string CameraFirmware
         {
             get { return _cameraFirmware; }
-            set { _cameraFirmware = value;
-            update("_cameraFirmware");
+            set
+            {
+                _cameraFirmware = value;
+                update("CameraFirmware");
             }
         }
         #endregion
@@ -232,7 +268,7 @@ namespace Canon_EOS_Remote
             {
                 Console.WriteLine("Cant register property event handler because : " + ErrorCodes.getErrorDataWithCodeNumber(error));
             }
-            
+
             error = EDSDK.EdsOpenSession(this.CameraPtr);
             if (error != 0)
             {
@@ -262,26 +298,7 @@ namespace Canon_EOS_Remote
             getavailableMeteringModesFromCamera();
             getavailableShutterTimesFromCamera();
             getLensStateOfCamera();
-            Console.WriteLine("Got following properties : \n" +
-            "Batterielevel : " + this.CameraBatteryLevel + "%" + "\n" +
-            "AEMode : " + this.CameraAEMode + "\n" +
-            "DriveMode : " + this.CameraDriveMode + " = " + this.driveModes.getDriveModeString(this.CameraDriveMode) + "\n" +
-            "AFMode : " + this.CameraAFMode + "\n" +
-            "MeteringMode : " + this.CameraMeteringMode + "\n" +
-            "Tv : " + this.CameraShutterTime + "\n" +
-            "ISO : " + this.CameraISOSpeed + " = " + this.isoList.getISOSpeedFromHex(this.CameraISOSpeed) + "\n" +
-            "Available Shots : " + this.CameraAvailableShots + "\n" +
-            "Firmware Version : " + this.CameraFirmware + "\n" +
-            "CameraOwner : " + this.CameraOwner + "\n" +
-            "Body ID : " + this.CameraBodyID + "\n" +
-            "Current Storage : " + this.CurrentStorage + "\n" 
-            + "Available ISO Speeds : " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[0]) + " - " + this.isoList.getISOSpeedFromHex(this.availableISOSpeeds.PropDesc[this.availableISOSpeeds.NumElements-1])
-            //+ "\n Available AEModes : " + this.availableAEModes.PropDesc[0]  + " - " + this.availableAEModes.PropDesc[this.availableAEModes.NumElements-1]
-            + "\n Lens attached : " + this._lensAttached +
-            "\n Available AE Modes Count : " + this.availableAEModes.NumElements
-            
-    );
-
+            getApertureFromCamera();
         }
 
         #endregion
@@ -295,7 +312,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        
+
         #region camera methods
 
         public void getCameraBatteryLevelFromBody()
@@ -305,7 +322,7 @@ namespace Canon_EOS_Remote
             tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BatteryLevel, 0, out tmpCameraBatteryLevel);
             if (tmpErrorCodeAfterCommand != 0)
             {
-                
+
             }
             else
             {
@@ -327,6 +344,21 @@ namespace Canon_EOS_Remote
             else
             {
                 Console.WriteLine("Cant get AEMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
+            }
+        }
+
+        public void getApertureFromCamera()
+        {
+            UInt32 tmpProperty = 0;
+            UInt32 tmpError = 0;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_Av, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraAperture = tmpProperty;
+            }
+            else
+            {
+                Console.WriteLine("Cant get Aperture from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
             }
         }
 
@@ -422,7 +454,7 @@ namespace Canon_EOS_Remote
 
         public void getCameraOwner()
         {
-            string tmpProperty="";
+            string tmpProperty = "";
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_OwnerName, 0, out tmpProperty);
             if (tmpError == 0)
@@ -558,7 +590,7 @@ namespace Canon_EOS_Remote
         private void getLensStateOfCamera()
         {
             UInt32 tmpError = 0;
-            UInt32 tmpProperty=0;
+            UInt32 tmpProperty = 0;
             tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_LensStatus, 0, out tmpProperty);
             if (tmpError == 0)
             {

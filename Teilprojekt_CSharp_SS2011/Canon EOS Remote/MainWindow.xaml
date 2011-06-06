@@ -48,11 +48,13 @@
                     <Label Content="Kamerafirmware :   " Height="28" HorizontalAlignment="Left" Margin="6,108,0,0" Name="lCameraFirmware" VerticalAlignment="Top" Width="112" />
                     <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraFirmware}" Height="28" HorizontalAlignment="Right" Margin="0,108,630,0" Name="lCameraFirmwareShow" VerticalAlignment="Top" Width="142" />
                     <Label Content="ISO : " Height="28" HorizontalAlignment="Left" Margin="340,0,0,0" Name="lISO" VerticalAlignment="Top" Width="99" />
-                    <Label Height="28" HorizontalAlignment="Right" Margin="0,40,386,0" Name="lBelichtungszeitShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentTv, UpdateSourceTrigger=PropertyChanged}" />
-                    <Label Height="28" HorizontalAlignment="Left" Margin="466,0,0,0" Name="lISOShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentISO, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Height="28" HorizontalAlignment="Right" Margin="0,40,296,0" Name="lBelichtungszeitShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentTv, UpdateSourceTrigger=PropertyChanged}" Width="132" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="466,0,0,0" Name="lISOShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentISO, UpdateSourceTrigger=PropertyChanged}" Width="132" />
                     <Label Content="Belichtungszeit : " Height="28" HorizontalAlignment="Left" Margin="340,40,0,0" Name="lBelichtungszeit" VerticalAlignment="Top" />
                     <Label Content="Programmmodus : " Height="28" HorizontalAlignment="Left" Margin="340,74,0,0" Name="lAEMode" VerticalAlignment="Top" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentProgramm, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Right" Margin="0,74,311,0" Name="lAEModeShow" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentProgramm, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Right" Margin="0,74,296,0" Name="lAEModeShow" VerticalAlignment="Top" Width="132" />
+                    <Label Content="Blende : " Height="28" HorizontalAlignment="Left" Margin="340,108,0,0" Name="lAperture" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAperture, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="466,108,296,0" Name="lApertureShow" VerticalAlignment="Top" Width="132" />
                 </Grid>
 			</TabItem>
 			<TabItem Header="Objektiv" HorizontalAlignment="Center" VerticalAlignment="Center">

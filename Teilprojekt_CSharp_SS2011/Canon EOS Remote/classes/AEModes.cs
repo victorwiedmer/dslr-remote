@@ -5,10 +5,17 @@ using System.Text;
 
 namespace Canon_EOS_Remote.classes
 {
+    /// <summary>
+    /// Klasse die eine Liste der AE Modi die von Canon EOS Digital Kameras beherrscht werden
+    /// enthält und von Hex-String oder String-Hex konvertieren kann
+    /// </summary>
     class AEModes
     {
         private List<TAEMode> aeModes;
 
+        /// <summary>
+        /// Konstruktor der Liste die alle AE Modi erzeugt
+        /// </summary>
         public AEModes()
         {
             this.aeModes = new List<TAEMode>();
@@ -38,6 +45,12 @@ namespace Canon_EOS_Remote.classes
             this.aeModes.Add(new TAEMode("Not Valid or No settings changes",0xff));
         }
 
+        /// <summary>
+        /// Gibt den Hex-Code der AE Mode Beschreibung zurück
+        /// </summary>
+        /// <param name="AEstring">Der String des AE Modes von dem der Hex-Code gesucht werden soll</param>
+        /// <example>uint AEMode=getAEHex("Reihenaufnahme")</example>
+        /// <returns>uint AE Mode</returns>
         public uint getAEHex(string AEstring) {
             for (int i = 0; i < this.aeModes.Count; i++)
             {
@@ -50,6 +63,12 @@ namespace Canon_EOS_Remote.classes
             return 0x0;
         }
 
+        /// <summary>
+        /// Gibt den String der AE Mode Beschreibung zurück
+        /// </summary>
+        /// <param name="aeHex">Der Hex-Code des AE Modes von dem der String gesucht werden soll</param>
+        /// <example>string AEMode=getAEString(1)</example>
+        /// <returns>String AE Mode</returns>
         public string getAEString(uint aeHex)
         {
             for (int i = 0; i < this.aeModes.Count; i++)

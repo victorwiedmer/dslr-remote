@@ -3,7 +3,6 @@ using System.ComponentModel;
 using EDSDKLib;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Canon_EOS_Remote.classes;
 
 namespace Canon_EOS_Remote.ViewModel
@@ -26,16 +25,22 @@ namespace Canon_EOS_Remote.ViewModel
         private ObservableCollection<int> availableISOListCollection;
 
         private ISOSpeeds isoConverter;
-        private classes.ShutterTimes shutterTimeConverter;
+
+        private ShutterTimes shutterTimeConverter;
+
         private EDSDK.EdsPropertyDesc propertyDescTv;
         private CollectionView availableShutterTimesView;
         private ObservableCollection<string> availableShutterTimesCollection;
         private EDSDK.EdsPropertyDesc propertyDescAE;
         private CollectionView aEView;
         private ObservableCollection<string> aECollection;
-        private classes.AEModes aeModeConverter;
+        private AEModes aeModeConverter;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private int currentISO;
+
+        #region Commands
 
         private Command_TakePhoto commandTakePhoto;
 
@@ -46,6 +51,7 @@ namespace Canon_EOS_Remote.ViewModel
         private Command_DriveLensFarOne commandDriveLensFarOne;
         private Command_DriveLensFarTwo commandDriveLensFarTwo;
         private Command_DriveLensFarThree commandDriveLensFarThree;
+        #endregion
 
         private string currentDate;
         private string currentTime;
@@ -55,17 +61,20 @@ namespace Canon_EOS_Remote.ViewModel
         private ObservableCollection<string> apertureCollection;
         private IntPtr streamref;
         private IntPtr imageref;
-        private classes.PropertyCodes propertyCodes;
+        private PropertyCodes propertyCodes;
         private string currentProgramm;
         private string currentAperture;
-        private classes.Apertures apertureConverter;
+        private Apertures apertureConverter;
+
         private string currentTv;
         private ExposureCompensation ebvConverter;
 
-        internal ExposureCompensation EbvConverter
+        public ExposureCompensation EbvConverter
         {
             get { return ebvConverter; }
-            set { ebvConverter = value; }
+            set { ebvConverter = value;
+            update("EbvConverter");
+            }
         }
 
         public string CurrentEBV
@@ -76,12 +85,13 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
-        public classes.AEModes AeModeConverter
+        public AEModes AeModeConverter
         {
             get { return aeModeConverter; }
-            set { aeModeConverter = value; }
+            set { aeModeConverter = value;
+            update("AeModeConverter");
+            }
         }
-
 
         public EDSDK.EdsPropertyDesc ApertureDesc
         {
@@ -91,7 +101,6 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
         
-
         public CollectionView ApertureView
         {
             get { return apertureView; }
@@ -100,7 +109,6 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
        
-
         internal ObservableCollection<string> AptureCollection
         {
             get { return apertureCollection; }
@@ -128,45 +136,55 @@ namespace Canon_EOS_Remote.ViewModel
         public Command_DriveLensNearOne CommandDriveLensNearOne
         {
             get { return commandDriveLensNearOne; }
-            set { commandDriveLensNearOne = value; }
+            set { commandDriveLensNearOne = value;
+            update("CommandDriveLensNearOne");
+            }
         }
 
         public Command_DriveLensNearTwo CommandDriveLensNearTwo
         {
             get { return commandDriveLensNearTwo; }
-            set { commandDriveLensNearTwo = value; }
+            set { commandDriveLensNearTwo = value;
+            update("CommandDriveLensNearTwo");
+            }
         }
 
         public Command_DriveLensFarThree CommandDriveLensFarThree
         {
             get { return commandDriveLensFarThree; }
-            set { commandDriveLensFarThree = value; }
+            set { commandDriveLensFarThree = value;
+            update("CommandDriveLensFarThree");
+            }
         }
 
         public Command_DriveLensFarTwo CommandDriveLensFarTwo
         {
             get { return commandDriveLensFarTwo; }
-            set { commandDriveLensFarTwo = value; }
+            set { commandDriveLensFarTwo = value;
+            update("CommandDriveLensFarTwo");
+            }
         }
 
         public Command_DriveLensFarOne CommandDriveLensFarOne
         {
             get { return commandDriveLensFarOne; }
-            set { commandDriveLensFarOne = value; }
+            set { commandDriveLensFarOne = value;
+            update("CommandDriveLensFarOne");
+            }
         }
 
         public Command_DriveLensNearThree CommandDriveLensNearThree
         {
             get { return commandDriveLensNearThree; }
-            set { commandDriveLensNearThree = value; }
+            set { commandDriveLensNearThree = value;
+            update("CommandDriveLensNearThree");
+            }
         }
 
         public string CurrentAperture
         {
             get { return currentAperture; }
-            set
-            {
-                currentAperture = value;
+            set  { currentAperture = value;
                 update("CurrentAperture");
             }
         }
@@ -181,22 +199,28 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
-        public classes.PropertyCodes PropertyCodes
+        public PropertyCodes PropertyCodes
         {
             get { return propertyCodes; }
-            set { propertyCodes = value; }
+            set { propertyCodes = value;
+            update("PropertyCodes");
+            }
         }
 
         public IntPtr Imageref
         {
             get { return imageref; }
-            set { imageref = value; }
+            set { imageref = value;
+            update("Imageref");
+            }
         }
 
         public Command_TakePhoto CommandTakePhoto
         {
             get { return commandTakePhoto; }
-            set { commandTakePhoto = value; }
+            set { commandTakePhoto = value;
+            update("CommandTakePhoto");
+            }
         }
 
         public int CurrentISO
@@ -208,7 +232,6 @@ namespace Canon_EOS_Remote.ViewModel
                 update("CurrentISO");
             }
         }
-
 
         public string CurrentTv
         {
@@ -223,9 +246,7 @@ namespace Canon_EOS_Remote.ViewModel
         public EDSDK.EdsPropertyDesc PropertyDescAE
         {
             get { return propertyDescAE; }
-            set
-            {
-                propertyDescAE = value;
+            set { propertyDescAE = value;
                 update("PropertyDescAE");
             }
         }
@@ -250,7 +271,7 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
-        public classes.AEModes AeModes
+        public AEModes AeModes
         {
             get { return aeModeConverter; }
             set
@@ -316,6 +337,9 @@ namespace Canon_EOS_Remote.ViewModel
             set
             {
                 currentCamera = value;
+
+                #region Setze neuen Zeiger bei den Commands
+
                 this.CommandTakePhoto.Camera = currentCamera.CameraPtr;
 
                 this.CommandDriveLensNearOne.CameraPtr = currentCamera.CameraPtr;
@@ -325,6 +349,8 @@ namespace Canon_EOS_Remote.ViewModel
                 this.CommandDriveLensFarOne.CameraPtr = currentCamera.CameraPtr;
                 this.CommandDriveLensFarTwo.CameraPtr = currentCamera.CameraPtr;
                 this.CommandDriveLensFarThree.CameraPtr = currentCamera.CameraPtr;
+                #endregion
+
                 update("CurrentCamera");
             }
         }
@@ -389,8 +415,6 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void update(string property)
         {
             if (PropertyChanged != null)
@@ -400,9 +424,43 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
+        public ISOSpeeds IsoConverter
+        {
+            get { return isoConverter; }
+            set
+            {
+                isoConverter = value;
+                update("IsoConverter");
+            }
+        }
+
+        public ShutterTimes ShutterTimeConverter
+        {
+            get { return shutterTimeConverter; }
+            set
+            {
+                shutterTimeConverter = value;
+                update("ShutterTimeConverter");
+            }
+        }
+
+        public Apertures ApertureConverter
+        {
+            get { return apertureConverter; }
+            set
+            {
+                apertureConverter = value;
+                update("ApertureConverter");
+            }
+        }
+
         public ViewModelCurrentCamera()
         {
-            Console.WriteLine("Intance of ViewModelCurrentCamera created.");
+            init();
+        }
+
+        public void init()
+        {
             this.CurrentCameraName = "CurrentCameraName";
             this.CurrentCameraOwner = "CurrentCameraOwner";
             this.CurrentCameraFirmware = "CurrentCameraFirmware";
@@ -417,11 +475,11 @@ namespace Canon_EOS_Remote.ViewModel
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
 
             this.AvailableShutterTimesCollection = new ObservableCollection<string>();
-            this.availableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
+            this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
             this.AECollection = new ObservableCollection<string>();
             this.AEView = new CollectionView(this.AECollection);
-            this.isoConverter = new ISOSpeeds();
-            this.shutterTimeConverter = new classes.ShutterTimes();
+            this.IsoConverter = new ISOSpeeds();
+            this.ShutterTimeConverter = new ShutterTimes();
             this.AeModes = new classes.AEModes();
             this.CurrentISO = 100;
             this.CurrentTv = "Lange";
@@ -439,11 +497,11 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandDriveLensFarTwo.CameraPtr = IntPtr.Zero;
             this.CommandDriveLensFarThree = new Command_DriveLensFarThree();
             this.CommandDriveLensFarThree.CameraPtr = IntPtr.Zero;
-            this.propertyCodes = new classes.PropertyCodes();
-            this.apertureConverter = new classes.Apertures();
+            this.PropertyCodes = new PropertyCodes();
+            this.ApertureConverter = new Apertures();
             this.AptureCollection = new ObservableCollection<string>();
             this.ApertureView = new CollectionView(this.AptureCollection);
-            this.AeModeConverter = new classes.AEModes();
+            this.AeModeConverter = new AEModes();
             this.EbvConverter = new ExposureCompensation();
         }
 

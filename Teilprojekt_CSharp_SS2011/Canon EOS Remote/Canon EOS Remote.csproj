@@ -73,6 +73,7 @@
     <Compile Include="classes\TAEMode.cs" />
     <Compile Include="classes\TAperture.cs" />
     <Compile Include="classes\TShutterTime.cs" />
+    <Compile Include="Command_DriveLensNearOne.cs" />
     <Compile Include="Command_TakePhoto.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />
@@ -94,7 +95,6 @@
     <Compile Include="classes\SDK.cs" />
     <Compile Include="EDSDK.cs" />
     <Compile Include="ErrorHandling\EdsError.cs" />
-    <Compile Include="classes\EdsTime.cs" />
     <Compile Include="classes\DriveModes.cs" />
     <Compile Include="ErrorHandling\ErrorCodes.cs" />
     <Compile Include="classes\ISOSpeeds.cs" />

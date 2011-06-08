@@ -9,6 +9,9 @@ using Canon_EOS_Remote.classes;
 
 namespace Canon_EOS_Remote
 {
+    /// <summary>
+    /// Klasse des Objektes Kamera
+    /// </summary>
     class Camera : INotifyPropertyChanged
     {
         #region Declaration of class members
@@ -17,10 +20,10 @@ namespace Canon_EOS_Remote
          * basic properties
          * */
         private IntPtr _cameraPtr;
-        private string _cameraName;/* The product name of the camera body*/
-        private string _cameraOwner; /*The setted name of the camera owner*/
+        private string _cameraName;
+        private string _cameraOwner;
         private string _cameraBodyID;
-        private EdsTime _cameraTime;
+        private EDSDK.EdsTime _cameraTime;
         private UInt32 _cameraBatteryLevel;
         private UInt32 _cameraAEMode;
         private UInt32 _cameraDriveMode;
@@ -47,8 +50,22 @@ namespace Canon_EOS_Remote
         private PropertyCodes propertyCodes;
         private EventCodes eventIDs;
 
-        private EDSDK.EdsPropertyDesc availableISOSpeeds;
+        private EDSDK.EdsPropertyDesc availableMeteringModes;
+        private EDSDK.EdsPropertyDesc availableApertureValues;
 
+        public EDSDK.EdsPropertyDesc AvailableApertureValues
+        {
+            get { return availableApertureValues; }
+            set { availableApertureValues = value;
+            update("AvailableApertureValues");
+            }
+        }
+        private EDSDK.EdsPropertyDesc availableShutterspeeds;
+        private EDSDK.EdsPropertyDesc availableISOSpeeds;
+        private EDSDK.EdsPropertyDesc availableExposureCompensation;
+        #endregion
+
+        #region Setter and Getter of class member
         public EDSDK.EdsPropertyDesc AvailableISOSpeeds
         {
             get { return availableISOSpeeds; }
@@ -61,20 +78,14 @@ namespace Canon_EOS_Remote
             get { return availableAEModes; }
             set { availableAEModes = value; }
         }
-        private EDSDK.EdsPropertyDesc availableMeteringModes;
-        private EDSDK.EdsPropertyDesc availableApertureValues;
-        private EDSDK.EdsPropertyDesc availableShutterspeeds;
+
 
         public EDSDK.EdsPropertyDesc AvailableShutterspeeds
         {
             get { return availableShutterspeeds; }
             set { availableShutterspeeds = value; }
         }
-        private EDSDK.EdsPropertyDesc availableExposureCompensation;
 
-        #endregion
-
-        #region Setter and Getter of class member
         public string CameraName
         {
             get { return _cameraName; }
@@ -115,7 +126,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        public EdsTime CameraTime
+        public EDSDK.EdsTime CameraTime
         {
             get { return _cameraTime; }
             set
@@ -299,6 +310,7 @@ namespace Canon_EOS_Remote
             getavailableShutterTimesFromCamera();
             getLensStateOfCamera();
             getApertureFromCamera();
+            getTimeFromCamera();
         }
 
         #endregion
@@ -312,7 +324,6 @@ namespace Canon_EOS_Remote
             }
         }
 
-
         #region camera methods
 
         public void getCameraBatteryLevelFromBody()
@@ -322,7 +333,7 @@ namespace Canon_EOS_Remote
             tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_BatteryLevel, 0, out tmpCameraBatteryLevel);
             if (tmpErrorCodeAfterCommand != 0)
             {
-
+                //TODO throw Exception
             }
             else
             {
@@ -330,20 +341,19 @@ namespace Canon_EOS_Remote
             }
         }
 
-
-
         public void getAEModeFromCamera()
         {
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, out tmpProperty);
-            if (tmpError == 0)
+            if (tmpError == 0 )//TODO change to !=0
             {
                 this.CameraAEMode = tmpProperty;
             }
             else
             {
                 Console.WriteLine("Cant get AEMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
+                //TODO throw Exception
             }
         }
 
@@ -352,13 +362,14 @@ namespace Canon_EOS_Remote
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_Av, 0, out tmpProperty);
-            if (tmpError == 0)
+            if (tmpError == 0) //TODO chagne to !=0
             {
                 this.CameraAperture = tmpProperty;
             }
             else
             {
                 Console.WriteLine("Cant get Aperture from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError).ErrorCodeString);
+                //TODO throw Exception
             }
         }
 
@@ -367,13 +378,14 @@ namespace Canon_EOS_Remote
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DriveMode, 0, out tmpProperty);
-            if (tmpError == 0)
+            if (tmpError == 0) //TODO change to !=0
             {
                 this.CameraDriveMode = tmpProperty;
             }
             else
             {
                 Console.WriteLine("Cant get DriveMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
+                //TODO throw Exception
             }
         }
 
@@ -382,13 +394,14 @@ namespace Canon_EOS_Remote
             UInt32 tmpProperty = 0;
             UInt32 tmpError = 0;
             tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_AFMode, 0, out tmpProperty);
-            if (tmpError == 0)
+            if (tmpError == 0) //TODO change to !=0
             {
                 this.CameraAFMode = tmpProperty;
             }
             else
             {
                 Console.WriteLine("Cant get AFMode from Camera because : " + ErrorCodes.getErrorDataWithCodeNumber(tmpError));
+                //TODO throw Exception
             }
         }
 
@@ -587,7 +600,7 @@ namespace Canon_EOS_Remote
             }
         }
 
-        private void getLensStateOfCamera()
+        public void getLensStateOfCamera()
         {
             UInt32 tmpError = 0;
             UInt32 tmpProperty = 0;
@@ -605,6 +618,17 @@ namespace Canon_EOS_Remote
             }
         }
 
+        public void getTimeFromCamera()
+        {
+            UInt32 tmpError = 0;
+            EDSDK.EdsTime tmpProperty;
+            tmpError = EDSDK.EdsGetPropertyData(this.CameraPtr, EDSDK.PropID_DateTime, 0, out tmpProperty);
+            if (tmpError == 0)
+            {
+                this.CameraTime = tmpProperty;
+            }   
+        }
+
         public void setISOSpeedToCamera(int isoSpeed)
         {
             EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_ISOSpeed, 0, sizeof(int), isoSpeed);
@@ -618,6 +642,11 @@ namespace Canon_EOS_Remote
         public void setAEModeToCamera(int aeMode)
         {
             EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_AEMode, 0, sizeof(int), aeMode);
+        }
+
+        public void setApertureToCamera(int aperture)
+        {
+            EDSDK.EdsSetPropertyData(this.CameraPtr, EDSDK.PropID_Av, 0, sizeof(int), aperture);
         }
         #endregion
 

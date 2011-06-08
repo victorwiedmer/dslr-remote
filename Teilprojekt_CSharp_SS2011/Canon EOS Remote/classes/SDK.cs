@@ -9,35 +9,42 @@ namespace Canon_EOS_Remote.classes
 {
     class SDK : IDisposable, INotifyPropertyChanged
     {
+        #region classmembers
         private bool _sDKState;
-
         public string _stringSdkState;
+        private EdsError error;
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
+        #region setter/getter
         public string StringSdkState
         {
-            get {return _stringSdkState; }
-            private set {_stringSdkState = value;}
+            get { return _stringSdkState; }
+            private set
+            {
+                _stringSdkState = value;
+                update("StringSdkState");
+            }
         }
 
         public bool SDKState
         {
             get { return this._sDKState; }
-            set { _sDKState = value;
-            if (value == true)
+            set
             {
-                this.StringSdkState = "SDK Initialized";
-                update("StringSdkState");
-            }
-            else
-            {
-                this.StringSdkState = "SDK not initialized";
-                update("StringSdkState");
-            }
+                _sDKState = value;
+                if (value == true)
+                {
+                    this.StringSdkState = "SDK Initialized";
+                }
+                else
+                {
+                    this.StringSdkState = "SDK not initialized";
+                }
+                update("SDKState");
             }
         }
-
-        private EdsError error;
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
         public SDK()
         {
@@ -68,7 +75,7 @@ namespace Canon_EOS_Remote.classes
         public void Dispose()
         {
             uint tmpError;
-            tmpError=EDSDK.EdsTerminateSDK();
+            tmpError = EDSDK.EdsTerminateSDK();
             this.SDKState = false;
         }
     }

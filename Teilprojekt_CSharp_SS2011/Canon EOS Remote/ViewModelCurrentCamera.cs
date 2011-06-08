@@ -3,6 +3,7 @@ using System.ComponentModel;
 using EDSDKLib;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Canon_EOS_Remote.ViewModel
 {
@@ -15,6 +16,7 @@ namespace Canon_EOS_Remote.ViewModel
         private string currentCameraOwner;
         private string currentCameraFirmware;
         private Camera currentCamera;
+
         private EDSDK.EdsPropertyDesc PropertyDescISO;
         private CollectionView availableISOListView;
         private ObservableCollection<int> availableISOListCollection;
@@ -27,11 +29,67 @@ namespace Canon_EOS_Remote.ViewModel
         private CollectionView aEView;
         private ObservableCollection<string> aECollection;
         private classes.AEModes aeModes;
+
         private bool isolistemtpy;
         private bool shuttertimeslistempty;
         private bool aelistempty;
+        private bool apertureslistempty;
         private int currentISO;
+
         private Command_TakePhoto commandTakePhoto;
+        private Command_DriveLensNearOne commandDriveLensNearOne;
+        private string currentDate;
+        private string currentTime;
+        private EDSDK.EdsPropertyDesc apertureDesc;
+        private classes.AEModes aemodes;
+
+        public EDSDK.EdsPropertyDesc ApertureDesc
+        {
+            get { return apertureDesc; }
+            set { apertureDesc = value;
+            update("ApertureDesc");
+            }
+        }
+        private CollectionView apertureView;
+
+        public CollectionView ApertureView
+        {
+            get { return apertureView; }
+            set { apertureView = value;
+            update("ApertureView");
+            }
+        }
+        private ObservableCollection<string> aptureCollection;
+
+        internal ObservableCollection<string> AptureCollection
+        {
+            get { return aptureCollection; }
+            set { aptureCollection = value;
+            update("AptureCollection");
+            }
+        }
+
+        public string CurrentTime
+        {
+            get { return currentTime; }
+            set { currentTime = value;
+            update("CurrentTime");
+            }
+        }
+
+        public string CurrentDate
+        {
+            get { return currentDate; }
+            set { currentDate = value;
+            update("CurrentDate");
+            }
+        }
+
+        public Command_DriveLensNearOne CommandDriveLensNearOne
+        {
+            get { return commandDriveLensNearOne; }
+            set { commandDriveLensNearOne = value; }
+        }
         private IntPtr streamref;
         private IntPtr imageref;
         private classes.PropertyCodes propertyCodes;
@@ -194,8 +252,9 @@ namespace Canon_EOS_Remote.ViewModel
             set
             {
                 currentCamera = value;
-                update("CurrentCamera");
                 this.CommandTakePhoto.Camera = currentCamera.CameraPtr;
+                this.CommandDriveLensNearOne.CameraPtr = currentCamera.CameraPtr;
+                update("CurrentCamera");
             }
         }
 
@@ -207,9 +266,13 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentCameraFirmware = "CurrentCameraFirmware";
             this.currentProgramm = "CurrentProgramm";
             this.CurrentAperture = "CurrentAperture";
+            this.CurrentDate = " CurrentDate";
+            this.CurrentTime = "CurrentTime";
             this.CurrentBatteryLevel = 50;
+
             this.AvailableISOListCollection = new ObservableCollection<int>();
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
+
             this.AvailableShutterTimesCollection = new ObservableCollection<string>();
             this.availableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
             this.AECollection = new ObservableCollection<string>();
@@ -219,13 +282,19 @@ namespace Canon_EOS_Remote.ViewModel
             this.AeModes = new classes.AEModes();
             this.isolistemtpy = true;
             this.shuttertimeslistempty = true;
+            this.apertureslistempty = true;
             this.aelistempty = true;
             this.CurrentISO = 100;
             this.CurrentTv = "Lange";
             this.CommandTakePhoto = new Command_TakePhoto();
             this.CommandTakePhoto.Camera = IntPtr.Zero;
+            this.CommandDriveLensNearOne = new Command_DriveLensNearOne();
+            this.CommandDriveLensNearOne.CameraPtr = IntPtr.Zero;
             this.propertyCodes = new classes.PropertyCodes();
             this.apertures = new classes.Apertures();
+            this.AptureCollection = new ObservableCollection<string>();
+            this.ApertureView = new CollectionView(this.AptureCollection);
+            this.aemodes = new classes.AEModes();
         }
 
         public string CurrentCameraFirmware
@@ -301,6 +370,7 @@ namespace Canon_EOS_Remote.ViewModel
 
         public void setCurrentlyCamera()
         {
+            Console.WriteLine("Set all values for the currently choosen camera ........");
             this.CurrentCameraName = this.currentCamera.CameraName;
             this.CurrentBatteryLevel = (int)this.currentCamera.CameraBatteryLevel;
             this.CurrentBodyID = this.currentCamera.CameraBodyID;
@@ -323,6 +393,12 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentTv = this.shutterTimes.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
             this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
             this.CurrentAperture = this.apertures.getApertureString(this.CurrentCamera.CameraAperture);
+            this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
+            this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
+            this.ApertureDesc = this.CurrentCamera.AvailableApertureValues;
+            if (apertureslistempty) copyPropertyDescAperturesToCollection();
+            this.ApertureView.CurrentChanged += new EventHandler(sendApertureToCamera);
+            Console.WriteLine("All values setted");
         }
 
         public void updateCurrentlyCamera(classes.PropertyEventArgs p)
@@ -390,6 +466,14 @@ namespace Canon_EOS_Remote.ViewModel
                         this.CurrentAperture = this.apertures.getApertureString(this.CurrentCamera.CameraAperture);
                         break;
                     }
+                case EDSDK.PropID_DateTime:
+                    {
+                        this.CurrentCamera.getTimeFromCamera();
+                        this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
+                        this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
+                        break;
+                    }
+                  
                 default:
                     {
                         Console.WriteLine("Cant identify PropertyID");
@@ -444,7 +528,17 @@ namespace Canon_EOS_Remote.ViewModel
             this.AECollection.Clear();
             for (int i = 0; i < this.propertyDescAE.NumElements; i++)
             {
-                this.AECollection.Add("value" + i);
+                this.AECollection.Add(this.aemodes.getAEString((uint)this.propertyDescAE.PropDesc[i]));
+            }
+        }
+
+        private void copyPropertyDescAperturesToCollection()
+        {
+            this.apertureslistempty = false;
+            this.AptureCollection.Clear();
+            for (int i = 0; i < this.ApertureDesc.NumElements; i++)
+            {
+                this.AptureCollection.Add(this.apertures.getApertureString((uint)this.ApertureDesc.PropDesc[i]));
             }
         }
 
@@ -456,6 +550,26 @@ namespace Canon_EOS_Remote.ViewModel
                 tmpProperty = (string)this.AEView.CurrentItem;
                 this.CurrentCamera.setAEModeToCamera((int)this.AeModes.getAEHex(tmpProperty));
             }
+        }
+
+        private void sendApertureToCamera(object sender, EventArgs e)
+        {
+            string tmpProperty = "";
+            if (this.ApertureView.CurrentItem != null)
+            {
+                tmpProperty = (string)this.ApertureView.CurrentItem;
+                this.CurrentCamera.setApertureToCamera((int)this.apertures.getApertureHex(tmpProperty));
+            }
+        }
+
+        public string convertEdsTimeToDateString(EDSDK.EdsTime time)
+        {
+            return time.Year + "-" + time.Month + "-" + time.Day;
+        }
+
+        public string convertEdsTimeToTimeString(EDSDK.EdsTime time)
+        {
+            return time.Hour + "-" + time.Minute + "-" + time.Second;
         }
     }
 }

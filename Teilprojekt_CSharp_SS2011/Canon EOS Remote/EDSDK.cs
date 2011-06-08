@@ -1188,6 +1188,9 @@ namespace EDSDKLib
         [DllImport("EDSDK.dll")]
         public extern static uint EdsSendCommand( IntPtr inCameraRef, uint inCommand, int inParam);
 
+        [DllImport("EDSDK.dll")]
+        public extern static uint EdsSendCommand(IntPtr inCameraRef, uint inCommand, uint inParam);
+
         /*-----------------------------------------------------------------------------
         //
         //  Function:   EdsSendStatusCommand

@@ -24,16 +24,16 @@ namespace Canon_EOS_Remote.classes
 
         private void init()
         {
-            this.aeModes.Add(new TAEMode("Programm AE",0));
-            this.aeModes.Add(new TAEMode("Shutter-Speed Priority AE",1));
-            this.aeModes.Add(new TAEMode("Aperture-Priority AE",2));
-            this.aeModes.Add(new TAEMode("Manual Exposure",3));
+            this.aeModes.Add(new TAEMode("P - Programmautomatik",0));
+            this.aeModes.Add(new TAEMode("Tv - Belichtungsautomatik",1));
+            this.aeModes.Add(new TAEMode("Av - Blendenautomatik",2));
+            this.aeModes.Add(new TAEMode("M - Manueller Modus",3));
             this.aeModes.Add(new TAEMode("Bulb",4));
             this.aeModes.Add(new TAEMode("Auto Depth-of-Field AE",5));
             this.aeModes.Add(new TAEMode("Depth-of Field AE",6));
             this.aeModes.Add(new TAEMode("Camera settings registered",7));
             this.aeModes.Add(new TAEMode("Lock",8));
-            this.aeModes.Add(new TAEMode("Auto",9));
+            this.aeModes.Add(new TAEMode("Vollautomatikmodus",9));
             this.aeModes.Add(new TAEMode("Night Scene Portrait",10));
             this.aeModes.Add(new TAEMode("Sports",11));
             this.aeModes.Add(new TAEMode("Portrait",12));

@@ -18,22 +18,21 @@ namespace Canon_EOS_Remote.ViewModel
         private Camera currentCamera;
 
         private EDSDK.EdsPropertyDesc PropertyDescISO;
+
         private CollectionView availableISOListView;
+
         private ObservableCollection<int> availableISOListCollection;
-        private ISOSpeeds isoSpeeds;
-        private classes.ShutterTimes shutterTimes;
+
+        private ISOSpeeds isoConverter;
+        private classes.ShutterTimes shutterTimeConverter;
         private EDSDK.EdsPropertyDesc propertyDescTv;
         private CollectionView availableShutterTimesView;
         private ObservableCollection<string> availableShutterTimesCollection;
         private EDSDK.EdsPropertyDesc propertyDescAE;
         private CollectionView aEView;
         private ObservableCollection<string> aECollection;
-        private classes.AEModes aeModes;
+        private classes.AEModes aeModeConverter;
 
-        private bool isolistemtpy;
-        private bool shuttertimeslistempty;
-        private bool aelistempty;
-        private bool apertureslistempty;
         private int currentISO;
 
         private Command_TakePhoto commandTakePhoto;
@@ -41,7 +40,24 @@ namespace Canon_EOS_Remote.ViewModel
         private string currentDate;
         private string currentTime;
         private EDSDK.EdsPropertyDesc apertureDesc;
-        private classes.AEModes aemodes;
+
+        private CollectionView apertureView;
+        private ObservableCollection<string> apertureCollection;
+        private IntPtr streamref;
+        private IntPtr imageref;
+        private classes.PropertyCodes propertyCodes;
+        private string currentProgramm;
+        private string currentAperture;
+        private classes.Apertures apertureConverter;
+        private string currentTv;
+
+
+        public classes.AEModes AeModeConverter
+        {
+            get { return aeModeConverter; }
+            set { aeModeConverter = value; }
+        }
+
 
         public EDSDK.EdsPropertyDesc ApertureDesc
         {
@@ -50,7 +66,7 @@ namespace Canon_EOS_Remote.ViewModel
             update("ApertureDesc");
             }
         }
-        private CollectionView apertureView;
+        
 
         public CollectionView ApertureView
         {
@@ -59,12 +75,12 @@ namespace Canon_EOS_Remote.ViewModel
             update("ApertureView");
             }
         }
-        private ObservableCollection<string> aptureCollection;
+       
 
         internal ObservableCollection<string> AptureCollection
         {
-            get { return aptureCollection; }
-            set { aptureCollection = value;
+            get { return apertureCollection; }
+            set { apertureCollection = value;
             update("AptureCollection");
             }
         }
@@ -90,12 +106,7 @@ namespace Canon_EOS_Remote.ViewModel
             get { return commandDriveLensNearOne; }
             set { commandDriveLensNearOne = value; }
         }
-        private IntPtr streamref;
-        private IntPtr imageref;
-        private classes.PropertyCodes propertyCodes;
-        private string currentProgramm;
-        private string currentAperture;
-        private classes.Apertures apertures;
+
 
         public string CurrentAperture
         {
@@ -144,7 +155,7 @@ namespace Canon_EOS_Remote.ViewModel
                 update("CurrentISO");
             }
         }
-        private string currentTv;
+
 
         public string CurrentTv
         {
@@ -188,10 +199,10 @@ namespace Canon_EOS_Remote.ViewModel
 
         public classes.AEModes AeModes
         {
-            get { return aeModes; }
+            get { return aeModeConverter; }
             set
             {
-                aeModes = value;
+                aeModeConverter = value;
                 update("AeModes");
             }
         }
@@ -256,45 +267,6 @@ namespace Canon_EOS_Remote.ViewModel
                 this.CommandDriveLensNearOne.CameraPtr = currentCamera.CameraPtr;
                 update("CurrentCamera");
             }
-        }
-
-        public ViewModelCurrentCamera()
-        {
-            Console.WriteLine("Intance of ViewModelCurrentCamera created.");
-            this.CurrentCameraName = "CurrentCameraName";
-            this.CurrentCameraOwner = "CurrentCameraOwner";
-            this.CurrentCameraFirmware = "CurrentCameraFirmware";
-            this.currentProgramm = "CurrentProgramm";
-            this.CurrentAperture = "CurrentAperture";
-            this.CurrentDate = " CurrentDate";
-            this.CurrentTime = "CurrentTime";
-            this.CurrentBatteryLevel = 50;
-
-            this.AvailableISOListCollection = new ObservableCollection<int>();
-            this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
-
-            this.AvailableShutterTimesCollection = new ObservableCollection<string>();
-            this.availableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
-            this.AECollection = new ObservableCollection<string>();
-            this.AEView = new CollectionView(this.AECollection);
-            this.isoSpeeds = new ISOSpeeds();
-            this.shutterTimes = new classes.ShutterTimes();
-            this.AeModes = new classes.AEModes();
-            this.isolistemtpy = true;
-            this.shuttertimeslistempty = true;
-            this.apertureslistempty = true;
-            this.aelistempty = true;
-            this.CurrentISO = 100;
-            this.CurrentTv = "Lange";
-            this.CommandTakePhoto = new Command_TakePhoto();
-            this.CommandTakePhoto.Camera = IntPtr.Zero;
-            this.CommandDriveLensNearOne = new Command_DriveLensNearOne();
-            this.CommandDriveLensNearOne.CameraPtr = IntPtr.Zero;
-            this.propertyCodes = new classes.PropertyCodes();
-            this.apertures = new classes.Apertures();
-            this.AptureCollection = new ObservableCollection<string>();
-            this.ApertureView = new CollectionView(this.AptureCollection);
-            this.aemodes = new classes.AEModes();
         }
 
         public string CurrentCameraFirmware
@@ -368,37 +340,91 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
+        public ViewModelCurrentCamera()
+        {
+            Console.WriteLine("Intance of ViewModelCurrentCamera created.");
+            this.CurrentCameraName = "CurrentCameraName";
+            this.CurrentCameraOwner = "CurrentCameraOwner";
+            this.CurrentCameraFirmware = "CurrentCameraFirmware";
+            this.currentProgramm = "CurrentProgramm";
+            this.CurrentAperture = "CurrentAperture";
+            this.CurrentDate = " CurrentDate";
+            this.CurrentTime = "CurrentTime";
+            this.CurrentBatteryLevel = 50;
+
+            this.AvailableISOListCollection = new ObservableCollection<int>();
+            this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
+
+            this.AvailableShutterTimesCollection = new ObservableCollection<string>();
+            this.availableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
+            this.AECollection = new ObservableCollection<string>();
+            this.AEView = new CollectionView(this.AECollection);
+            this.isoConverter = new ISOSpeeds();
+            this.shutterTimeConverter = new classes.ShutterTimes();
+            this.AeModes = new classes.AEModes();
+            this.CurrentISO = 100;
+            this.CurrentTv = "Lange";
+            this.CommandTakePhoto = new Command_TakePhoto();
+            this.CommandTakePhoto.Camera = IntPtr.Zero;
+            this.CommandDriveLensNearOne = new Command_DriveLensNearOne();
+            this.CommandDriveLensNearOne.CameraPtr = IntPtr.Zero;
+            this.propertyCodes = new classes.PropertyCodes();
+            this.apertureConverter = new classes.Apertures();
+            this.AptureCollection = new ObservableCollection<string>();
+            this.ApertureView = new CollectionView(this.AptureCollection);
+            this.AeModeConverter = new classes.AEModes();
+        }
+
         public void setCurrentlyCamera()
         {
-            Console.WriteLine("Set all values for the currently choosen camera ........");
-            this.CurrentCameraName = this.currentCamera.CameraName;
-            this.CurrentBatteryLevel = (int)this.currentCamera.CameraBatteryLevel;
-            this.CurrentBodyID = this.currentCamera.CameraBodyID;
-            this.currentCamera.getAvailableShotsFromCamera();
-            this.CurrentAvailableShots = (int)this.currentCamera.CameraAvailableShots;
-            this.CurrentCameraOwner = this.currentCamera.CameraOwner;
-            this.CurrentCameraFirmware = this.currentCamera.CameraFirmware;
+            getCurrentCameraFields();
+            CurrentCameraPropertyDescs();
+            setEventHandlerToViews();
+        }
+
+        /// <summary>
+        /// Holt die PropertyDescs von der aktuellen Kamera und kopiert sie in die Collections
+        /// </summary>
+        private void CurrentCameraPropertyDescs()
+        {
             this.AvailableISOList = this.CurrentCamera.AvailableISOSpeeds;
-            if (this.isolistemtpy) copyPropertyDescISOToCollection();
+            copyPropertyDescISOToCollection();
+            this.propertyDescTv = this.CurrentCamera.AvailableShutterspeeds;
+            copyPropertyDescShutterTimesToCollection();
+            this.propertyDescAE = this.CurrentCamera.AvailableAEModes;
+            copyPropertyDescAEModesToCollection();
+            this.ApertureDesc = this.CurrentCamera.AvailableApertureValues;
+            copyPropertyDescAperturesToCollection();
+        }
+
+        /// <summary>
+        /// Holt die einzelnen Felder der aktuellen Kamera
+        /// </summary>
+        private void getCurrentCameraFields()
+        {
+            this.CurrentCameraName = this.CurrentCamera.CameraName;
+            this.CurrentBatteryLevel = (int)this.CurrentCamera.CameraBatteryLevel;
+            this.CurrentBodyID = this.CurrentCamera.CameraBodyID;
+            this.CurrentAvailableShots = (int)this.CurrentCamera.CameraAvailableShots;
+            this.CurrentCameraOwner = this.CurrentCamera.CameraOwner;
+            this.CurrentCameraFirmware = this.CurrentCamera.CameraFirmware;
+            this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.CurrentCamera.CameraShutterTime);
+            this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
+            this.CurrentAperture = this.apertureConverter.getApertureString(this.CurrentCamera.CameraAperture);
+            this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
+            this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
+            this.CurrentISO = (int)this.isoConverter.getISOSpeedFromHex(this.CurrentCamera.CameraISOSpeed);
+        }
+
+       /// <summary>
+        /// Wenn in den ComboBoxen ein neuer Wert gewählt wird, werden diese durch die EventHandler bei CurrentChanged an die Kamera gesendet 
+       /// </summary>
+        private void setEventHandlerToViews()
+        {
+            this.ApertureView.CurrentChanged += new EventHandler(sendApertureToCamera);
             this.AvailableISOListView.CurrentChanged += new EventHandler(sendISOSpeedToCamera);
             this.AvailableShutterTimesView.CurrentChanged += new EventHandler(sendShutterTimeToCamera);
             this.AEView.CurrentChanged += new EventHandler(sendAEModeToCamera);
-            this.propertyDescTv = this.CurrentCamera.AvailableShutterspeeds;
-            if (this.shuttertimeslistempty) copyPropertyDescShutterTimesToCollection();
-            this.propertyDescAE = this.CurrentCamera.AvailableAEModes;
-            if (this.aelistempty) copyPropertyDescAEModesToCollection();
-            this.CurrentCamera.getISOSpeedFromCamera();
-            this.CurrentISO = (int)this.isoSpeeds.getISOSpeedFromHex(this.currentCamera.CameraISOSpeed);
-            this.CurrentCamera.getTvFromCamera();
-            this.CurrentTv = this.shutterTimes.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
-            this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
-            this.CurrentAperture = this.apertures.getApertureString(this.CurrentCamera.CameraAperture);
-            this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
-            this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
-            this.ApertureDesc = this.CurrentCamera.AvailableApertureValues;
-            if (apertureslistempty) copyPropertyDescAperturesToCollection();
-            this.ApertureView.CurrentChanged += new EventHandler(sendApertureToCamera);
-            Console.WriteLine("All values setted");
         }
 
         public void updateCurrentlyCamera(classes.PropertyEventArgs p)
@@ -408,13 +434,13 @@ namespace Canon_EOS_Remote.ViewModel
                 case EDSDK.PropID_Tv:
                     {
                         this.CurrentCamera.getTvFromCamera();
-                        this.CurrentTv = this.shutterTimes.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
+                        this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
                         break;
                     }
                 case EDSDK.PropID_ISOSpeed:
                     {
                         this.CurrentCamera.getISOSpeedFromCamera();
-                        this.CurrentISO = (int)this.isoSpeeds.getISOSpeedFromHex(this.currentCamera.CameraISOSpeed);
+                        this.CurrentISO = (int)this.isoConverter.getISOSpeedFromHex(this.currentCamera.CameraISOSpeed);
                         break;
                     }
                 case EDSDK.PropID_AvailableShots:
@@ -463,7 +489,7 @@ namespace Canon_EOS_Remote.ViewModel
                 case EDSDK.PropID_Av:
                     {
                         this.currentCamera.getApertureFromCamera();
-                        this.CurrentAperture = this.apertures.getApertureString(this.CurrentCamera.CameraAperture);
+                        this.CurrentAperture = this.apertureConverter.getApertureString(this.CurrentCamera.CameraAperture);
                         break;
                     }
                 case EDSDK.PropID_DateTime:
@@ -484,11 +510,10 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void copyPropertyDescISOToCollection()
         {
-            this.isolistemtpy = false;
             this.availableISOListCollection.Clear();
             for (int i = 0; i < this.AvailableISOList.NumElements; i++)
             {
-                this.AvailableISOListCollection.Add((int)this.isoSpeeds.getISOSpeedFromHex(this.AvailableISOList.PropDesc[i]));
+                this.AvailableISOListCollection.Add((int)this.isoConverter.getISOSpeedFromHex(this.AvailableISOList.PropDesc[i]));
             }
         }
 
@@ -498,17 +523,16 @@ namespace Canon_EOS_Remote.ViewModel
             if (this.AvailableISOListView.CurrentItem != null)
             {
                 tmpProperty = (int)this.AvailableISOListView.CurrentItem;
-                this.CurrentCamera.setISOSpeedToCamera((int)this.isoSpeeds.getISOSpeedFromDec((uint)tmpProperty));
+                this.CurrentCamera.setISOSpeedToCamera((int)this.isoConverter.getISOSpeedFromDec((uint)tmpProperty));
             }
         }
 
         private void copyPropertyDescShutterTimesToCollection()
         {
-            this.shuttertimeslistempty = false;
             this.AvailableShutterTimesCollection.Clear();
             for (int i = 0; i < this.propertyDescTv.NumElements; i++)
             {
-                this.AvailableShutterTimesCollection.Add(this.shutterTimes.getShutterTimeStringFromHex((uint)this.propertyDescTv.PropDesc[i]));
+                this.AvailableShutterTimesCollection.Add(this.shutterTimeConverter.getShutterTimeStringFromHex((uint)this.propertyDescTv.PropDesc[i]));
             }
         }
 
@@ -518,27 +542,25 @@ namespace Canon_EOS_Remote.ViewModel
             if (this.AvailableShutterTimesView.CurrentItem != null)
             {
                 tmpProperty = (string)this.AvailableShutterTimesView.CurrentItem;
-                this.CurrentCamera.setShutterTimeToCamera((int)this.shutterTimes.getShutterTimeStringFromDec(tmpProperty));
+                this.CurrentCamera.setShutterTimeToCamera((int)this.shutterTimeConverter.getShutterTimeStringFromDec(tmpProperty));
             }
         }
 
         private void copyPropertyDescAEModesToCollection()
         {
-            this.aelistempty = false;
             this.AECollection.Clear();
             for (int i = 0; i < this.propertyDescAE.NumElements; i++)
             {
-                this.AECollection.Add(this.aemodes.getAEString((uint)this.propertyDescAE.PropDesc[i]));
+                this.AECollection.Add(this.AeModeConverter.getAEString((uint)this.propertyDescAE.PropDesc[i]));
             }
         }
 
         private void copyPropertyDescAperturesToCollection()
         {
-            this.apertureslistempty = false;
             this.AptureCollection.Clear();
             for (int i = 0; i < this.ApertureDesc.NumElements; i++)
             {
-                this.AptureCollection.Add(this.apertures.getApertureString((uint)this.ApertureDesc.PropDesc[i]));
+                this.AptureCollection.Add(this.apertureConverter.getApertureString((uint)this.ApertureDesc.PropDesc[i]));
             }
         }
 
@@ -558,7 +580,7 @@ namespace Canon_EOS_Remote.ViewModel
             if (this.ApertureView.CurrentItem != null)
             {
                 tmpProperty = (string)this.ApertureView.CurrentItem;
-                this.CurrentCamera.setApertureToCamera((int)this.apertures.getApertureHex(tmpProperty));
+                this.CurrentCamera.setApertureToCamera((int)this.apertureConverter.getApertureHex(tmpProperty));
             }
         }
 

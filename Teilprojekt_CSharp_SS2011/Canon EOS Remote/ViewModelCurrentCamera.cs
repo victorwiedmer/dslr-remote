@@ -4,6 +4,7 @@ using EDSDKLib;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Canon_EOS_Remote.classes;
 
 namespace Canon_EOS_Remote.ViewModel
 {
@@ -16,6 +17,7 @@ namespace Canon_EOS_Remote.ViewModel
         private string currentCameraOwner;
         private string currentCameraFirmware;
         private Camera currentCamera;
+        private string currentEBV;
 
         private EDSDK.EdsPropertyDesc PropertyDescISO;
 
@@ -36,7 +38,15 @@ namespace Canon_EOS_Remote.ViewModel
         private int currentISO;
 
         private Command_TakePhoto commandTakePhoto;
+
         private Command_DriveLensNearOne commandDriveLensNearOne;
+        private Command_DriveLensNearTwo commandDriveLensNearTwo;
+        private Command_DriveLensNearThree commandDriveLensNearThree;
+
+        private Command_DriveLensFarOne commandDriveLensFarOne;
+        private Command_DriveLensFarTwo commandDriveLensFarTwo;
+        private Command_DriveLensFarThree commandDriveLensFarThree;
+
         private string currentDate;
         private string currentTime;
         private EDSDK.EdsPropertyDesc apertureDesc;
@@ -50,7 +60,21 @@ namespace Canon_EOS_Remote.ViewModel
         private string currentAperture;
         private classes.Apertures apertureConverter;
         private string currentTv;
+        private ExposureCompensation ebvConverter;
 
+        internal ExposureCompensation EbvConverter
+        {
+            get { return ebvConverter; }
+            set { ebvConverter = value; }
+        }
+
+        public string CurrentEBV
+        {
+            get { return currentEBV; }
+            set { currentEBV = value;
+            update("CurrentEBV");
+            }
+        }
 
         public classes.AEModes AeModeConverter
         {
@@ -107,6 +131,35 @@ namespace Canon_EOS_Remote.ViewModel
             set { commandDriveLensNearOne = value; }
         }
 
+        public Command_DriveLensNearTwo CommandDriveLensNearTwo
+        {
+            get { return commandDriveLensNearTwo; }
+            set { commandDriveLensNearTwo = value; }
+        }
+
+        public Command_DriveLensFarThree CommandDriveLensFarThree
+        {
+            get { return commandDriveLensFarThree; }
+            set { commandDriveLensFarThree = value; }
+        }
+
+        public Command_DriveLensFarTwo CommandDriveLensFarTwo
+        {
+            get { return commandDriveLensFarTwo; }
+            set { commandDriveLensFarTwo = value; }
+        }
+
+        public Command_DriveLensFarOne CommandDriveLensFarOne
+        {
+            get { return commandDriveLensFarOne; }
+            set { commandDriveLensFarOne = value; }
+        }
+
+        public Command_DriveLensNearThree CommandDriveLensNearThree
+        {
+            get { return commandDriveLensNearThree; }
+            set { commandDriveLensNearThree = value; }
+        }
 
         public string CurrentAperture
         {
@@ -264,7 +317,14 @@ namespace Canon_EOS_Remote.ViewModel
             {
                 currentCamera = value;
                 this.CommandTakePhoto.Camera = currentCamera.CameraPtr;
+
                 this.CommandDriveLensNearOne.CameraPtr = currentCamera.CameraPtr;
+                this.CommandDriveLensNearTwo.CameraPtr = currentCamera.CameraPtr;
+                this.CommandDriveLensNearThree.CameraPtr = currentCamera.CameraPtr;
+
+                this.CommandDriveLensFarOne.CameraPtr = currentCamera.CameraPtr;
+                this.CommandDriveLensFarTwo.CameraPtr = currentCamera.CameraPtr;
+                this.CommandDriveLensFarThree.CameraPtr = currentCamera.CameraPtr;
                 update("CurrentCamera");
             }
         }
@@ -351,6 +411,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentDate = " CurrentDate";
             this.CurrentTime = "CurrentTime";
             this.CurrentBatteryLevel = 50;
+            this.CurrentEBV = "EBV";
 
             this.AvailableISOListCollection = new ObservableCollection<int>();
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
@@ -368,11 +429,22 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandTakePhoto.Camera = IntPtr.Zero;
             this.CommandDriveLensNearOne = new Command_DriveLensNearOne();
             this.CommandDriveLensNearOne.CameraPtr = IntPtr.Zero;
+            this.CommandDriveLensNearTwo = new Command_DriveLensNearTwo();
+            this.CommandDriveLensNearTwo.CameraPtr = IntPtr.Zero;
+            this.CommandDriveLensNearThree = new Command_DriveLensNearThree();
+            this.CommandDriveLensNearThree.CameraPtr = IntPtr.Zero;
+            this.CommandDriveLensFarOne = new Command_DriveLensFarOne();
+            this.CommandDriveLensFarOne.CameraPtr = IntPtr.Zero;
+            this.CommandDriveLensFarTwo = new Command_DriveLensFarTwo();
+            this.CommandDriveLensFarTwo.CameraPtr = IntPtr.Zero;
+            this.CommandDriveLensFarThree = new Command_DriveLensFarThree();
+            this.CommandDriveLensFarThree.CameraPtr = IntPtr.Zero;
             this.propertyCodes = new classes.PropertyCodes();
             this.apertureConverter = new classes.Apertures();
             this.AptureCollection = new ObservableCollection<string>();
             this.ApertureView = new CollectionView(this.AptureCollection);
             this.AeModeConverter = new classes.AEModes();
+            this.EbvConverter = new ExposureCompensation();
         }
 
         public void setCurrentlyCamera()
@@ -414,6 +486,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
             this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
             this.CurrentISO = (int)this.isoConverter.getISOSpeedFromHex(this.CurrentCamera.CameraISOSpeed);
+            this.CurrentEBV = this.EbvConverter.getEbvString(this.CurrentCamera.CameraExposureCompensation);
         }
 
        /// <summary>
@@ -497,6 +570,12 @@ namespace Canon_EOS_Remote.ViewModel
                         this.CurrentCamera.getTimeFromCamera();
                         this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
                         this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
+                        break;
+                    }
+                case EDSDK.PropID_ExposureCompensation:
+                    {
+                        this.CurrentCamera.getEbvFromBody();
+                        this.CurrentEBV = this.EbvConverter.getEbvString(this.CurrentCamera.CameraExposureCompensation);
                         break;
                     }
                   

@@ -25,22 +25,22 @@ namespace Canon_EOS_Remote.classes
         private void init()
         {
             this.aeModes.Add(new TAEMode("P - Programmautomatik",0));
-            this.aeModes.Add(new TAEMode("Tv - Belichtungsautomatik",1));
-            this.aeModes.Add(new TAEMode("Av - Blendenautomatik",2));
-            this.aeModes.Add(new TAEMode("M - Manueller Modus",3));
-            this.aeModes.Add(new TAEMode("Bulb",4));
+            this.aeModes.Add(new TAEMode("Tv - Blendenautomatik",1));
+            this.aeModes.Add(new TAEMode("Av - Zeitautomatik",2));
+            this.aeModes.Add(new TAEMode("M - Manuell",3));
+            this.aeModes.Add(new TAEMode("Bulb - Langzeitbelichtung",4));
             this.aeModes.Add(new TAEMode("Auto Depth-of-Field AE",5));
             this.aeModes.Add(new TAEMode("Depth-of Field AE",6));
             this.aeModes.Add(new TAEMode("Camera settings registered",7));
             this.aeModes.Add(new TAEMode("Lock",8));
-            this.aeModes.Add(new TAEMode("Vollautomatikmodus",9));
-            this.aeModes.Add(new TAEMode("Night Scene Portrait",10));
-            this.aeModes.Add(new TAEMode("Sports",11));
-            this.aeModes.Add(new TAEMode("Portrait",12));
-            this.aeModes.Add(new TAEMode("Landscape",13));
-            this.aeModes.Add(new TAEMode("Close-Up",14));
-            this.aeModes.Add(new TAEMode("Flash Off",15));
-            this.aeModes.Add(new TAEMode("Creative Auto",19));
+            this.aeModes.Add(new TAEMode("Vollautomatik",9));
+            this.aeModes.Add(new TAEMode("Nachtporträt",10));
+            this.aeModes.Add(new TAEMode("Sport",11));
+            this.aeModes.Add(new TAEMode("Porträt",12));
+            this.aeModes.Add(new TAEMode("Landschaft",13));
+            this.aeModes.Add(new TAEMode("Nahaufnahme",14));
+            this.aeModes.Add(new TAEMode("Blitz aus",15));
+            this.aeModes.Add(new TAEMode("CA - Kreativautomatik",19));
             this.aeModes.Add(new TAEMode("Photo In Movie",21));
             this.aeModes.Add(new TAEMode("Not Valid or No settings changes",0xff));
         }

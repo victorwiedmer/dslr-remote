@@ -91,8 +91,8 @@ namespace Canon_EOS_Remote
             get { return _cameraName; }
             set
             {
-                update("CameraName");
                 _cameraName = value;
+                update("CameraName");
             }
         }
 
@@ -172,7 +172,6 @@ namespace Canon_EOS_Remote
             set
             {
                 _cameraISOSpeed = value;
-                Console.WriteLine("CameraISOSpeed new value " + value);
                 update("CameraISOSpeed");
             }
         }
@@ -203,7 +202,6 @@ namespace Canon_EOS_Remote
             set
             {
                 _cameraAperture = value;
-                Console.WriteLine("CameraAperture new value " + value);
                 update("CameraAperture");
             }
         }
@@ -311,6 +309,7 @@ namespace Canon_EOS_Remote
             getLensStateOfCamera();
             getApertureFromCamera();
             getTimeFromCamera();
+            getEbvFromBody();
         }
 
         #endregion
@@ -338,6 +337,21 @@ namespace Canon_EOS_Remote
             else
             {
                 this.CameraBatteryLevel = tmpCameraBatteryLevel;
+            }
+        }
+
+        public void getEbvFromBody()
+        {
+            UInt32 tmpEbv = 0;
+            tmpErrorCodeAfterCommand = 0;
+            tmpErrorCodeAfterCommand = EDSDK.EdsGetPropertyData(this._cameraPtr, EDSDKLib.EDSDK.PropID_ExposureCompensation, 0, out tmpEbv);
+            if (tmpErrorCodeAfterCommand != 0)
+            {
+                //TODO throw Exception
+            }
+            else
+            {
+                this.CameraExposureCompensation = tmpEbv;
             }
         }
 

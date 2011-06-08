@@ -72,9 +72,15 @@
     <Compile Include="classes\ShutterTimes.cs" />
     <Compile Include="classes\TAEMode.cs" />
     <Compile Include="classes\TAperture.cs" />
+    <Compile Include="classes\TExposureCompensation.cs" />
     <Compile Include="classes\TShutterTime.cs" />
     <Compile Include="Command_DriveLensNearOne.cs" />
     <Compile Include="Command_TakePhoto.cs" />
+    <Compile Include="Command_DriveLensNearTwo.cs" />
+    <Compile Include="Command_DriveLensNearThree.cs" />
+    <Compile Include="Command_DriveLensFarOne.cs" />
+    <Compile Include="Command_DriveLensFarTwo.cs" />
+    <Compile Include="Command_DriveLensFarThree.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />
     <Compile Include="ViewModelCurrentCamera.cs" />

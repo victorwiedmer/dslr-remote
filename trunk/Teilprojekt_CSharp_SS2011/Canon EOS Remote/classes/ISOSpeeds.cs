@@ -47,7 +47,6 @@ namespace Canon_EOS_Remote
         }
 
         public UInt32 getISOSpeedFromHex(UInt32 isoHexvalue){
-            Console.WriteLine("Search the ISO for : " + isoHexvalue);
             for (int i = 0; i < _isoSpeeds.Count; i++)
             {
                 if (_isoSpeeds.ElementAt(i).HexValue == isoHexvalue)
@@ -60,7 +59,6 @@ namespace Canon_EOS_Remote
 
         public UInt32 getISOSpeedFromHex(int isoHexvalue)
         {
-            Console.WriteLine("Search the ISO for : " + isoHexvalue);
             for (int i = 0; i < _isoSpeeds.Count; i++)
             {
                 if (_isoSpeeds.ElementAt(i).HexValue == isoHexvalue)

@@ -96,7 +96,7 @@ namespace Canon_EOS_Remote
             _errorCodes.Add(new EdsError(0x00000081, "EDS_ERR_DEVICE_BUSY", "Device is busy or will get in unstable mode"));
             _errorCodes.Add(new EdsError(0x00000082, "EDS_ERR_DEVICE_INVALID", ""));
             _errorCodes.Add(new EdsError(0x00000083, "EDS_ERR_DEVICE_EMERGENCY", ""));
-            _errorCodes.Add(new EdsError(0x00000084, "EDS_ERR_DEVICE_MEMORY_FULL", ""));
+            _errorCodes.Add(new EdsError(0x00000084, "EDS_ERR_DEVICE_MEMORY_FULL", "Kameraspeicher voll"));
             _errorCodes.Add(new EdsError(0x00000085, "EDS_ERR_DEVICE_INTERNAL_ERROR", ""));
             _errorCodes.Add(new EdsError(0x00000086, "EDS_ERR_DEVICE_INVALID_PARAMETER", ""));
             _errorCodes.Add(new EdsError(0x00000087, "EDS_ERR_DEVICE_NO_DISK", ""));
@@ -125,9 +125,9 @@ namespace Canon_EOS_Remote
             /* Communications errors */
             _errorCodes.Add(new EdsError(0x000000C0, "EDS_ERR_COMM_PORT_IS_IN_USE", "Port wird benutzt"));
             _errorCodes.Add(new EdsError(0x000000C1, "EDS_ERR_COMM_DISCONNECTED", ""));
-            _errorCodes.Add(new EdsError(0x000000C2, "EDS_ERR_COMM_DEVICE_INCOMPATIBLE", ""));
+            _errorCodes.Add(new EdsError(0x000000C2, "EDS_ERR_COMM_DEVICE_INCOMPATIBLE", "Kamera nicht kompatibel"));
             _errorCodes.Add(new EdsError(0x000000C3, "EDS_ERR_COMM_BUFFER_FULL", ""));
-            _errorCodes.Add(new EdsError(0x000000C4, "EDS_ERR_COMM_USB_BUS_ERR", ""));
+            _errorCodes.Add(new EdsError(0x000000C4, "EDS_ERR_COMM_USB_BUS_ERR", "Fehler in der Kameraverbindung"));
 
             /* Lock/Unlock */
             _errorCodes.Add(new EdsError(0x000000D0, "EDS_ERR_USB_DEVICE_LOCK_ERROR", ""));

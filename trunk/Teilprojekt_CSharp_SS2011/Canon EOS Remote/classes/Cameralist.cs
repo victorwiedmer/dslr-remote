@@ -40,7 +40,7 @@ namespace Canon_EOS_Remote.classes
         }
         #endregion
 
-        public uint onCameraAdded(IntPtr inContext)
+        public uint onCameraAdded(IntPtr inContext) //TODO add Exceptionhandling
         {
             IntPtr tmpPtr = IntPtr.Zero;
             int tmpCount = 0;
@@ -88,6 +88,7 @@ namespace Canon_EOS_Remote.classes
         public Cameralist()
         {
             uint error = 0;
+            //TODO export to init method
             this.cameraList = new ObservableCollection<Camera>();
             this.CameraAddedHandler = new EDSDKLib.EDSDK.EdsCameraAddedHandler(onCameraAdded);
             error = EDSDKLib.EDSDK.EdsSetCameraAddedHandler(cameraAddedHandler, IntPtr.Zero);
@@ -106,9 +107,9 @@ namespace Canon_EOS_Remote.classes
             Console.WriteLine("Cameralist meldet, in einer Kamera hat sich was geaendert : \n" +
                 this.CameraList.ElementAt(getCameraIndexFromList(inContext)).CameraName + "\nEventID:" +
                 this.eventIDs.getEventIDString(inEvent) +"\nPropertyID : " + this.propertyCodes.getPropertyString(inPropertyID));
-                if(onCameraPropertyChangedEvent!=null){
+                
+            if(onCameraPropertyChangedEvent!=null){
                     onCameraPropertyChangedEvent(new PropertyEventArgs(inPropertyID));
-                    Console.WriteLine("Event onCameraPropertyChangedEvent() fired");
                 }
             
             return 0x0;
@@ -128,6 +129,7 @@ namespace Canon_EOS_Remote.classes
                     }
                 }
                 Console.WriteLine("Cant delete camera from list");
+                //TODO find out why he dont cant delete camera from list , try method getCameraIndexFromList
             }
             return 0x0;
         }

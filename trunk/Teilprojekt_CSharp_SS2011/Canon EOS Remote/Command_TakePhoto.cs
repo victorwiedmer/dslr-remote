@@ -4,12 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Canon_EOS_Remote
 {
     class Command_TakePhoto :ICommand , INotifyPropertyChanged
     {
         IntPtr camera=IntPtr.Zero;
+        private int photoCount = 1;
+
+        public int PhotoCount
+        {
+            get { return photoCount; }
+            set { photoCount = value; }
+        }
 
         public IntPtr Camera
         {
@@ -35,10 +43,25 @@ namespace Canon_EOS_Remote
 
         public event EventHandler CanExecuteChanged;
 
+        public void takePhoto()
+        {
+            uint tmpError = 0;
+            for (int i = 0; i < this.photoCount; )
+            {
+                tmpError = EDSDKLib.EDSDK.EdsSendCommand(this.camera, EDSDKLib.EDSDK.CameraCommand_TakePicture, 0);
+                if (tmpError == 0) { i++; }
+                else
+                {
+                    Thread.Sleep(1);
+                }
+            }
+
+        }
+
         public void Execute(object parameter)
         {
-            Console.WriteLine("Rise command : take photo");
-            EDSDKLib.EDSDK.EdsSendCommand(this.Camera, EDSDKLib.EDSDK.CameraCommand_TakePicture, 0);
+            Thread photoThread = new Thread(new ThreadStart(this.takePhoto));
+            photoThread.Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

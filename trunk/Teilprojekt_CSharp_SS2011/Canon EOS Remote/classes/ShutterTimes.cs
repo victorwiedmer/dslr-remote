@@ -17,6 +17,7 @@ namespace Canon_EOS_Remote.classes
 
         private void init()
         {
+            this.shutterTimes.Add(new TShutterTime("Not available", 0x00));
             this.shutterTimes.Add(new TShutterTime("Bulb", 0x0C));
             this.shutterTimes.Add(new TShutterTime("30s", 0x10));
             this.shutterTimes.Add(new TShutterTime("25s", 0x13));

@@ -50,6 +50,7 @@ namespace Canon_EOS_Remote.classes
             this.ApertureList.Add(new TAperture("8", 0x38));
             this.ApertureList.Add(new TAperture("9", 0x3B));
             this.ApertureList.Add(new TAperture("9.5", 0x3C));
+            this.ApertureList.Add(new TAperture("10", 0X3D));
             this.ApertureList.Add(new TAperture("11", 0x40));
             this.ApertureList.Add(new TAperture("13", 0x43));
             this.ApertureList.Add(new TAperture("13", 0x44));
@@ -92,12 +93,10 @@ namespace Canon_EOS_Remote.classes
 
         public string getApertureString(UInt32 apertureHex)
         {
-            Console.WriteLine("Search the Aperture String for : " + apertureHex + " in " + this.ApertureList.Count + " Elements");
             for (int i = 0; i < this.ApertureList.Count; i++)
             {
                 if (this.apertureList.ElementAt(i).ApertureHex == apertureHex)
                 {
-                    Console.WriteLine("Aperture String found : " + ApertureList.ElementAt(i).ApertureString);
                     return this.ApertureList.ElementAt(i).ApertureString;
                 }
             }

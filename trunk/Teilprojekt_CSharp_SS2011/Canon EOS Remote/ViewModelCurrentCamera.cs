@@ -340,15 +340,15 @@ namespace Canon_EOS_Remote.ViewModel
 
                 #region Setze neuen Zeiger bei den Commands
 
-                this.CommandTakePhoto.Camera = currentCamera.CameraPtr;
+                this.CommandTakePhoto.Camera = currentCamera.Ptr;
 
-                this.CommandDriveLensNearOne.CameraPtr = currentCamera.CameraPtr;
-                this.CommandDriveLensNearTwo.CameraPtr = currentCamera.CameraPtr;
-                this.CommandDriveLensNearThree.CameraPtr = currentCamera.CameraPtr;
+                this.CommandDriveLensNearOne.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensNearTwo.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensNearThree.CameraPtr = currentCamera.Ptr;
 
-                this.CommandDriveLensFarOne.CameraPtr = currentCamera.CameraPtr;
-                this.CommandDriveLensFarTwo.CameraPtr = currentCamera.CameraPtr;
-                this.CommandDriveLensFarThree.CameraPtr = currentCamera.CameraPtr;
+                this.CommandDriveLensFarOne.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensFarTwo.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensFarThree.CameraPtr = currentCamera.Ptr;
                 #endregion
 
                 update("CurrentCamera");
@@ -532,11 +532,11 @@ namespace Canon_EOS_Remote.ViewModel
         /// </summary>
         private void getCurrentCameraFields()
         {
-            this.CurrentCameraName = this.CurrentCamera.CameraName;
+            this.CurrentCameraName = this.CurrentCamera.Name;
             this.CurrentBatteryLevel = (int)this.CurrentCamera.CameraBatteryLevel;
-            this.CurrentBodyID = this.CurrentCamera.CameraBodyID;
+            this.CurrentBodyID = this.CurrentCamera.BodyID;
             this.CurrentAvailableShots = (int)this.CurrentCamera.CameraAvailableShots;
-            this.CurrentCameraOwner = this.CurrentCamera.CameraOwner;
+            this.CurrentCameraOwner = this.CurrentCamera.Owner;
             this.CurrentCameraFirmware = this.CurrentCamera.CameraFirmware;
             this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.CurrentCamera.CameraShutterTime);
             this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
@@ -564,25 +564,25 @@ namespace Canon_EOS_Remote.ViewModel
             {
                 case EDSDK.PropID_Tv:
                     {
-                        this.CurrentCamera.getTvFromCamera();
+                        this.CurrentCamera.getShutterTime();
                         this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
                         break;
                     }
                 case EDSDK.PropID_ISOSpeed:
                     {
-                        this.CurrentCamera.getISOSpeedFromCamera();
+                        this.CurrentCamera.getIsoSpeed();
                         this.CurrentISO = (int)this.isoConverter.getISOSpeedFromHex(this.currentCamera.CameraISOSpeed);
                         break;
                     }
                 case EDSDK.PropID_AvailableShots:
                     {
-                        this.currentCamera.getAvailableShotsFromCamera();
+                        this.currentCamera.getAvailableShots();
                         this.CurrentAvailableShots = (int)this.currentCamera.CameraAvailableShots;
                         break;
                     }
                 case EDSDK.PropID_BatteryLevel:
                     {
-                        this.currentCamera.getCameraBatteryLevelFromBody();
+                        this.currentCamera.getBatteryLevel();
                         this.CurrentBatteryLevel = (int)this.currentCamera.CameraBatteryLevel;
                         break;
                     }
@@ -595,25 +595,25 @@ namespace Canon_EOS_Remote.ViewModel
 
                 case EDSDK.PropID_ProductName:
                     {
-                        this.currentCamera.getCameraName();
-                        this.CurrentCameraName = this.currentCamera.CameraName;
+                        this.currentCamera.getName();
+                        this.CurrentCameraName = this.currentCamera.Name;
                         break;
                     }
                 case EDSDK.PropID_OwnerName:
                     {
-                        this.currentCamera.getCameraOwner();
-                        this.CurrentCameraOwner = this.currentCamera.CameraOwner;
+                        this.currentCamera.getOwner();
+                        this.CurrentCameraOwner = this.currentCamera.Owner;
                         break;
                     }
                 case EDSDK.PropID_BodyIDEx:
                     {
                         this.currentCamera.getBodyID();
-                        this.CurrentBodyID = this.currentCamera.CameraBodyID;
+                        this.CurrentBodyID = this.currentCamera.BodyID;
                         break;
                     }
                 case EDSDK.PropID_AEMode:
                     {
-                        this.currentCamera.getAEModeFromCamera();
+                        this.currentCamera.getAeMode();
                         this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
                         break;
                     }

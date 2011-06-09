@@ -265,6 +265,11 @@ namespace Canon_EOS_Remote
 
         #region Constructors
 
+        /// <summary>
+        /// Konstruktor für das Objekt Kamera
+        /// </summary>
+        /// <param name="cameraPtr">Zeiger auf die Kamera der von der SDK zurückgegeben wurde</param>
+        /// <remarks>Werte die nicht vom Konstruktor festgelegt wurden, werden automatisch während der Instanzierung ausgelesen</remarks>
         public Camera(IntPtr cameraPtr)
         {
             throw new NotImplementedException();
@@ -272,25 +277,6 @@ namespace Canon_EOS_Remote
 
         private void initFields()
         {
-
-        }
-
-        public Camera(IntPtr cameraPtr, String cameraName)
-        {
-            UInt32 error = 0;
-            this.Ptr = cameraPtr;
-            this.Name = cameraName;
-            if (error != 0)
-            {
-                Console.WriteLine("Cant register property event handler because : " + ErrorCodes.getErrorDataWithCodeNumber(error));
-            }
-
-            error = EDSDK.EdsOpenSession(this.Ptr);
-            if (error != 0)
-            {
-                Console.WriteLine("Cant open session with camera because : " + ErrorCodes.getErrorDataWithCodeNumber(error));
-            }
-
             getBatteryLevel();
             getAeMode();
             getDriveMode();
@@ -314,6 +300,23 @@ namespace Canon_EOS_Remote
             getApertureFromCamera();
             getTimeFromCamera();
             getEbvFromBody();
+        }
+
+        /// <summary>
+        /// Konstruktor für das Objekt Kamera
+        /// </summary>
+        /// <param name="cameraPtr">Zeiger auf die Kamera der von der SDK zurückgegeben wurde</param>
+        /// <param name="cameraName">Produkt Name der Kamera der aus der SDK ausgelesen wurde</param>
+        /// <remarks>Werte die nicht vom Konstruktor festgelegt wurden, werden automatisch während der Instanzierung ausgelesen</remarks>
+        public Camera(IntPtr cameraPtr, String cameraName)
+        {
+            this.Ptr = cameraPtr;
+            this.Name = cameraName;
+            if ((Error = EDSDK.EdsOpenSession(this.Ptr)) != 0)
+            {
+                publicError(Error);
+            }
+            initFields();
         }
 
         #endregion

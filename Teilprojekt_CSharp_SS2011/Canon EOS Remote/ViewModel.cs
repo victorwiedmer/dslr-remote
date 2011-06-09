@@ -53,7 +53,7 @@ namespace Canon_EOS_Remote.ViewModel
                 Camera tmpCamera=(Camera)CameraListView.CurrentItem;
                 if (tmpCamera != null)
                 {
-                    Console.WriteLine("Got new currently camera : " + tmpCamera.CameraName);
+                    Console.WriteLine("Got new currently camera : " + tmpCamera.Name);
                     Console.WriteLine("He index in the cameralist is : " + Model.CameraList.CameraList.IndexOf(tmpCamera));
                     this.ViewModelCurrentCamera.CurrentCamera = model.CameraList.CameraList.ElementAt(Model.CameraList.CameraList.IndexOf(tmpCamera));
                     this.ViewModelCurrentCamera.setCurrentlyCamera();

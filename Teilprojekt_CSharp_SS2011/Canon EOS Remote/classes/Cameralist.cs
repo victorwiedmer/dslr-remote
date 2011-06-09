@@ -105,7 +105,7 @@ namespace Canon_EOS_Remote.classes
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
         {
             Console.WriteLine("Cameralist meldet, in einer Kamera hat sich was geaendert : \n" +
-                this.CameraList.ElementAt(getCameraIndexFromList(inContext)).CameraName + "\nEventID:" +
+                this.CameraList.ElementAt(getCameraIndexFromList(inContext)).Name + "\nEventID:" +
                 this.eventIDs.getEventIDString(inEvent) +"\nPropertyID : " + this.propertyCodes.getPropertyString(inPropertyID));
                 
             if(onCameraPropertyChangedEvent!=null){
@@ -123,7 +123,7 @@ namespace Canon_EOS_Remote.classes
                 EDSDK.EdsCloseSession(inContext);
                 for (int i = 0; i < this.CameraList.Count; i++)
                 {
-                    if (this.CameraList.ElementAt(i).CameraPtr == inContext)
+                    if (this.CameraList.ElementAt(i).Ptr == inContext)
                     {
                         this.CameraList.RemoveAt(i);
                     }
@@ -139,7 +139,7 @@ namespace Canon_EOS_Remote.classes
         {
             for (int i = 0; i < this.CameraList.Count; i++)
             {
-                if (this.CameraList.ElementAt(i).CameraPtr == cameraPtr)
+                if (this.CameraList.ElementAt(i).Ptr == cameraPtr)
                 {
                     return i;
                 }

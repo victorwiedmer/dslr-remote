@@ -79,7 +79,11 @@ namespace Canon_EOS_Remote.classes
             {
                 Console.WriteLine("Error while getting deviceinfo : " + error);
             }
-            this.CameraList.Add(new Camera(tmpPtr,deviceInfo.szDeviceDescription));
+            string cameraName;
+            EDSDK.EdsOpenSession(tmpPtr);
+            EDSDK.EdsGetPropertyData(tmpPtr, EDSDK.PropID_ProductName, 0, out cameraName);
+            EDSDK.EdsCloseSession(tmpPtr);
+            this.CameraList.Add(new Camera(tmpPtr,cameraName));
             error = EDSDK.EdsSetPropertyEventHandler(tmpPtr, EDSDK.PropertyEvent_All, cameraPropertyEventHandler, tmpPtr);
             error = EDSDK.EdsSetCameraStateEventHandler(tmpPtr, EDSDK.StateEvent_All, this.cameraStateEventHandler, tmpPtr);
             return 0x0;

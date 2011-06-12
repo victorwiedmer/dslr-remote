@@ -39,7 +39,7 @@
 			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
 					<Label Content="Kamera auswählen : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto"></Label>
-                    <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="128" ItemsSource="{Binding Path=CameraListView, UpdateSourceTrigger=PropertyChanged}" Name="CBCameraList" DisplayMemberPath="CameraName" IsSynchronizedWithCurrentItem="True">
+                    <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="128" ItemsSource="{Binding Path=CameraListView, UpdateSourceTrigger=PropertyChanged}" Name="CBCameraList" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True">
                     </ComboBox>
                     <Label Content="Kameraname : " Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="lKameraName" VerticalAlignment="Top" Width="112" />
                     <Label Height="28" HorizontalAlignment="Left" Margin="122,40,0,0" Name="lKameraNameShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName, UpdateSourceTrigger=PropertyChanged}"/>
@@ -88,7 +88,7 @@
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,29.96,0,0" Width="120" VerticalAlignment="Top" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableShutterTimesView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height" ItemsSource="{Binding Path=ViewModelCurrentCamera.AEView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,0,0,18.9" VerticalAlignment="Bottom" Width="120" ItemsSource="{Binding Path=ViewModelCurrentCamera.ApertureView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
-					<ComboBox HorizontalAlignment="Right" Margin="0,4,167,0" Width="120" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Right" Margin="0,0,468,0" Width="120" VerticalAlignment="Top" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableEBVView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
                     <Button Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="607,56,0,0" Name="bTakePhoto" VerticalAlignment="Top" Width="96" Command="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto, UpdateSourceTrigger=PropertyChanged}" />
                     <Label Content="Anzahl : " Height="28" HorizontalAlignment="Left" Margin="607,88,0,0" Name="lPhotoCount" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="670,90,0,0" Name="tBPhotoCount" VerticalAlignment="Top" Width="120" Text="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto.PhotoCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -96,12 +96,16 @@
 			</TabItem>
 			<TabItem Header="Script">
 				<Grid>
-					<Button Content="ISO ändern" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126.277" Margin="8,0,0,0"/>
+                    <Button Content="ISO ändern" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126.277" Margin="8,0,0,0" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeIso, UpdateSourceTrigger=PropertyChanged}"/>
 					<Button Content="Blende ändern" Margin="8,0,0,51.79" VerticalAlignment="Bottom" Width="126.277" HorizontalAlignment="Left"/>
 					<Button Content="Belichtungszeit ändern" Margin="8,65.88,0,73.75" Width="Auto" HorizontalAlignment="Left" d:LayoutOverrides="Height"/>
-					<Button Content="EBV ändern" HorizontalAlignment="Left" Margin="8,21.96,0,0" VerticalAlignment="Top" Width="126.277"/>
-					<Button Content="Fokus ändern" HorizontalAlignment="Left" Margin="8,43.92,0,0" Width="126.277" Height="21.96" VerticalAlignment="Top"/>
-					</Grid>
+					<Button Content="EBV ändern" HorizontalAlignment="Left" Margin="8,21.96,0,0" VerticalAlignment="Top" Width="126.277" Height="22" />
+                    <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableISOListView, UpdateSourceTrigger=PropertyChanged}" Margin="140,0,0,0" VerticalAlignment="Top" Width="120" />
+                    <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableShutterTimesView, UpdateSourceTrigger=PropertyChanged}" Margin="140,65,0,0" VerticalAlignment="Top" Width="120" />
+                    <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ApertureView, UpdateSourceTrigger=PropertyChanged}" Margin="140,86,0,0" VerticalAlignment="Top" Width="120" />
+                    <ComboBox HorizontalAlignment="Right" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableEBVView, UpdateSourceTrigger=PropertyChanged}" Margin="0,22,634,0" VerticalAlignment="Top" Width="120" />
+                    <TextBlock Height="149" HorizontalAlignment="Left" Margin="413,6,0,0" Name="textBlock1" Text="{Binding Path=ViewModelCurrentCamera.Script, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="475" />
+                </Grid>
 			</TabItem>
 		</TabControl>
         <Label Content="Freier Speicher : " Height="28" HorizontalAlignment="Left" Margin="127,31,0,0" Name="lAvailableShots" VerticalAlignment="Top" />

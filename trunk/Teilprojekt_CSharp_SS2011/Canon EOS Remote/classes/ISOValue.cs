@@ -12,7 +12,7 @@ namespace Canon_EOS_Remote
     {
         #region Declaration of class members
 
-        private UInt32 decValue;
+        private string decValue;
         private UInt32 hexValue;
 
         #endregion
@@ -25,7 +25,7 @@ namespace Canon_EOS_Remote
             set { hexValue = value; }
         }
 
-        public UInt32 DecValue
+        public string DecValue
         {
             get { return decValue; }
             set { decValue = value; }
@@ -35,7 +35,7 @@ namespace Canon_EOS_Remote
 
         #region Construtors
 
-        public ISOValue(UInt32 decValue, UInt32 hexValue)
+        public ISOValue(string decValue, UInt32 hexValue)
         {
             this.decValue = decValue;
             this.hexValue = hexValue;

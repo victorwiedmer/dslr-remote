@@ -27,7 +27,7 @@ namespace Canon_EOS_Remote
             this.EbvList.Add(new TExposureCompensation("-5",0xd8));
             this.EbvList.Add(new TExposureCompensation("-4,5",0xdc));
             this.EbvList.Add(new TExposureCompensation("-4",0xe0));
-            this.EbvList.Add(new TExposureCompensation("-3,5",0xe0));
+            this.EbvList.Add(new TExposureCompensation("-3,5",0xe4));
             this.EbvList.Add(new TExposureCompensation("-3",0xe8));
             this.EbvList.Add(new TExposureCompensation("-2,5",0xec));
             this.EbvList.Add(new TExposureCompensation("-2",0xf0));
@@ -43,7 +43,7 @@ namespace Canon_EOS_Remote
             this.EbvList.Add(new TExposureCompensation("3",0x18));
             this.EbvList.Add(new TExposureCompensation("3,5",0x1c));
             this.EbvList.Add(new TExposureCompensation("4",0x20));
-            this.EbvList.Add(new TExposureCompensation("4,5",0x4));
+            this.EbvList.Add(new TExposureCompensation("4,5",0x24));
             this.EbvList.Add(new TExposureCompensation("5",0x28));
         }
 
@@ -58,6 +58,19 @@ namespace Canon_EOS_Remote
             }
 
             return "unknown : " + ebvHex;
+        }
+
+        public uint getebvHex(string ebvstring)
+        {
+            for (int i = 0; i < this.EbvList.Count; i++)
+            {
+                if (this.EbvList.ElementAt(i).EBVString == ebvstring)
+                {
+                    return this.EbvList.ElementAt(i).EBVHex;
+                }
+            }
+
+            return 0;
         }
     }
 }

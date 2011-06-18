@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Canon_EOS_Remote
 {
-    class CommandChangeISO : ICommand
+    class CommandScriptPhoto : ICommand
     {
         public bool CanExecute(object parameter)
         {
@@ -18,16 +18,17 @@ namespace Canon_EOS_Remote
 
         public void Execute(object parameter)
         {
-            changeISO("ChangeISO");
+            Console.WriteLine("Script take photo clicked");
+            takePhoto("TakePhoto");
         }
 
         public delegate void scriptEventHandler(string e);
-        public event scriptEventHandler changeIsoCommand;
+        public event scriptEventHandler takePhotoCommand;
 
-        private void changeISO(string e){
-            if (changeIsoCommand != null)
+        private void takePhoto(string e){
+            if (takePhotoCommand != null)
             {
-                changeIsoCommand(e);
+                takePhotoCommand(e);
             }
         }
     }

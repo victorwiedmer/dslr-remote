@@ -37,7 +37,10 @@ namespace Canon_EOS_Remote.Commands
 
         public void Execute(object parameter)
         {
-            Console.WriteLine("Driving Lens Far2");
+            Console.WriteLine(
+    "|-----------------|\n" +
+    "|Driving Lens Far2|\n" +
+    "|-----------------|\n");
             EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DoEvfAf, 1);
             EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DriveLensEvf, EDSDKLib.EDSDK.EvfDriveLens_Far2);
             EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DoEvfAf, 0);

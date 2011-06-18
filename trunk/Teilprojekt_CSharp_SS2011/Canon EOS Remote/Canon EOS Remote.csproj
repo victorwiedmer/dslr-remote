@@ -104,6 +104,7 @@
     <Compile Include="classes\TExposureCompensation.cs" />
     <Compile Include="classes\TShutterTime.cs" />
     <Compile Include="Commands\CommandChangeISO.cs" />
+    <Compile Include="Commands\Command_DelScript.cs" />
     <Compile Include="Commands\Command_DriveLensNearOne.cs" />
     <Compile Include="Commands\Command_TakePhoto.cs" />
     <Compile Include="Commands\Command_DriveLensNearTwo.cs" />

@@ -23,7 +23,10 @@ namespace Canon_EOS_Remote.Commands
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("Command_RunScript say : PropertyChanged : " + property);
+                Console.WriteLine(
+                    "|------------------------------------------------------|\n" + 
+                    "|Command_RunScript say : PropertyChanged : " + property + "|\n" +
+                    "|------------------------------------------------------|\n");
             }
         }
 

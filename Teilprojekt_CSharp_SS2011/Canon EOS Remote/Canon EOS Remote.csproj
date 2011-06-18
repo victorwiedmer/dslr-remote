@@ -111,6 +111,10 @@
     <Compile Include="Command_DriveLensFarOne.cs" />
     <Compile Include="Command_DriveLensFarTwo.cs" />
     <Compile Include="Command_DriveLensFarThree.cs" />
+    <Compile Include="CommandChangeTv.cs" />
+    <Compile Include="Command_RunScript.cs" />
+    <Compile Include="CommandScriptPhoto.cs" />
+    <Compile Include="ScriptCommand.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />
     <Compile Include="ViewModelCurrentCamera.cs" />

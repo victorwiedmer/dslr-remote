@@ -4,6 +4,7 @@ using EDSDKLib;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using Canon_EOS_Remote.classes;
+using System.Collections.Generic;
 
 namespace Canon_EOS_Remote.ViewModel
 {
@@ -20,10 +21,53 @@ namespace Canon_EOS_Remote.ViewModel
 
         private string script;
 
+        private CommandChangeTv commandChangeTv;
+
+        private Command_RunScript scriptCommand;
+
+        private CommandScriptPhoto scriptTakePhoto;
+
+        public CommandScriptPhoto Command_ScriptTakePhoto
+        {
+            get { return scriptTakePhoto; }
+            set { scriptTakePhoto = value;
+            update("Command_ScriptTakePhoto");
+            }
+        }
+
+        public Command_RunScript ScriptCommand
+        {
+            get { return scriptCommand; }
+            set { scriptCommand = value;
+            update("ScriptCommand");
+            }
+        }
+
+        public CommandChangeTv CommandChangeTv
+        {
+            get { return commandChangeTv; }
+            set { commandChangeTv = value;
+            update("CommandChangeTv");
+            }
+        }
 
         private EDSDK.EdsPropertyDesc PropertyDescISO;
 
         private CollectionView availableISOListView;
+
+        private CollectionView scriptIso;
+
+
+        private CollectionView scriptAperture;
+
+
+        private CollectionView scriptTv;
+
+
+        private CollectionView scriptEbv;
+
+
+
 
         private ObservableCollection<string> availableISOListCollection;
 
@@ -84,6 +128,36 @@ namespace Canon_EOS_Remote.ViewModel
         private ExposureCompensation ebvConverter;
 
         private CommandChangeISO commandChangeIso;
+
+        public CollectionView ScriptIso
+        {
+            get { return scriptIso; }
+            set { scriptIso = value;
+            update("ScriptIso");
+            }
+        }
+        public CollectionView ScriptAperture
+        {
+            get { return scriptAperture; }
+            set { scriptAperture = value;
+            update("ScriptAperture");
+            }
+        }
+
+        public CollectionView ScriptTv
+        {
+            get { return scriptTv; }
+            set { scriptTv = value;
+            update("ScriptTv");
+            }
+        }
+        public CollectionView ScriptEbv
+        {
+            get { return scriptEbv; }
+            set { scriptEbv = value;
+            update("ScriptEbv");
+            }
+        }
 
         public CommandChangeISO CommandChangeIso
         {
@@ -531,10 +605,10 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentTime = "CurrentTime";
             this.CurrentBatteryLevel = 50;
             this.CurrentEBV = "EBV";
-
+            this.ScriptCommand = new Command_RunScript();
             this.AvailableISOListCollection = new ObservableCollection<string>();
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
-
+            this.Command_ScriptTakePhoto = new CommandScriptPhoto();
             this.AvailableShutterTimesCollection = new ObservableCollection<string>();
             this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
 
@@ -569,14 +643,36 @@ namespace Canon_EOS_Remote.ViewModel
             this.ApertureView = new CollectionView(this.AptureCollection);
             this.AeModeConverter = new AEModes();
             this.EbvConverter = new ExposureCompensation();
-            this.Script = "Hier wird das Script stehen";
+            this.Script = "";
             this.commandChangeIso = new CommandChangeISO();
+            this.CommandChangeTv = new CommandChangeTv();
             this.commandChangeIso.changeIsoCommand += addCommandToScript;
+            this.CommandChangeTv.changeTvCommand += addCommandToScript;
+            this.Command_ScriptTakePhoto.takePhotoCommand += addCommandToScript;
+            //Initialise CollectionViews for Scriptpanel
+            this.ScriptAperture = new CollectionView(this.apertureCollection);
+            this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
+            this.ScriptIso = new CollectionView(this.AvailableISOListCollection);
+            this.ScriptEbv = new CollectionView(this.AvailableEVBCollection);
+
         }
 
         private void addCommandToScript(string e)
         {
-            this.Script+=e;
+            if (e == "ChangeISO")
+            {
+                this.Script += "Ändere ISO nach : " + this.ScriptIso.CurrentItem + "\n";
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ISOSpeed,sizeof(int),this.IsoConverter.getISOSpeedFromDec((string)this.ScriptIso.CurrentItem)));
+            }
+            if (e == "TakePhoto")
+            {
+                this.Script += "Foto Aufnahme\n";
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr,EDSDK.CameraCommand_TakePicture,0,0));
+            }
+            if (e == "ChangeTv")
+            {
+                this.Script += "Ändere Tv nach : " + this.ScriptTv.CurrentItem + "\n";
+            }
         }
 
         public void setCurrentlyCamera()

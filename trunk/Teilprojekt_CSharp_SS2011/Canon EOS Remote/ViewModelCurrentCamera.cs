@@ -10,6 +10,7 @@ namespace Canon_EOS_Remote.ViewModel
 {
     class ViewModelCurrentCamera : INotifyPropertyChanged
     {
+        #region Kamera Parameter der aktuellen Kamera
         private string currentCameraName;
         private int currentBatteryLevel;
         private string currentBodyID;
@@ -18,81 +19,57 @@ namespace Canon_EOS_Remote.ViewModel
         private string currentCameraFirmware;
         private Camera currentCamera;
         private string currentEBV;
-
-        private string script;
-
-        private CommandChangeTv commandChangeTv;
-
-        private Command_RunScript scriptCommand;
-
-        private CommandScriptPhoto scriptTakePhoto;
-
-        public CommandScriptPhoto Command_ScriptTakePhoto
-        {
-            get { return scriptTakePhoto; }
-            set { scriptTakePhoto = value;
-            update("Command_ScriptTakePhoto");
-            }
-        }
-
-        public Command_RunScript ScriptCommand
-        {
-            get { return scriptCommand; }
-            set { scriptCommand = value;
-            update("ScriptCommand");
-            }
-        }
-
-        public CommandChangeTv CommandChangeTv
-        {
-            get { return commandChangeTv; }
-            set { commandChangeTv = value;
-            update("CommandChangeTv");
-            }
-        }
-
         private EDSDK.EdsPropertyDesc PropertyDescISO;
+        private EDSDK.EdsPropertyDesc propertyDescTv;
+        private EDSDK.EdsPropertyDesc propertyDescEBV;
+        #endregion
 
+        #region Script
+        private string script;
+        private CommandChangeTv commandChangeTv;
+        private Command_RunScript scriptCommand;
+        private CommandScriptPhoto scriptTakePhoto;
+        private CommandChangeAv commandChangeAv;
+        #endregion
+
+        #region CollectionViews für die GUI
+        //Collections Views der Kamera Einstellung
         private CollectionView availableISOListView;
-
+        private CollectionView availableShutterTimesView;
+        private CollectionView availableEBVView;
+        private CollectionView aEView;
+        private CollectionView apertureView;
+        // Collection Views der Scriptsteuerung
         private CollectionView scriptIso;
-
-
         private CollectionView scriptAperture;
-
-
         private CollectionView scriptTv;
-
-
         private CollectionView scriptEbv;
-
+        #endregion
 
 
 
         private ObservableCollection<string> availableISOListCollection;
-
-        private ISOSpeeds isoConverter;
-
-        private ShutterTimes shutterTimeConverter;
-
-        private EDSDK.EdsPropertyDesc propertyDescTv;
-        private CollectionView availableShutterTimesView;
         private ObservableCollection<string> availableShutterTimesCollection;
-
-        private EDSDK.EdsPropertyDesc propertyDescEBV;
-
-
-        private CollectionView availableEBVView;
-
-
         private ObservableCollection<string> availableEVBCollection;
+
+        #region Konverter fuer die Umwandlung von String zu Hexadezimal
+        private ISOSpeeds isoConverter;
+        private ShutterTimes shutterTimeConverter;
+        private AEModes aeModeConverter;
+        private ExposureCompensation ebvConverter;
+        #endregion
+
+
+
+
+        
 
         public delegate void scriptEventHandler(string e);
 
         private EDSDK.EdsPropertyDesc propertyDescAE;
-        private CollectionView aEView;
+        
         private ObservableCollection<string> aECollection;
-        private AEModes aeModeConverter;
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -100,8 +77,9 @@ namespace Canon_EOS_Remote.ViewModel
 
         #region Commands
 
-        private Command_TakePhoto commandTakePhoto;
+        private Command_TakePhoto commandTakePhoto; //Macht n-Fotos die ueber die Kameraeinstellung festgelegt wurden
 
+        #region Commands fuer die Objektivfokus Steuerung
         private Command_DriveLensNearOne commandDriveLensNearOne;
         private Command_DriveLensNearTwo commandDriveLensNearTwo;
         private Command_DriveLensNearThree commandDriveLensNearThree;
@@ -110,12 +88,16 @@ namespace Canon_EOS_Remote.ViewModel
         private Command_DriveLensFarTwo commandDriveLensFarTwo;
         private Command_DriveLensFarThree commandDriveLensFarThree;
         #endregion
+        #region Commands der Scriptsteuerung
+        private CommandChangeEBV commandChangeEbv;
+        #endregion
+        #endregion
 
         private string currentDate;
         private string currentTime;
         private EDSDK.EdsPropertyDesc apertureDesc;
 
-        private CollectionView apertureView;
+        
         private ObservableCollection<string> apertureCollection;
         private IntPtr streamref;
         private IntPtr imageref;
@@ -125,9 +107,61 @@ namespace Canon_EOS_Remote.ViewModel
         private Apertures apertureConverter;
 
         private string currentTv;
-        private ExposureCompensation ebvConverter;
+        
 
         private CommandChangeISO commandChangeIso;
+
+        public CommandScriptPhoto Command_ScriptTakePhoto
+        {
+            get { return scriptTakePhoto; }
+            set
+            {
+                scriptTakePhoto = value;
+                update("Command_ScriptTakePhoto");
+            }
+        }
+
+        public CommandChangeAv CommandChangeAv
+        {
+            get { return commandChangeAv; }
+            set
+            {
+                commandChangeAv = value;
+                update("CommandChangeAv");
+            }
+        }
+
+        
+
+        public CommandChangeEBV CommandChangeEbv
+        {
+            get { return commandChangeEbv; }
+            set
+            {
+                commandChangeEbv = value;
+                update("CommandChangeEbv");
+            }
+        }
+
+        public Command_RunScript ScriptCommand
+        {
+            get { return scriptCommand; }
+            set
+            {
+                scriptCommand = value;
+                update("ScriptCommand");
+            }
+        }
+
+        public CommandChangeTv CommandChangeTv
+        {
+            get { return commandChangeTv; }
+            set
+            {
+                commandChangeTv = value;
+                update("CommandChangeTv");
+            }
+        }
 
         public CollectionView ScriptIso
         {
@@ -646,9 +680,13 @@ namespace Canon_EOS_Remote.ViewModel
             this.Script = "";
             this.commandChangeIso = new CommandChangeISO();
             this.CommandChangeTv = new CommandChangeTv();
+            this.CommandChangeAv = new CommandChangeAv();
+            this.CommandChangeEbv = new CommandChangeEBV();
             this.commandChangeIso.changeIsoCommand += addCommandToScript;
             this.CommandChangeTv.changeTvCommand += addCommandToScript;
             this.Command_ScriptTakePhoto.takePhotoCommand += addCommandToScript;
+            this.CommandChangeAv.changeAvCommand += addCommandToScript;
+            this.CommandChangeEbv.changeEbvCommand += addCommandToScript;
             //Initialise CollectionViews for Scriptpanel
             this.ScriptAperture = new CollectionView(this.apertureCollection);
             this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
@@ -672,6 +710,17 @@ namespace Canon_EOS_Remote.ViewModel
             if (e == "ChangeTv")
             {
                 this.Script += "Ändere Tv nach : " + this.ScriptTv.CurrentItem + "\n";
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_Tv, sizeof(int), this.ShutterTimeConverter.getShutterTimeStringFromDec((string)this.ScriptTv.CurrentItem)));
+            }
+            if (e == "ChangeEBV")
+            {
+                this.Script += "Ändere EBV nach : " + this.ScriptEbv.CurrentItem + "\n";
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ExposureCompensation, sizeof(int), this.EbvConverter.getebvHex((string)this.ScriptEbv.CurrentItem)));
+            }
+            if (e == "ChangeAv")
+            {
+                this.Script += "Ändere Av nach : " + this.ScriptAperture.CurrentItem + "\n";
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_Av, sizeof(int), this.ApertureConverter.getApertureHex((string)this.ScriptAperture.CurrentItem)));
             }
         }
 
@@ -915,19 +964,27 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void sendEbvToCamera(object sender, EventArgs e)
         {
-            string tmpProperty = "";
             if (this.AvailableEBVView.CurrentItem != null)
             {
-                tmpProperty = (string)this.AvailableEBVView.CurrentItem;
-                this.CurrentCamera.setEbvToCamera((int)this.EbvConverter.getebvHex(tmpProperty));
+                this.CurrentCamera.setEbvToCamera((int)this.EbvConverter.getebvHex((string)this.AvailableEBVView.CurrentItem));
             }
         }
 
+        /// <summary>
+        /// Konvertiert das Kameradatum vom Typ EdsTime zum String
+        /// </summary>
+        /// <param name="time">Datum das aus der Kamera gelesen wurde vom Typ EdsTime</param>
+        /// <returns>String mit dem Kameradatum aus dem Parameter</returns>
         public string convertEdsTimeToDateString(EDSDK.EdsTime time)
         {
             return time.Year + "-" + time.Month + "-" + time.Day;
         }
 
+        /// <summary>
+        /// Konvertiert die Kamerazeit vom Typ EdsTime zum String
+        /// </summary>
+        /// <param name="time">Zeit die aus der Kamera gelesen wurde vom Typ EdsTime</param>
+        /// <returns>String mit der Kamerazeit aus dem Parameter</returns>
         public string convertEdsTimeToTimeString(EDSDK.EdsTime time)
         {
             return time.Hour + "-" + time.Minute + "-" + time.Second;

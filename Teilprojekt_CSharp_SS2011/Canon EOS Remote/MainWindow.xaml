@@ -107,9 +107,9 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"> 
                     <TextBlock Height="149" HorizontalAlignment="Left" Margin="413,6,0,0" Name="textBlock1" Text="{Binding Path=ViewModelCurrentCamera.Script, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="475" />
                     </ScrollViewer>
-                    <Button Content="Script ausführen" Command="{Binding Path=ViewModelCurrentCamera.ScriptCommand, UpdateSourceTrigger=PropertyChanged}"  Height="23" HorizontalAlignment="Left" Margin="8,121,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
+                    <Button Content="Script ausführen" Command="{Binding Path=ViewModelCurrentCamera.ScriptCommand, UpdateSourceTrigger=PropertyChanged}"  Height="23" HorizontalAlignment="Left" Margin="8,121,0,0" Name="bRunScript" VerticalAlignment="Top" Width="126" />
                     <Button Command="{Binding Path=ViewModelCurrentCamera.Command_ScriptTakePhoto, UpdateSourceTrigger=PropertyChanged}" Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="8,92,0,0" Name="button2" VerticalAlignment="Top" Width="126" />
-                    <Button Content="Script löschen" Height="23" HorizontalAlignment="Left" Margin="140,92,0,0" Name="bScriptDel" VerticalAlignment="Top" Width="120" IsEnabled="False" />
+                    <Button Content="Script löschen" Command="{Binding Path=ViewModelCurrentCamera.CommandDelScript, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="140,92,0,0" Name="bScriptDel" VerticalAlignment="Top" Width="120" IsEnabled="True" />
                     <Button Content="Letzen Befehl löschen" Height="23" HorizontalAlignment="Left" Margin="140,121,0,0" Name="bDelLastCommand" VerticalAlignment="Top" Width="136" IsEnabled="False" />
                 </Grid>
 			</TabItem>

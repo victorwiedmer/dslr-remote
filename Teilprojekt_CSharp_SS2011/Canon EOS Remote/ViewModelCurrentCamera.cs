@@ -25,12 +25,13 @@ namespace Canon_EOS_Remote.ViewModel
         private EDSDK.EdsPropertyDesc propertyDescEBV;
         #endregion
 
-        #region Script
+        #region Script Commands
         private string script;
         private CommandChangeTv commandChangeTv;
         private Command_RunScript scriptCommand;
         private CommandScriptPhoto scriptTakePhoto;
         private CommandChangeAv commandChangeAv;
+        private Command_DelScript commandDelScript;
         #endregion
 
         #region CollectionViews für die GUI
@@ -111,6 +112,15 @@ namespace Canon_EOS_Remote.ViewModel
         
 
         private CommandChangeISO commandChangeIso;
+
+
+        public Command_DelScript CommandDelScript
+        {
+            get { return commandDelScript; }
+            set { commandDelScript = value;
+            update("CommandDelScript");
+            }
+        }
 
         public CommandScriptPhoto Command_ScriptTakePhoto
         {
@@ -683,17 +693,25 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandChangeTv = new CommandChangeTv();
             this.CommandChangeAv = new CommandChangeAv();
             this.CommandChangeEbv = new CommandChangeEBV();
+            this.CommandDelScript = new Command_DelScript();
             this.commandChangeIso.changeIsoCommand += addCommandToScript;
             this.CommandChangeTv.changeTvCommand += addCommandToScript;
             this.Command_ScriptTakePhoto.takePhotoCommand += addCommandToScript;
             this.CommandChangeAv.changeAvCommand += addCommandToScript;
             this.CommandChangeEbv.changeEbvCommand += addCommandToScript;
+            this.CommandDelScript.delscriptHandler += delScript;
             //Initialise CollectionViews for Scriptpanel
             this.ScriptAperture = new CollectionView(this.apertureCollection);
             this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
             this.ScriptIso = new CollectionView(this.AvailableISOListCollection);
             this.ScriptEbv = new CollectionView(this.AvailableEVBCollection);
 
+        }
+
+        private void delScript(string e)
+        {
+            this.Script = "";
+            this.ScriptCommand.ScriptCommands.Clear();
         }
 
         private void addCommandToScript(string e)

@@ -70,7 +70,11 @@ namespace Canon_EOS_Remote.Commands
 
         public void Execute(object parameter)
         {
-            Console.WriteLine("Command run script clicked");
+            Console.WriteLine(
+                "|--------------------------|\n" + 
+                "|Command run script clicked|\n" + 
+                "|--------------------------|\n"
+                );
             Thread scriptThread = new Thread(new ThreadStart(this.runScript));
             scriptThread.Start();
         }

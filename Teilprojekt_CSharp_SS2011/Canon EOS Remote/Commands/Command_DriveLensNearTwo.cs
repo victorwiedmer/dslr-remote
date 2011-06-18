@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
 
-namespace Canon_EOS_Remote
+namespace Canon_EOS_Remote.Commands
 {
-    class Command_DriveLensNearThree : ICommand, INotifyPropertyChanged
+    class Command_DriveLensNearTwo : ICommand, INotifyPropertyChanged
     {
         private IntPtr cameraPtr;
 
@@ -37,9 +37,9 @@ namespace Canon_EOS_Remote
 
         public void Execute(object parameter)
         {
-            Console.WriteLine("Driving Lens Near3");
+            Console.WriteLine("Driving Lens Near2");
             EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DoEvfAf, 1);
-            EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DriveLensEvf, EDSDKLib.EDSDK.EvfDriveLens_Near3);
+            EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DriveLensEvf, EDSDKLib.EDSDK.EvfDriveLens_Near2);
             EDSDKLib.EDSDK.EdsSendCommand(this.CameraPtr, EDSDKLib.EDSDK.CameraCommand_DoEvfAf, 0);
         }
 

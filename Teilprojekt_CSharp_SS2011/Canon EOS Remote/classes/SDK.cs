@@ -12,7 +12,6 @@ namespace Canon_EOS_Remote.classes
         #region classmembers
         private bool _sDKState;
         public string _stringSdkState;
-        private EdsError error;
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 

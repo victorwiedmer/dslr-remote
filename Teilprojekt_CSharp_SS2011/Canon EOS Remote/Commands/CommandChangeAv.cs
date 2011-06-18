@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
 
-namespace Canon_EOS_Remote
+namespace Canon_EOS_Remote.Commands
 {
-    class CommandChangeEBV : ICommand
+    class CommandChangeAv : ICommand
     {
         public bool CanExecute(object parameter)
         {
@@ -18,16 +18,16 @@ namespace Canon_EOS_Remote
 
         public void Execute(object parameter)
         {
-            changeEBV("ChangeEBV");
+            changeAv("ChangeAv");
         }
 
         public delegate void scriptEventHandler(string e);
-        public event scriptEventHandler changeEbvCommand;
+        public event scriptEventHandler changeAvCommand;
 
-        private void changeEBV(string e){
-            if (changeEbvCommand != null)
+        private void changeAv(string e){
+            if (changeAvCommand != null)
             {
-                changeEbvCommand(e);
+                changeAvCommand(e);
             }
         }
     }

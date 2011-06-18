@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Collections.ObjectModel;
 using Canon_EOS_Remote.classes;
 using System.Collections.Generic;
+using Canon_EOS_Remote.Commands;
 
 namespace Canon_EOS_Remote.ViewModel
 {

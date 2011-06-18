@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
 
-namespace Canon_EOS_Remote
+namespace Canon_EOS_Remote.Commands
 {
-    class CommandChangeISO : ICommand
+    class CommandChangeEBV : ICommand
     {
         public bool CanExecute(object parameter)
         {
@@ -18,16 +18,16 @@ namespace Canon_EOS_Remote
 
         public void Execute(object parameter)
         {
-            changeISO("ChangeISO");
+            changeEBV("ChangeEBV");
         }
 
         public delegate void scriptEventHandler(string e);
-        public event scriptEventHandler changeIsoCommand;
+        public event scriptEventHandler changeEbvCommand;
 
-        private void changeISO(string e){
-            if (changeIsoCommand != null)
+        private void changeEBV(string e){
+            if (changeEbvCommand != null)
             {
-                changeIsoCommand(e);
+                changeEbvCommand(e);
             }
         }
     }

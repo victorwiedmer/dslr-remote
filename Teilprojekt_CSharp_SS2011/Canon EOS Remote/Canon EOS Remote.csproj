@@ -114,6 +114,8 @@
     <Compile Include="CommandChangeTv.cs" />
     <Compile Include="Command_RunScript.cs" />
     <Compile Include="CommandScriptPhoto.cs" />
+    <Compile Include="CommandChangeEBV.cs" />
+    <Compile Include="CommandChangeAv.cs" />
     <Compile Include="ScriptCommand.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />

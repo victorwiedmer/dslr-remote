@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
 
-namespace Canon_EOS_Remote
+namespace Canon_EOS_Remote.Commands
 {
     class Command_DriveLensFarOne : ICommand, INotifyPropertyChanged
     {

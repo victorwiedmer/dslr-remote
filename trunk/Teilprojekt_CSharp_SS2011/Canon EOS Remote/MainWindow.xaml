@@ -97,7 +97,7 @@
 			<TabItem Header="Script">
 				<Grid>
                     <Button Content="ISO ändern" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126.277" Margin="8,0,0,0" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeIso, UpdateSourceTrigger=PropertyChanged}" Name="bChangeIso" />
-                    <Button Content="Blende ändern" Margin="8,0,0,75" VerticalAlignment="Bottom" Width="126.277" HorizontalAlignment="Left" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeAv, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Blende ändern" Margin="8,0,0,75" VerticalAlignment="Bottom" Width="126.277" HorizontalAlignment="Left" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeAv, UpdateSourceTrigger=PropertyChanged}" Name="bChangeTv" />
 					<Button Content="Belichtungszeit ändern" Margin="8,44,0,96" Width="Auto" HorizontalAlignment="Left" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeTv, UpdateSourceTrigger=PropertyChanged}" />
                     <Button Content="EBV ändern" HorizontalAlignment="Left" Margin="8,21.96,0,0" VerticalAlignment="Top" Width="126.277" Height="22" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeEbv, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptIso, UpdateSourceTrigger=PropertyChanged}" Margin="140,0,0,0" VerticalAlignment="Top" Width="120" />

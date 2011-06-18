@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Threading;
 
-namespace Canon_EOS_Remote
+namespace Canon_EOS_Remote.Commands
 {
     class Command_RunScript :ICommand , INotifyPropertyChanged
     {

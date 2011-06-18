@@ -103,19 +103,19 @@
     <Compile Include="classes\TAperture.cs" />
     <Compile Include="classes\TExposureCompensation.cs" />
     <Compile Include="classes\TShutterTime.cs" />
-    <Compile Include="CommandChangeISO.cs" />
-    <Compile Include="Command_DriveLensNearOne.cs" />
-    <Compile Include="Command_TakePhoto.cs" />
-    <Compile Include="Command_DriveLensNearTwo.cs" />
-    <Compile Include="Command_DriveLensNearThree.cs" />
-    <Compile Include="Command_DriveLensFarOne.cs" />
-    <Compile Include="Command_DriveLensFarTwo.cs" />
-    <Compile Include="Command_DriveLensFarThree.cs" />
-    <Compile Include="CommandChangeTv.cs" />
-    <Compile Include="Command_RunScript.cs" />
-    <Compile Include="CommandScriptPhoto.cs" />
-    <Compile Include="CommandChangeEBV.cs" />
-    <Compile Include="CommandChangeAv.cs" />
+    <Compile Include="Commands\CommandChangeISO.cs" />
+    <Compile Include="Commands\Command_DriveLensNearOne.cs" />
+    <Compile Include="Commands\Command_TakePhoto.cs" />
+    <Compile Include="Commands\Command_DriveLensNearTwo.cs" />
+    <Compile Include="Commands\Command_DriveLensNearThree.cs" />
+    <Compile Include="Commands\Command_DriveLensFarOne.cs" />
+    <Compile Include="Commands\Command_DriveLensFarTwo.cs" />
+    <Compile Include="Commands\Command_DriveLensFarThree.cs" />
+    <Compile Include="Commands\CommandChangeTv.cs" />
+    <Compile Include="Commands\Command_RunScript.cs" />
+    <Compile Include="Commands\CommandScriptPhoto.cs" />
+    <Compile Include="Commands\CommandChangeEBV.cs" />
+    <Compile Include="Commands\CommandChangeAv.cs" />
     <Compile Include="ScriptCommand.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelCameralist.cs" />
@@ -167,7 +167,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
     <None Include="EDSDK.lib" />
     <None Include="icc\1001_F.BIN">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

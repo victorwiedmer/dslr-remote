@@ -40,11 +40,14 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -90,19 +93,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="classes\AEModes.cs" />
-    <Compile Include="classes\Apertures.cs" />
-    <Compile Include="classes\EventCodes.cs" />
-    <Compile Include="classes\EventID.cs" />
-    <Compile Include="classes\PropertyCodes.cs" />
-    <Compile Include="classes\PropertyEventArgs.cs" />
-    <Compile Include="classes\PropertyID.cs" />
-    <Compile Include="classes\scriptCommandEventArgs.cs" />
-    <Compile Include="classes\ShutterTimes.cs" />
-    <Compile Include="classes\TAEMode.cs" />
-    <Compile Include="classes\TAperture.cs" />
-    <Compile Include="classes\TExposureCompensation.cs" />
-    <Compile Include="classes\TShutterTime.cs" />
+    <Compile Include="Typen und Listen\AEModes.cs" />
+    <Compile Include="Typen und Listen\Apertures.cs" />
+    <Compile Include="Typen und Listen\EventCodes.cs" />
+    <Compile Include="Typen und Listen\TEventID.cs" />
+    <Compile Include="Typen und Listen\PropertyCodes.cs" />
+    <Compile Include="Typen und Listen\PropertyEventArgs.cs" />
+    <Compile Include="Typen und Listen\PropertyID.cs" />
+    <Compile Include="Typen und Listen\scriptCommandEventArgs.cs" />
+    <Compile Include="Typen und Listen\ShutterTimes.cs" />
+    <Compile Include="Typen und Listen\TAEMode.cs" />
+    <Compile Include="Typen und Listen\TAperture.cs" />
+    <Compile Include="Typen und Listen\TExposureCompensation.cs" />
+    <Compile Include="Typen und Listen\TShutterTime.cs" />
     <Compile Include="Commands\CommandChangeISO.cs" />
     <Compile Include="Commands\Command_DelScript.cs" />
     <Compile Include="Commands\Command_DriveLensNearOne.cs" />
@@ -133,17 +136,16 @@
     <Compile Include="classes\Cameralist.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="classes\TDriveMode.cs" />
-    <Compile Include="classes\Lens.cs" />
+    <Compile Include="Typen und Listen\TDriveMode.cs" />
     <Compile Include="classes\SDK.cs" />
     <Compile Include="EDSDK.cs" />
     <Compile Include="ErrorHandling\EdsError.cs" />
-    <Compile Include="classes\DriveModes.cs" />
+    <Compile Include="Typen und Listen\DriveModes.cs" />
     <Compile Include="ErrorHandling\ErrorCodes.cs" />
-    <Compile Include="classes\ISOSpeeds.cs" />
-    <Compile Include="classes\ExposureCompensation.cs" />
-    <Compile Include="classes\ISOSpeed.cs" />
-    <Compile Include="classes\ISOValue.cs" />
+    <Compile Include="Typen und Listen\ISOSpeeds.cs" />
+    <Compile Include="Typen und Listen\ExposureCompensation.cs" />
+    <Compile Include="Typen und Listen\ISOSpeed.cs" />
+    <Compile Include="Typen und Listen\TISOValue.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -168,6 +170,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="EDSDK.lib" />
     <None Include="icc\1001_F.BIN">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1270,6 +1273,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

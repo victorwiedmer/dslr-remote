@@ -18,7 +18,6 @@ namespace Canon_EOS_Remote
     {
         private List<UInt32> _availableISOSpeeds;
         private UInt32 _currentlySettedISOSpeed;
-        private ISOSpeeds _convertISOSpeeds;
 
         /**
          * Setter and Getter of the class member _availableISOSpeed

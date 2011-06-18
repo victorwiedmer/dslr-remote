@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Canon_EOS_Remote.classes
 {
-    class EventID
+    class TEventID
     {
         private string eventIDString;
 
@@ -22,7 +22,7 @@ namespace Canon_EOS_Remote.classes
             set { eventIDCode = value; }
         }
 
-        public EventID(string eventIDString, UInt32 eventIDCode)
+        public TEventID(string eventIDString, UInt32 eventIDCode)
         {
             this.EventIDCode = eventIDCode;
             this.EventIDString = eventIDString;

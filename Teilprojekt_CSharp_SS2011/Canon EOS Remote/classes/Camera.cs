@@ -5,6 +5,7 @@ using Canon_EOS_Remote.classes;
 using System.Windows.Controls;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.IO;
 
 namespace Canon_EOS_Remote
 {
@@ -296,7 +297,7 @@ namespace Canon_EOS_Remote
 
         private void initFields()
         {
-            startLVThread();
+            //startLVThread();
             getBatteryLevel();
             getAeMode();
             getDriveMode();
@@ -557,7 +558,7 @@ namespace Canon_EOS_Remote
         /// <summary>
         /// Holt die Tabelle der verfügbaren Blendenwerte von der Kamera und speichert sie in den Klassemember
         /// </summary>
-        private void getpropertyDescApertureValues()
+        public void getpropertyDescApertureValues()
         {
             if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_Av, out this.availableApertureValues)) != 0)
             {
@@ -568,7 +569,7 @@ namespace Canon_EOS_Remote
         /// <summary>
         /// Holt die Tabelle der verfügbaren Belichtungszeiten von der Kamera und speichert sie in den Klassemember
         /// </summary>
-        private void getpropertyDescShutterTimes()
+        public void getpropertyDescShutterTimes()
         {
             if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_Tv, out this.availableShutterspeeds)) != 0)
             {
@@ -579,7 +580,7 @@ namespace Canon_EOS_Remote
         /// <summary>
         /// Holt die Tabelle der verfügbaren EBV von der Kamera und speichert sie in den Klassemember
         /// </summary>
-        private void getpropertyDescExposureCompensation()
+        public void getpropertyDescExposureCompensation()
         {
             if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_ExposureCompensation, out this.availableExposureCompensation)) != 0)
             {
@@ -696,6 +697,15 @@ namespace Canon_EOS_Remote
                 LVThread.Join();
                 EDSDK.EdsSetPropertyData(this.Ptr, (uint)EDSDK.PropID_Evf_OutputDevice, 0, Marshal.SizeOf((uint)EDSDK.EvfOutputDevice_PC), (uint)EDSDK.EvfOutputDevice_TFT);
             }
+        }
+
+        private EDSDK.EdsDirectoryItemInfo _pictureInfo;
+        private EDSDK.EdsImageInfo _imageInfo;
+        private IntPtr _pictureRef;
+
+        public void downloadLastImage()
+        {
+            throw new NotImplementedException();
         }
 
 

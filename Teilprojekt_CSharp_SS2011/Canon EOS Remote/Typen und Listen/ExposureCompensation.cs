@@ -72,5 +72,6 @@ namespace Canon_EOS_Remote
 
             return 0;
         }
+
     }
 }

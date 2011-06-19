@@ -4,91 +4,75 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	x:Class="Teilprojekt_SS2011.MainWindow"
 	x:Name="mainWindow"
-	Width="926" Height="591"
+	Width="640" Height="480"
     xmlns:locale="clr-namespace:Teilprojekt_SS2011"
     xmlns:vm="clr-namespace:Canon_EOS_Remote.ViewModel"
-    Title="" Loaded="Window_Loaded">
+    Title="Canon EOS Remote" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:ViewModel/>
     </Window.DataContext>
 	<Grid x:Name="LayoutRoot">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="0.15*"/>
-			<RowDefinition Height="0.35*"/>
-			<RowDefinition Height="0.50*"/>
+			<RowDefinition Height="42*"/>
+            <RowDefinition Height="399*"/>
 		</Grid.RowDefinitions>
-		<Menu Height="25" VerticalAlignment="Top">
-			<MenuItem Header="Datei" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold">
-			<MenuItem Header="Beenden" Width="Auto" Height="Auto" Margin="0"></MenuItem>
-			</MenuItem>
-			<MenuItem Header="Kamera" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold">
-			</MenuItem>
-			<MenuItem Header="Script" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold">
-				<MenuItem Header="Neu"></MenuItem>
-				<MenuItem Header="Öffnen"></MenuItem>
-				<MenuItem Header="Speichern"></MenuItem>
-				<MenuItem Header="Speichern unter"></MenuItem>
-			</MenuItem>
-			<MenuItem Header="Info" Height="25" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"/>
-		</Menu>
-		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName}" HorizontalAlignment="Left" Margin="0,25,0,15" d:LayoutOverrides="Height" Height="30"/>
-		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAvailableShots}" HorizontalAlignment="Left" Margin="234,31,0,22" d:LayoutOverrides="Height" Height="30" Width="35" />
-		<Label Content="Batterie Status : " Margin="569,31,235,22" d:LayoutOverrides="Height" Height="30"/>
-		<ProgressBar HorizontalAlignment="Right" Margin="0,23,29,11" Width="200" Grid.Row="0" Height="20" Minimum="0" Maximum="100" Value="{Binding Path=ViewModelCurrentCamera.CurrentBatteryLevel, UpdateSourceTrigger=PropertyChanged}" />
-		<TabControl Grid.Row="1" BorderBrush="{x:Null}">
+		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName}" HorizontalAlignment="Left" Margin="1,12,0,0" d:LayoutOverrides="Height" Height="30"/>
+		<Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAvailableShots}" HorizontalAlignment="Left" Margin="307,12,0,0" d:LayoutOverrides="Height" Height="30" Width="35" />
+        <ProgressBar HorizontalAlignment="Right" Margin="0,17,69,5" Width="122" Height="20" Minimum="0" Maximum="100" Value="{Binding Path=ViewModelCurrentCamera.CurrentBatteryLevel, UpdateSourceTrigger=PropertyChanged}" />
+		<TabControl Grid.Row="1" BorderBrush="{x:Null}" Margin="0,6,0,0">
 			<TabItem Header="Allgemein" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
 					<Label Content="Kamera auswählen : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto"></Label>
                     <ComboBox HorizontalAlignment="Left" Margin="121.953,4,0,0" VerticalAlignment="Top" Width="128" ItemsSource="{Binding Path=CameraListView, UpdateSourceTrigger=PropertyChanged}" Name="CBCameraList" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True">
                     </ComboBox>
                     <Label Content="Kameraname : " Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="lKameraName" VerticalAlignment="Top" Width="112" />
-                    <Label Height="28" HorizontalAlignment="Left" Margin="122,40,0,0" Name="lKameraNameShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Height="28" HorizontalAlignment="Left" Margin="131,40,0,0" Name="lKameraNameShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraName, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Kamerabesitzer : " Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" Name="lOwner" VerticalAlignment="Top" Width="112" />
-                    <Label Height="28" HorizontalAlignment="Left" Margin="122,74,0,0" Name="lOwnerShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraOwner, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="132,74,0,0" Name="lOwnerShow" VerticalAlignment="Top" Width="142" Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraOwner, UpdateSourceTrigger=PropertyChanged}" />
                     <Label Content="Kamerafirmware :   " Height="28" HorizontalAlignment="Left" Margin="6,108,0,0" Name="lCameraFirmware" VerticalAlignment="Top" Width="112" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraFirmware}" Height="28" HorizontalAlignment="Right" Margin="0,108,630,0" Name="lCameraFirmwareShow" VerticalAlignment="Top" Width="142" />
-                    <Label Content="ISO : " Height="28" HorizontalAlignment="Left" Margin="340,0,0,0" Name="lISO" VerticalAlignment="Top" Width="99" />
-                    <Label Height="28" HorizontalAlignment="Right" Margin="0,40,296,0" Name="lBelichtungszeitShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentTv, UpdateSourceTrigger=PropertyChanged}" Width="132" />
-                    <Label Height="28" HorizontalAlignment="Left" Margin="466,0,0,0" Name="lISOShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentISO, UpdateSourceTrigger=PropertyChanged}" Width="132" />
-                    <Label Content="Belichtungszeit : " Height="28" HorizontalAlignment="Left" Margin="340,40,0,0" Name="lBelichtungszeit" VerticalAlignment="Top" />
-                    <Label Content="Programmmodus : " Height="28" HorizontalAlignment="Left" Margin="340,74,0,0" Name="lAEMode" VerticalAlignment="Top" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentProgramm, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Right" Margin="0,74,296,0" Name="lAEModeShow" VerticalAlignment="Top" Width="132" />
-                    <Label Content="Blende : " Height="28" HorizontalAlignment="Left" Margin="340,108,0,0" Name="lAperture" VerticalAlignment="Top" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAperture, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="466,108,296,0" Name="lApertureShow" VerticalAlignment="Top" Width="132" />
-                    <Label Content="Kameradatum : " Height="28" HorizontalAlignment="Left" Margin="650,6,0,0" Name="lCameraDate" VerticalAlignment="Top" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentDate, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Left" Margin="769,6,0,0" Name="lCameraDateShow" VerticalAlignment="Top" />
-                    <Label Content="Kamerazeit: " Height="28" HorizontalAlignment="Left" Margin="650,40,0,0" Name="lCameraTime" VerticalAlignment="Top" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentTime, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Left" Margin="769,40,0,0" Name="lCameraTimeShow" VerticalAlignment="Top" />
-                    <Label Content="EBV : " Height="28" HorizontalAlignment="Left" Margin="650,74,0,0" Name="label1" VerticalAlignment="Top" />
-                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentEBV, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Left" Margin="769,74,0,0" Name="label2" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentCameraFirmware}" Height="28" HorizontalAlignment="Right"  Name="lCameraFirmwareShow" VerticalAlignment="Top" Width="142" Margin="0,108,335,0" />
+                    <Label Content="ISO : " Height="28" HorizontalAlignment="Left" Margin="6,142,0,0" Name="lISO" VerticalAlignment="Top" Width="99" />
+                    <Label Height="28" HorizontalAlignment="Right" Margin="0,176,344,0" Name="lBelichtungszeitShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentTv, UpdateSourceTrigger=PropertyChanged}" Width="132" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="132,142,0,0" Name="lISOShow" VerticalAlignment="Top" Content="{Binding Path=ViewModelCurrentCamera.CurrentISO, UpdateSourceTrigger=PropertyChanged}" Width="132" />
+                    <Label Content="Belichtungszeit : " Height="28" HorizontalAlignment="Left" Margin="6,176,0,0" Name="lBelichtungszeit" VerticalAlignment="Top" />
+                    <Label Content="Programmmodus : " Height="28" HorizontalAlignment="Left" Margin="7,244,0,0" Name="lAEMode" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentProgramm, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Right" Margin="0,244,344,0" Name="lAEModeShow" VerticalAlignment="Top" Width="132" />
+                    <Label Content="Blende : " Height="28" HorizontalAlignment="Left" Margin="6,210,0,0" Name="lAperture" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentAperture, UpdateSourceTrigger=PropertyChanged}" Height="28" Name="lApertureShow" VerticalAlignment="Top" Width="132" Margin="132,210,344,0" />
+                    <Label Content="Kameradatum : " Height="28" HorizontalAlignment="Left" Margin="650,40,0,0" Name="lCameraDate" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentDate, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Left" Margin="764,40,0,0" Name="lCameraDateShow" VerticalAlignment="Top" />
+                    <Label Content="Kamerazeit: " Height="28" HorizontalAlignment="Left" Margin="650,74,0,0" Name="lCameraTime" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentTime, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Left" Margin="769,74,0,0" Name="lCameraTimeShow" VerticalAlignment="Top" />
+                    <Label Content="EBV : " Height="28" HorizontalAlignment="Left" Margin="650,108,0,0" Name="label1" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=ViewModelCurrentCamera.CurrentEBV, UpdateSourceTrigger=PropertyChanged}" Height="28" HorizontalAlignment="Left" Margin="769,108,0,0" Name="label2" VerticalAlignment="Top" />
                 </Grid>
 			</TabItem>
 			<TabItem Header="Objektiv" HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Grid>
-					<Grid HorizontalAlignment="Left" Margin="0,0,0,18.9" Width="154">
+					<Grid HorizontalAlignment="Left" Margin="0,0,0,232" Width="162" Height="129">
 						<Label Content="Fokussteuerung" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="SemiBold"/>
-                        <Button x:Name="BFokusNah1" Content="Nah 1" HorizontalAlignment="Left" Margin="0,29.96,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensNearOne, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button x:Name="BFokusFern1" Content="Fern 1" HorizontalAlignment="Right" Margin="0,29.96,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensFarOne, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button x:Name="BFokusFern2" Content="Fern 2" Margin="0,55.92,0,64.81" HorizontalAlignment="Right" Width="75" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensFarTwo, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button x:Name="BFokusNah2" Content="Nah 2" Margin="0,55.92,0,64.81" HorizontalAlignment="Left" Width="75" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensNearTwo, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Button x:Name="BFokusNah3" Content="Nah 3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,38.85" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensNearThree, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button x:Name="BFokusFern3" Content="Fern 3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,38.85" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensFarThree, UpdateSourceTrigger=PropertyChanged}" />
-					</Grid>
-					
-				</Grid>
+                        <Button x:Name="BFokusNah1" Content="Nah 1" HorizontalAlignment="Left" Margin="6,32,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensNearOne, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button x:Name="BFokusNah2" Content="Nah 2" Margin="6,60,0,47" HorizontalAlignment="Left" Width="75" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensNearTwo, UpdateSourceTrigger=PropertyChanged}" Height="22" />
+                        <Button x:Name="BFokusNah3" Content="Nah 3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Margin="6,0,0,19" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensNearThree, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button x:Name="BFokusFern1" Content="Fern 1" HorizontalAlignment="Right" Margin="0,32,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensFarOne, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button x:Name="BFokusFern2" Content="Fern 2" Margin="0,60,0,0" HorizontalAlignment="Right" Width="75" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensFarTwo, UpdateSourceTrigger=PropertyChanged}" Height="23" VerticalAlignment="Top" />
+                        <Button x:Name="BFokusFern3" Content="Fern 3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,19" Command="{Binding Path=ViewModelCurrentCamera.CommandDriveLensFarThree, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                    <Button Command="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto, UpdateSourceTrigger=PropertyChanged}" Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="6,135,0,0" Name="button1" VerticalAlignment="Top" Width="96" />
+                    <Label Content="Anzahl : " Height="28" HorizontalAlignment="Left" Margin="8,173,0,0" Name="label3" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="71,175,0,0" Name="textBox1" Text="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto.PhotoCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" />
+                </Grid>
 			</TabItem>
 			<TabItem Header="Kamera">
 				<Grid>
-					<Label Content="ISO" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-					<Label Content="Blende" HorizontalAlignment="Left" Margin="0,0,0,18.9" VerticalAlignment="Bottom"/>
-					<Label Content="Belichtungszeit" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
-					<Label Content="Programm" HorizontalAlignment="Left" Margin="0,51.92,0,44.86" d:LayoutOverrides="Height"/>
-					<Label Content="EBV" HorizontalAlignment="Left" Margin="269.596,0,0,0" VerticalAlignment="Top"/>
+					<Label Content="ISO" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,0,0,0" />
+					<Label Content="Blende" HorizontalAlignment="Left" Margin="6,0,0,245" VerticalAlignment="Bottom"/>
+					<Label Content="Belichtungszeit" HorizontalAlignment="Left" Margin="6,26,0,0" VerticalAlignment="Top"/>
+                    <Label Content="EBV" HorizontalAlignment="Left" Margin="6,58,0,0" VerticalAlignment="Top"/>
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,4,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableISOListView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
                     <ComboBox HorizontalAlignment="Left" Margin="116.787,29.96,0,0" Width="120" VerticalAlignment="Top" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableShutterTimesView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
-                    <ComboBox HorizontalAlignment="Left" Margin="116.787,55.92,0,44.86" Width="120" d:LayoutOverrides="Height" ItemsSource="{Binding Path=ViewModelCurrentCamera.AEView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
-                    <ComboBox HorizontalAlignment="Left" Margin="116.787,0,0,18.9" VerticalAlignment="Bottom" Width="120" ItemsSource="{Binding Path=ViewModelCurrentCamera.ApertureView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
-                    <ComboBox HorizontalAlignment="Right" Margin="0,0,468,0" Width="120" VerticalAlignment="Top" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableEBVView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="117,0,0,245" VerticalAlignment="Bottom" Width="120" ItemsSource="{Binding Path=ViewModelCurrentCamera.ApertureView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" />
+                    <ComboBox HorizontalAlignment="Right" Margin="0,62,371,0" Width="120" VerticalAlignment="Top" ItemsSource="{Binding Path=ViewModelCurrentCamera.AvailableEBVView, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
                     <Button Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="607,56,0,0" Name="bTakePhoto" VerticalAlignment="Top" Width="96" Command="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto, UpdateSourceTrigger=PropertyChanged}" />
                     <Label Content="Anzahl : " Height="28" HorizontalAlignment="Left" Margin="607,88,0,0" Name="lPhotoCount" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="670,90,0,0" Name="tBPhotoCount" VerticalAlignment="Top" Width="120" Text="{Binding Path=ViewModelCurrentCamera.CommandTakePhoto.PhotoCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -97,23 +81,24 @@
 			<TabItem Header="Script">
 				<Grid>
                     <Button Content="ISO ändern" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126.277" Margin="8,0,0,0" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeIso, UpdateSourceTrigger=PropertyChanged}" Name="bChangeIso" />
-                    <Button Content="Blende ändern" Margin="8,0,0,75" VerticalAlignment="Bottom" Width="126.277" HorizontalAlignment="Left" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeAv, UpdateSourceTrigger=PropertyChanged}" Name="bChangeTv" />
-					<Button Content="Belichtungszeit ändern" Margin="8,44,0,96" Width="Auto" HorizontalAlignment="Left" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeTv, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Content="EBV ändern" HorizontalAlignment="Left" Margin="8,21.96,0,0" VerticalAlignment="Top" Width="126.277" Height="22" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeEbv, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Blende ändern" Margin="8,0,0,253" VerticalAlignment="Bottom" Width="126.277" HorizontalAlignment="Left" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeAv, UpdateSourceTrigger=PropertyChanged}" Name="bChangeTv" />
+					<Button Content="Belichtungszeit ändern" Margin="8,58,0,281" Width="Auto" HorizontalAlignment="Left" d:LayoutOverrides="Height" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeTv, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Content="EBV ändern" HorizontalAlignment="Left" Margin="8,28,0,0" VerticalAlignment="Top" Width="126.277" Height="22" Command="{Binding Path=ViewModelCurrentCamera.CommandChangeEbv, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptIso, UpdateSourceTrigger=PropertyChanged}" Margin="140,0,0,0" VerticalAlignment="Top" Width="120" />
-                    <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptTv, UpdateSourceTrigger=PropertyChanged}" Margin="140,44,0,0" VerticalAlignment="Top" Width="120" />
-                    <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptAperture, UpdateSourceTrigger=PropertyChanged}" Margin="140,64,0,0" VerticalAlignment="Top" Width="120" />
-                    <ComboBox HorizontalAlignment="Right" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptEbv, UpdateSourceTrigger=PropertyChanged}" Margin="0,22,634,0" VerticalAlignment="Top" Width="120" />
-                    
-                    <TextBlock Height="149" HorizontalAlignment="Left" Margin="413,6,0,0" Name="textBlock1" Text="{Binding Path=ViewModelCurrentCamera.Script, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="475" />
-                    
-                    <Button Content="Script ausführen" Command="{Binding Path=ViewModelCurrentCamera.ScriptCommand, UpdateSourceTrigger=PropertyChanged}"  Height="23" HorizontalAlignment="Left" Margin="8,121,0,0" Name="bRunScript" VerticalAlignment="Top" Width="126" />
-                    <Button Command="{Binding Path=ViewModelCurrentCamera.Command_ScriptTakePhoto, UpdateSourceTrigger=PropertyChanged}" Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="8,92,0,0" Name="button2" VerticalAlignment="Top" Width="126" />
-                    <Button Content="Script löschen" Command="{Binding Path=ViewModelCurrentCamera.CommandDelScript, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="140,92,0,0" Name="bScriptDel" VerticalAlignment="Top" Width="120" IsEnabled="True" />
-                    <Button Content="Letzen Befehl löschen" Command="{Binding Path=ViewModelCurrentCamera.CommandDelLastCommandScript, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="140,121,0,0" Name="bDelLastCommand" VerticalAlignment="Top" Width="136" IsEnabled="True" />
+                    <ComboBox HorizontalAlignment="Right" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptTv, UpdateSourceTrigger=PropertyChanged}" Margin="0,86,348,0" VerticalAlignment="Top" Width="120" />
+                    <ComboBox HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptAperture, UpdateSourceTrigger=PropertyChanged}" Margin="140,58,0,0" VerticalAlignment="Top" Width="120" />
+                    <ComboBox HorizontalAlignment="Right" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=ViewModelCurrentCamera.ScriptEbv, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Margin="0,28,348,0" />
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="282,6,6,0" Width="320">
+                        <TextBox Height="323" Name="textBlock1" Text="{Binding Path=ViewModelCurrentCamera.Script, UpdateSourceTrigger=PropertyChanged}" Width="299" />
+                    </ScrollViewer>
+                    <Button Content="Script ausführen" Command="{Binding Path=ViewModelCurrentCamera.ScriptCommand, UpdateSourceTrigger=PropertyChanged}"  Height="23" HorizontalAlignment="Left" Margin="8,0,0,187" Name="bRunScript" VerticalAlignment="Bottom" Width="126" />
+                    <Button Command="{Binding Path=ViewModelCurrentCamera.Command_ScriptTakePhoto, UpdateSourceTrigger=PropertyChanged}" Content="Foto aufnehmen" Height="23" HorizontalAlignment="Left" Margin="8,122,0,0" Name="button2" VerticalAlignment="Top" Width="126" />
+                    <Button Content="Script löschen" Command="{Binding Path=ViewModelCurrentCamera.CommandDelScript, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="142,152,0,0" Name="bScriptDel" VerticalAlignment="Top" Width="120" IsEnabled="True" />
+                    <Button Content="HDR" Command="{Binding Path=ViewModelCurrentCamera.CommandHDR, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="140,122,0,0" Name="button3" VerticalAlignment="Top" Width="120" />
                 </Grid>
 			</TabItem>
 		</TabControl>
-        <Label Content="Freier Speicher : " Height="28" HorizontalAlignment="Left" Margin="127,31,0,0" Name="lAvailableShots" VerticalAlignment="Top" />
+        <Label Content="Freier Speicher : " Height="28" HorizontalAlignment="Left" Margin="180,12,0,0" Name="lAvailableShots" VerticalAlignment="Top" />
+        <Label Content="Batterie : " Height="28" HorizontalAlignment="Left" Margin="361,12,0,0" Name="label4" VerticalAlignment="Top" />
     </Grid>
 </Window>

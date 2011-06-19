@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Canon_EOS_Remote.classes
+namespace Canon_EOS_Remote.Types
 {
-    class PropertyID
+    class TPropertyID
     {
         private UInt32 propertyIDNumber;
 
@@ -22,7 +22,7 @@ namespace Canon_EOS_Remote.classes
             set { propertyIDString = value; }
         }
 
-        public PropertyID(string propidstring, UInt32 propidcode)
+        public TPropertyID(string propidstring, UInt32 propidcode)
         {
             this.PropertyIDNumber = propidcode;
             this.PropertyIDString = propidstring;

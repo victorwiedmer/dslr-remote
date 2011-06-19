@@ -93,6 +93,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\Command_DelScript_LastCommand.cs" />
+    <Compile Include="LiveView.cs" />
     <Compile Include="Typen und Listen\AEModes.cs" />
     <Compile Include="Typen und Listen\Apertures.cs" />
     <Compile Include="Typen und Listen\EventCodes.cs" />

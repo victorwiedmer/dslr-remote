@@ -6,8 +6,9 @@ using System.Windows.Input;
 
 namespace Canon_EOS_Remote.Commands
 {
-    class Command_DelScript:ICommand
+    class Command_DelScript_LastCommand:ICommand
     {
+
         public bool CanExecute(object parameter)
         {
             return true;
@@ -16,21 +17,13 @@ namespace Canon_EOS_Remote.Commands
         public event EventHandler CanExecuteChanged;
 
         public delegate void scriptEventHandler(string e);
-        public event scriptEventHandler delscriptHandler;
-
-        private void sendDelScriptEvent(string e)
-        {
-            if (delscriptHandler != null)
-            {
-                delscriptHandler("DelScript");
-            }
-        }
+        public event scriptEventHandler delLastCommand;
 
         public void Execute(object parameter)
         {
-            if (delscriptHandler != null)
+            if (delLastCommand != null)
             {
-                delscriptHandler("DelScript");
+                delLastCommand("DelLastCommand");
             }
         }
     }

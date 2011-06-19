@@ -46,10 +46,15 @@ namespace Canon_EOS_Remote
         private EDSDK.EdsPropertyDesc availableISOSpeeds;
         private EDSDK.EdsPropertyDesc availableExposureCompensation;
 
-        Image imageDestionation;
-        IntPtr memstream;
-        IntPtr evfimage;
-        uint device;
+        private LiveView liveView;
+
+        internal LiveView LiveView
+        {
+            get { return liveView; }
+            set { liveView = value;
+            update("LiveView");
+            }
+        }
 
         #endregion
 
@@ -315,6 +320,8 @@ namespace Canon_EOS_Remote
             getApertureFromCamera();
             getTime();
             getEbvFromBody();
+            LiveView = new LiveView(this.Ptr);
+            //StartLV();
         }
 
         /// <summary>
@@ -649,6 +656,48 @@ namespace Canon_EOS_Remote
         }
 
         #endregion
+
+        private Thread LVThread;
+        private bool LVrunning = false;
+        private bool LVinit = false;
+
+
+        public void StartLV()
+        {
+            if (!LVinit)
+            {
+                LiveView.startLV();
+
+                LVinit = true;
+
+                ContinueLV();
+            }
+        }
+
+        private void ContinueLV()
+        {
+            if (!LVrunning & LVinit)
+            {
+                LVThread = new Thread(new ThreadStart(LiveView.Run));
+                LVThread.Start();
+
+                LVrunning = true;
+            }
+        }
+
+        public void StopLV()
+        {
+            if (LVrunning)
+            {
+                LVrunning = false;
+                LVinit = false;
+                LiveView.pauseLV();
+                LiveView.stopLV();
+                LVThread.Join();
+                EDSDK.EdsSetPropertyData(this.Ptr, (uint)EDSDK.PropID_Evf_OutputDevice, 0, Marshal.SizeOf((uint)EDSDK.EvfOutputDevice_PC), (uint)EDSDK.EvfOutputDevice_TFT);
+            }
+        }
+
 
     }
 }

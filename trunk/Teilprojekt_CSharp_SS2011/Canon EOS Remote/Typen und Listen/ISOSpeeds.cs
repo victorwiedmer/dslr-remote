@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Canon_EOS_Remote.Types;
 
 namespace Canon_EOS_Remote
 {

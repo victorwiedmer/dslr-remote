@@ -32,6 +32,8 @@ namespace Canon_EOS_Remote.ViewModel
         private CommandScriptPhoto scriptTakePhoto;
         private CommandChangeAv commandChangeAv;
         private Command_DelScript commandDelScript;
+        private Command_DelScript_LastCommand commandDelLastCommandScript;
+
         #endregion
 
         #region CollectionViews für die GUI
@@ -48,11 +50,12 @@ namespace Canon_EOS_Remote.ViewModel
         private CollectionView scriptEbv;
         #endregion
 
-
-
+        #region ObservableCollections fuer die CollectionViews der GUI
         private ObservableCollection<string> availableISOListCollection;
         private ObservableCollection<string> availableShutterTimesCollection;
         private ObservableCollection<string> availableEVBCollection;
+        private ObservableCollection<string> apertureCollection;
+        #endregion
 
         #region Konverter fuer die Umwandlung von String zu Hexadezimal
         private ISOSpeeds isoConverter;
@@ -97,10 +100,11 @@ namespace Canon_EOS_Remote.ViewModel
 
         private string currentDate;
         private string currentTime;
+
         private EDSDK.EdsPropertyDesc apertureDesc;
 
         
-        private ObservableCollection<string> apertureCollection;
+        
         private IntPtr streamref;
         private IntPtr imageref;
         private PropertyCodes propertyCodes;
@@ -113,6 +117,14 @@ namespace Canon_EOS_Remote.ViewModel
 
         private CommandChangeISO commandChangeIso;
 
+        #region setter und getter methoden der klassenfelder
+        public Command_DelScript_LastCommand CommandDelLastCommandScript
+        {
+            get { return commandDelLastCommandScript; }
+            set { commandDelLastCommandScript = value;
+            update("CommandDelLastCommandScript");
+            }
+        }
 
         public Command_DelScript CommandDelScript
         {
@@ -289,7 +301,7 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
        
-        internal ObservableCollection<string> AptureCollection
+        public ObservableCollection<string> AptureCollection
         {
             get { return apertureCollection; }
             set { apertureCollection = value;
@@ -451,16 +463,6 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
-        public AEModes AeModes
-        {
-            get { return aeModeConverter; }
-            set
-            {
-                aeModeConverter = value;
-                update("AeModes");
-            }
-        }
-
         public CollectionView AvailableShutterTimesView
         {
             get { return availableShutterTimesView; }
@@ -595,15 +597,6 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
-        private void update(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("\n\nViewModelCurrentCamera Property has changed : " + property+"\n\n");
-            }
-        }
-
         public ISOSpeeds IsoConverter
         {
             get { return isoConverter; }
@@ -634,40 +627,27 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
+#endregion
+
+        private void update(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                Console.WriteLine("\n\nViewModelCurrentCamera Property has changed : " + property + "\n\n");
+            }
+        }
+
         public ViewModelCurrentCamera()
         {
             init();
         }
 
-        public void init()
+        private void instance()
         {
-            this.CurrentCameraName = "CurrentCameraName";
-            this.CurrentCameraOwner = "CurrentCameraOwner";
-            this.CurrentCameraFirmware = "CurrentCameraFirmware";
-            this.currentProgramm = "CurrentProgramm";
-            this.CurrentAperture = "CurrentAperture";
-            this.CurrentDate = " CurrentDate";
-            this.CurrentTime = "CurrentTime";
-            this.CurrentBatteryLevel = 50;
-            this.CurrentEBV = "EBV";
+            // Instance Commands
             this.ScriptCommand = new Command_RunScript();
-            this.AvailableISOListCollection = new ObservableCollection<string>();
-            this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
             this.Command_ScriptTakePhoto = new CommandScriptPhoto();
-            this.AvailableShutterTimesCollection = new ObservableCollection<string>();
-            this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
-
-            this.AECollection = new ObservableCollection<string>();
-            this.AEView = new CollectionView(this.AECollection);
-
-            this.AvailableEVBCollection = new ObservableCollection<string>();
-            this.AvailableEBVView = new CollectionView(this.AvailableEVBCollection);
-
-            this.IsoConverter = new ISOSpeeds();
-            this.ShutterTimeConverter = new ShutterTimes();
-            this.AeModes = new classes.AEModes();
-            this.CurrentISO = "CurrentISO";
-            this.CurrentTv = "Lange";
             this.CommandTakePhoto = new Command_TakePhoto();
             this.CommandTakePhoto.Camera = IntPtr.Zero;
             this.CommandDriveLensNearOne = new Command_DriveLensNearOne();
@@ -682,67 +662,118 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandDriveLensFarTwo.CameraPtr = IntPtr.Zero;
             this.CommandDriveLensFarThree = new Command_DriveLensFarThree();
             this.CommandDriveLensFarThree.CameraPtr = IntPtr.Zero;
-            this.PropertyCodes = new PropertyCodes();
-            this.ApertureConverter = new Apertures();
-            this.AptureCollection = new ObservableCollection<string>();
-            this.ApertureView = new CollectionView(this.AptureCollection);
-            this.AeModeConverter = new AEModes();
-            this.EbvConverter = new ExposureCompensation();
-            this.Script = "";
             this.commandChangeIso = new CommandChangeISO();
             this.CommandChangeTv = new CommandChangeTv();
             this.CommandChangeAv = new CommandChangeAv();
             this.CommandChangeEbv = new CommandChangeEBV();
             this.CommandDelScript = new Command_DelScript();
-            this.commandChangeIso.changeIsoCommand += addCommandToScript;
-            this.CommandChangeTv.changeTvCommand += addCommandToScript;
-            this.Command_ScriptTakePhoto.takePhotoCommand += addCommandToScript;
-            this.CommandChangeAv.changeAvCommand += addCommandToScript;
-            this.CommandChangeEbv.changeEbvCommand += addCommandToScript;
-            this.CommandDelScript.delscriptHandler += delScript;
+            this.CommandDelLastCommandScript = new Command_DelScript_LastCommand();
+            // Instance ObservableCollections
+            this.AvailableISOListCollection = new ObservableCollection<string>();
+            this.AvailableShutterTimesCollection = new ObservableCollection<string>();
+            this.AECollection = new ObservableCollection<string>();
+            this.AvailableEVBCollection = new ObservableCollection<string>();
+            this.AptureCollection = new ObservableCollection<string>();
+            //Instance CollectionViews
+            this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
+            this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
+            this.AEView = new CollectionView(this.AECollection);
+            this.AvailableEBVView = new CollectionView(this.AvailableEVBCollection);
+            this.ApertureView = new CollectionView(this.AptureCollection);
             //Initialise CollectionViews for Scriptpanel
             this.ScriptAperture = new CollectionView(this.apertureCollection);
             this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
             this.ScriptIso = new CollectionView(this.AvailableISOListCollection);
             this.ScriptEbv = new CollectionView(this.AvailableEVBCollection);
+            //Instance Konverter
+            this.IsoConverter = new ISOSpeeds();
+            this.ShutterTimeConverter = new ShutterTimes();
+            this.AeModeConverter = new classes.AEModes();
+            this.PropertyCodes = new PropertyCodes();
+            this.ApertureConverter = new Apertures();
+            this.EbvConverter = new ExposureCompensation();
+            this.AeModeConverter = new AEModes();
+        }
 
+        /// <summary>
+        /// Setzt die Methoden an den Events, die fuer die Scriptsteuerung benoetigt werden
+        /// </summary>
+        private void setEvents()
+        {
+            this.commandChangeIso.changeIsoCommand += addCommandToScript;           //Button-Script-ISO Aendern
+            this.CommandChangeTv.changeTvCommand += addCommandToScript;             //Button-Script-Belichtungszeit Aendern
+            this.Command_ScriptTakePhoto.takePhotoCommand += addCommandToScript;    //Button-Script-Foto aufnehmen
+            this.CommandChangeAv.changeAvCommand += addCommandToScript;             //Button-Script-Blende Aendern
+            this.CommandChangeEbv.changeEbvCommand += addCommandToScript;           //Button-Script-EBV Aendern
+            this.CommandDelScript.delscriptHandler += delScript;                    //Button-Script-Script loeschen
+            this.CommandDelLastCommandScript.delLastCommand += delScript;           //Button-Script-letzten Befehl loeschen
+        }
+
+        private void init()
+        {
+            this.CurrentCameraName = "CurrentCameraName";
+            this.CurrentCameraOwner = "CurrentCameraOwner";
+            this.CurrentCameraFirmware = "CurrentCameraFirmware";
+            this.currentProgramm = "CurrentProgramm";
+            this.CurrentAperture = "CurrentAperture";
+            this.CurrentDate = " CurrentDate";
+            this.CurrentTime = "CurrentTime";
+            this.CurrentBatteryLevel = 50;
+            this.CurrentEBV = "EBV";
+            this.CurrentISO = "CurrentISO";
+            this.CurrentTv = "Lange";
+            this.Script = "";
+            instance();
+            setEvents();
         }
 
         private void delScript(string e)
         {
-            this.Script = "";
-            this.ScriptCommand.ScriptCommands.Clear();
+            if (e == "DelScript")
+            {
+                this.Script = "";
+                this.ScriptCommand.ScriptCommands.Clear();
+            }
+            if (e == "DelLastCommand")
+            {
+                this.Script.Remove(
+                this.Script.LastIndexOf(";")-1);
+                this.Script.Remove(this.Script.LastIndexOf(";"));
+            }
         }
 
         private void addCommandToScript(string e)
         {
             if (e == "ChangeISO")
             {
-                this.Script += "Ändere ISO nach : " + this.ScriptIso.CurrentItem + "\n";
+                this.Script += "Ändere ISO nach : " + this.ScriptIso.CurrentItem + ";\n";
                 this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ISOSpeed,sizeof(int),this.IsoConverter.getISOSpeedFromDec((string)this.ScriptIso.CurrentItem)));
             }
             if (e == "TakePhoto")
             {
-                this.Script += "Foto Aufnahme\n";
+                this.Script += "Foto Aufnahme;\n";
                 this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr,EDSDK.CameraCommand_TakePicture,0,0));
             }
             if (e == "ChangeTv")
             {
-                this.Script += "Ändere Tv nach : " + this.ScriptTv.CurrentItem + "\n";
+                this.Script += "Ändere Tv nach : " + this.ScriptTv.CurrentItem + ";\n";
                 this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_Tv, sizeof(int), this.ShutterTimeConverter.getShutterTimeStringFromDec((string)this.ScriptTv.CurrentItem)));
             }
             if (e == "ChangeEBV")
             {
-                this.Script += "Ändere EBV nach : " + this.ScriptEbv.CurrentItem + "\n";
+                this.Script += "Ändere EBV nach : " + this.ScriptEbv.CurrentItem + ";\n";
                 this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ExposureCompensation, sizeof(int), this.EbvConverter.getebvHex((string)this.ScriptEbv.CurrentItem)));
             }
             if (e == "ChangeAv")
             {
-                this.Script += "Ändere Av nach : " + this.ScriptAperture.CurrentItem + "\n";
+                this.Script += "Ändere Av nach : " + this.ScriptAperture.CurrentItem + ";\n";
                 this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_Av, sizeof(int), this.ApertureConverter.getApertureHex((string)this.ScriptAperture.CurrentItem)));
             }
         }
 
+        /// <summary>
+        /// Ruft die Methoden auf um die Anzeigefelder der GUI, die Parametertabellen der Kamera und EventHandler zu setzen
+        /// </summary>
         public void setCurrentlyCamera()
         {
             getCurrentCameraFields();
@@ -785,7 +816,7 @@ namespace Canon_EOS_Remote.ViewModel
             Console.WriteLine("Current CameraOwner is : " + this.CurrentCameraOwner);
             this.CurrentCameraFirmware = this.CurrentCamera.CameraFirmware;
             this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.CurrentCamera.CameraShutterTime);
-            this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
+            this.CurrentProgramm = this.AeModeConverter.getAEString(this.CurrentCamera.CameraAEMode);
             this.CurrentAperture = this.apertureConverter.getApertureString(this.CurrentCamera.CameraAperture);
             this.CurrentDate = convertEdsTimeToDateString(this.CurrentCamera.CameraTime);
             this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
@@ -861,7 +892,7 @@ namespace Canon_EOS_Remote.ViewModel
                 case EDSDK.PropID_AEMode:
                     {
                         this.currentCamera.getAeMode();
-                        this.CurrentProgramm = this.AeModes.getAEString(this.CurrentCamera.CameraAEMode);
+                        this.CurrentProgramm = this.AeModeConverter.getAEString(this.CurrentCamera.CameraAEMode);
                         if (this.CurrentProgramm == "Tv - Blendenautomatik")
                         {
                             updatePropertyDescTv();
@@ -967,7 +998,7 @@ namespace Canon_EOS_Remote.ViewModel
             if (this.AEView.CurrentItem != null)
             {
                 tmpProperty = (string)this.AEView.CurrentItem;
-                this.CurrentCamera.setAEModeToCamera((int)this.AeModes.getAEHex(tmpProperty));
+                this.CurrentCamera.setAEModeToCamera((int)this.AeModeConverter.getAEHex(tmpProperty));
             }
         }
 

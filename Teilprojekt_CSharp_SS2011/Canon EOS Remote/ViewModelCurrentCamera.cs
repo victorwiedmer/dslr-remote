@@ -736,6 +736,7 @@ namespace Canon_EOS_Remote.ViewModel
             }
             if (e == "DelLastCommand")
             {
+                //TODO funktioniert nicht
                 this.Script.Remove(
                 this.Script.LastIndexOf(";")-1);
                 this.Script.Remove(this.Script.LastIndexOf(";"));
@@ -840,19 +841,19 @@ namespace Canon_EOS_Remote.ViewModel
         {
             switch (p.PropertyName)
             {
-                case EDSDK.PropID_Tv:
+                case EDSDK.PropID_Tv: // Wenn sich die Eigenschaft Belichtungszeit aendert
                     {
                         this.CurrentCamera.getShutterTime();
                         this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.currentCamera.CameraShutterTime);
                         break;
                     }
-                case EDSDK.PropID_ISOSpeed:
+                case EDSDK.PropID_ISOSpeed: // Wenn sich die Eigenschaft ISO aendert
                     {
                         this.CurrentCamera.getIsoSpeed();
                         this.CurrentISO = this.isoConverter.getISOSpeedFromHex(this.currentCamera.CameraISOSpeed);
                         break;
                     }
-                case EDSDK.PropID_AvailableShots:
+                case EDSDK.PropID_AvailableShots: //Wenn sich die Eigenschaft Anzahl der freien Fotos aendert
                     {
                         this.currentCamera.getAvailableShots();
                         this.CurrentAvailableShots = (int)this.currentCamera.CameraAvailableShots;
@@ -927,6 +928,9 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
+        /// <summary>
+        /// Kopiert die hexadezimalen Werte der Tabelle fuer die verfuegbaren ISO Werte als String in die CollectionList
+        /// </summary>
         private void copyPropertyDescISOToCollection()
         {
             this.availableISOListCollection.Clear();

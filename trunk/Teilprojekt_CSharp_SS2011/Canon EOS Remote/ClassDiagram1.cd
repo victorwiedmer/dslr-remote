@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Teilprojekt_SS2011.App" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Teilprojekt_SS2011.MainWindow" Collapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Camera" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FDkjqECiomEiBY9JwBAAAiWIwEIAk/ECExDMiKEkAAE=</HashCode>
+      <FileName>classes\Camera.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.EdsError" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAEAAAAIEAAAAAAAAGAAAAIAAAAAIA=</HashCode>
+      <FileName>ErrorHandling\EdsError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.ErrorCodes" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAEAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorHandling\ErrorCodes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.LiveView" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCABAAAAgQAAAIgAAgAAAACAAAAKAAgAAgAAQAAAAM=</HashCode>
+      <FileName>LiveView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Model" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAACAAAAAAAAAAAQgAAAAAAAAAAAAAAEQAA=</HashCode>
+      <FileName>Model.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.ScriptCommand" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkAAAAJAAAAAQAAAAFAACgAQAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ScriptCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.DriveModes" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAAABAAAA=</HashCode>
+      <FileName>Typen und Listen\DriveModes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.ExposureCompensation" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAABAAAAAAAAAAAQCIAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\ExposureCompensation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.ISOSpeed" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAAAAAABAAAAAAAAAAAACAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\ISOSpeed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.ISOSpeeds" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIABEAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Typen und Listen\ISOSpeeds.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.Cameralist" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAIAAAgAwMgAIAAAAAAAgAAAAAAAAAEAAgAEQAE=</HashCode>
+      <FileName>classes\Cameralist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.SDK" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAoAACAAAAAAAAAAAAAAgAAgAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>classes\SDK.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.AEModes" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAgAAAEAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\AEModes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.Apertures" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAJAAIAAAAAAAAAACA=</HashCode>
+      <FileName>Typen und Listen\Apertures.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.EventCodes" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAQAAAAAAAAAAAAAAAAAMAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\EventCodes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.PropertyCodes" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAQAAAAEAA=</HashCode>
+      <FileName>Typen und Listen\PropertyCodes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.PropertyEventArgs" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Typen und Listen\PropertyEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.scriptCommandEventArgs" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\scriptCommandEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.ShutterTimes" Collapsed="true">
+    <Position X="12.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAEQAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\ShutterTimes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.TAEMode" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>Typen und Listen\TAEMode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.TAperture" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAgAAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\TAperture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.TDriveMode" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACgAAAAAAAEAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\TDriveMode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.TEventID" Collapsed="true">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Typen und Listen\TEventID.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.TExposureCompensation" Collapsed="true">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAIAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Typen und Listen\TExposureCompensation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.classes.TShutterTime" Collapsed="true">
+    <Position X="12.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAgE=</HashCode>
+      <FileName>Typen und Listen\TShutterTime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DelScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAAAAAAAAAAAAAAAAAACAAAAQ=</HashCode>
+      <FileName>Commands\Command_DelScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DelScript_LastCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAMAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\Command_DelScript_LastCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DriveLensFarOne" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQgAEAAAAAAgAAAAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\Command_DriveLensFarOne.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DriveLensFarThree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQgAEAAAAAAgAAAAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\Command_DriveLensFarThree.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DriveLensFarTwo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQgAEAAAAAAgAAAAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\Command_DriveLensFarTwo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DriveLensNearOne" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQgAEAAAAAAgAAAAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\Command_DriveLensNearOne.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DriveLensNearThree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQgAEAAAAAAgAAAAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\Command_DriveLensNearThree.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_DriveLensNearTwo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQgAEAAAAAAgAAAAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\Command_DriveLensNearTwo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_RunScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAACABQAAEAAAAAAgAAAAAAAAAAAAAAEEAA=</HashCode>
+      <FileName>Commands\Command_RunScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.Command_TakePhoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgACAAQAAEAAAAAAgAAAAAAAAAAICAAECAA=</HashCode>
+      <FileName>Commands\Command_TakePhoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.CommandChangeAv" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACACQAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\CommandChangeAv.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.CommandChangeEBV" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAACAAQAAEAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Commands\CommandChangeEBV.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.CommandChangeISO" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAQAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\CommandChangeISO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.CommandChangeTv" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEEIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\CommandChangeTv.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.CommandHDR" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAAAAAAAAAQAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Commands\CommandHDR.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.Commands.CommandScriptPhoto" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAECAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Commands\CommandScriptPhoto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EDSDKLib.EDSDK" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/5/vX/9TuW9//z7j2/vXP/7b//9u/57uv3/v92vu/X8=</HashCode>
+      <FileName>EDSDK.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Properties.Resources" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Properties.Settings" Collapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Types.TPropertyID" Collapsed="true">
+    <Position X="11" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAgAAAAAAAAAAgAAAAAAAAIAAA=</HashCode>
+      <FileName>Typen und Listen\PropertyID.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.Types.TISOValue" Collapsed="true">
+    <Position X="9.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Typen und Listen\TISOValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canon_EOS_Remote.ViewModel.ViewModelCameralist" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ViewModelCameralist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.ViewModel.ViewModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAgAACAAAAAAAAAQAAgAgAABAAAAAAgAAAAMAAA=</HashCode>
+      <FileName>ViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Canon_EOS_Remote.ViewModel.ViewModelCurrentCamera" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>8C6qAKIfYYThnKXGxNyRj2Bm8glpp3qEbrEUheg2HiA=</HashCode>
+      <FileName>ViewModelCurrentCamera.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -23,6 +23,11 @@ namespace Canon_EOS_Remote.ViewModel
         private EDSDK.EdsPropertyDesc PropertyDescISO;
         private EDSDK.EdsPropertyDesc propertyDescTv;
         private EDSDK.EdsPropertyDesc propertyDescEBV;
+        private string currentDate;
+        private string currentTime;
+        private string currentISO;
+        private string currentProgramm;
+        private string currentAperture;
         #endregion
 
         #region Script Commands
@@ -33,6 +38,8 @@ namespace Canon_EOS_Remote.ViewModel
         private CommandChangeAv commandChangeAv;
         private Command_DelScript commandDelScript;
         private Command_DelScript_LastCommand commandDelLastCommandScript;
+        private CommandHDR commandHDR;
+
 
         #endregion
 
@@ -55,6 +62,7 @@ namespace Canon_EOS_Remote.ViewModel
         private ObservableCollection<string> availableShutterTimesCollection;
         private ObservableCollection<string> availableEVBCollection;
         private ObservableCollection<string> apertureCollection;
+        private ObservableCollection<string> aECollection;
         #endregion
 
         #region Konverter fuer die Umwandlung von String zu Hexadezimal
@@ -62,6 +70,7 @@ namespace Canon_EOS_Remote.ViewModel
         private ShutterTimes shutterTimeConverter;
         private AEModes aeModeConverter;
         private ExposureCompensation ebvConverter;
+        private Apertures apertureConverter;
         #endregion
 
 
@@ -73,12 +82,12 @@ namespace Canon_EOS_Remote.ViewModel
 
         private EDSDK.EdsPropertyDesc propertyDescAE;
         
-        private ObservableCollection<string> aECollection;
+        
         
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string currentISO;
+        
 
         #region Commands
 
@@ -98,8 +107,7 @@ namespace Canon_EOS_Remote.ViewModel
         #endregion
         #endregion
 
-        private string currentDate;
-        private string currentTime;
+
 
         private EDSDK.EdsPropertyDesc apertureDesc;
 
@@ -108,9 +116,8 @@ namespace Canon_EOS_Remote.ViewModel
         private IntPtr streamref;
         private IntPtr imageref;
         private PropertyCodes propertyCodes;
-        private string currentProgramm;
-        private string currentAperture;
-        private Apertures apertureConverter;
+
+        
 
         private string currentTv;
         
@@ -118,6 +125,25 @@ namespace Canon_EOS_Remote.ViewModel
         private CommandChangeISO commandChangeIso;
 
         #region setter und getter methoden der klassenfelder
+
+        public CommandHDR CommandHDR
+        {
+            get { return commandHDR; }
+            set { commandHDR = value;
+            update("CommandHDR");
+            }
+        }
+
+        public EDSDK.EdsPropertyDesc PropertyDescTv
+        {
+            get { return propertyDescTv; }
+            set
+            {
+                propertyDescTv = value;
+                update("PropertyDescTv");
+            }
+        }
+
         public Command_DelScript_LastCommand CommandDelLastCommandScript
         {
             get { return commandDelLastCommandScript; }
@@ -301,7 +327,7 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
        
-        public ObservableCollection<string> AptureCollection
+        public ObservableCollection<string> ApertureCollection
         {
             get { return apertureCollection; }
             set { apertureCollection = value;
@@ -668,18 +694,19 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandChangeEbv = new CommandChangeEBV();
             this.CommandDelScript = new Command_DelScript();
             this.CommandDelLastCommandScript = new Command_DelScript_LastCommand();
+            this.CommandHDR = new CommandHDR();
             // Instance ObservableCollections
             this.AvailableISOListCollection = new ObservableCollection<string>();
             this.AvailableShutterTimesCollection = new ObservableCollection<string>();
             this.AECollection = new ObservableCollection<string>();
             this.AvailableEVBCollection = new ObservableCollection<string>();
-            this.AptureCollection = new ObservableCollection<string>();
+            this.ApertureCollection = new ObservableCollection<string>();
             //Instance CollectionViews
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
             this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
             this.AEView = new CollectionView(this.AECollection);
             this.AvailableEBVView = new CollectionView(this.AvailableEVBCollection);
-            this.ApertureView = new CollectionView(this.AptureCollection);
+            this.ApertureView = new CollectionView(this.ApertureCollection);
             //Initialise CollectionViews for Scriptpanel
             this.ScriptAperture = new CollectionView(this.apertureCollection);
             this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
@@ -707,6 +734,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandChangeEbv.changeEbvCommand += addCommandToScript;           //Button-Script-EBV Aendern
             this.CommandDelScript.delscriptHandler += delScript;                    //Button-Script-Script loeschen
             this.CommandDelLastCommandScript.delLastCommand += delScript;           //Button-Script-letzten Befehl loeschen
+            this.CommandHDR.HDRCommand += addCommandToScript;                       //Button-Script-HDR
         }
 
         private void init()
@@ -770,6 +798,16 @@ namespace Canon_EOS_Remote.ViewModel
                 this.Script += "Ändere Av nach : " + this.ScriptAperture.CurrentItem + ";\n";
                 this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_Av, sizeof(int), this.ApertureConverter.getApertureHex((string)this.ScriptAperture.CurrentItem)));
             }
+            if (e == "HDR")
+            {
+                this.Script += "HDR;\n";
+                for (int i = 0; i < this.PropertyDescEBV.NumElements; i++)
+                {
+                    this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ExposureCompensation, sizeof(int), (uint)this.PropertyDescEBV.PropDesc[i]));
+                    this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.CameraCommand_TakePicture, 0, 0));
+                }
+            }
+
         }
 
         /// <summary>
@@ -800,8 +838,26 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void updatePropertyDescTv()
         {
-            this.propertyDescTv = this.CurrentCamera.AvailableShutterspeeds;
+            Console.WriteLine("UpdatePropertyDescTV called");
+            this.CurrentCamera.getpropertyDescShutterTimes();
+            this.PropertyDescTv = this.CurrentCamera.AvailableShutterspeeds;
             copyPropertyDescShutterTimesToCollection();
+        }
+
+        private void updatePropertyDescAv()
+        {
+            Console.WriteLine("UpdatePropertyDescAv called");
+            this.CurrentCamera.getpropertyDescApertureValues();
+            this.ApertureDesc = this.CurrentCamera.AvailableApertureValues;
+            copyPropertyDescAperturesToCollection();
+        }
+
+        private void updatePropertyDescEBV()
+        {
+            Console.WriteLine("UpdatePropertyDescEBV called");
+            this.CurrentCamera.getpropertyDescExposureCompensation();
+            this.PropertyDescEBV = this.CurrentCamera.AvailableExposureCompensation;
+            copyPropertyDescEbvToCollection();
         }
 
         /// <summary>
@@ -894,10 +950,38 @@ namespace Canon_EOS_Remote.ViewModel
                     {
                         this.currentCamera.getAeMode();
                         this.CurrentProgramm = this.AeModeConverter.getAEString(this.CurrentCamera.CameraAEMode);
-                        if (this.CurrentProgramm == "Tv - Blendenautomatik")
+                        if (this.CurrentCamera.CameraAEMode==1)
                         {
                             updatePropertyDescTv();
+                            updatePropertyDescEBV();
+                            delPropertyDescAperturesFromCollection();
+                            Console.WriteLine(
+                                "|-----------------------------------------------------------------------------|\n"+
+                                "|Property Desc fuer die Zeit geladen, da auf Blendenautomatik gewechselt wurde|\n"+
+                                "|-----------------------------------------------------------------------------|\n");
                         }
+                        if (this.CurrentCamera.CameraAEMode == 2)
+                        {
+                            updatePropertyDescAv();
+                            updatePropertyDescEBV();
+                            delPropertyDescShutterTimesFromCollection();
+                            Console.WriteLine(
+                                "|----------------------------------------------------------------------------|\n" +
+                                "|Property Desc fuer die Blende geladen, da auf Zeitautomatik gewechselt wurde|\n" +
+                                "|----------------------------------------------------------------------------|\n");
+                        }
+                        if (this.CurrentCamera.CameraAEMode == 3)
+                        {
+                            updatePropertyDescTv();
+                            updatePropertyDescAv();
+                            delPropertyDescEbvFromCollection();
+                            Console.WriteLine(
+                                "|------------------------------------------------------------------------------|\n" +
+                                "|Property Desc fuer die Zeit und Blende geladen, da auf Manuel gewechselt wurde|\n" +
+                                "|------------------------------------------------------------------------------|\n");
+                        }
+
+
                         break;
                     }
                 case EDSDK.PropID_Av:
@@ -952,10 +1036,11 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void copyPropertyDescShutterTimesToCollection()
         {
+            Console.WriteLine("CopyPropertyDescShutterTimesToCollection called");
             this.AvailableShutterTimesCollection.Clear();
-            for (int i = 0; i < this.propertyDescTv.NumElements; i++)
+            for (int i = 0; i < this.PropertyDescTv.NumElements; i++)
             {
-                this.AvailableShutterTimesCollection.Add(this.shutterTimeConverter.getShutterTimeStringFromHex((uint)this.propertyDescTv.PropDesc[i]));
+                this.AvailableShutterTimesCollection.Add(this.ShutterTimeConverter.getShutterTimeStringFromHex((uint)this.PropertyDescTv.PropDesc[i]));
             }
         }
 
@@ -980,10 +1065,10 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void copyPropertyDescAperturesToCollection()
         {
-            this.AptureCollection.Clear();
+            this.ApertureCollection.Clear();
             for (int i = 0; i < this.ApertureDesc.NumElements; i++)
             {
-                this.AptureCollection.Add(this.apertureConverter.getApertureString((uint)this.ApertureDesc.PropDesc[i]));
+                this.ApertureCollection.Add(this.apertureConverter.getApertureString((uint)this.ApertureDesc.PropDesc[i]));
             }
         }
 
@@ -994,6 +1079,26 @@ namespace Canon_EOS_Remote.ViewModel
             {
                 this.AvailableEVBCollection.Add(this.EbvConverter.getEbvString((uint)this.PropertyDescEBV.PropDesc[i]));
             }
+        }
+
+        private void delPropertyDescAperturesFromCollection()
+        {
+            this.ApertureCollection.Clear();
+        }
+
+        private void delPropertyDescEbvFromCollection()
+        {
+            this.AvailableEVBCollection.Clear();
+        }
+
+        private void delPropertyDescShutterTimesFromCollection()
+        {
+            this.AvailableShutterTimesCollection.Clear();
+        }
+
+        private void delPropertyDescISOFromCollection()
+        {
+            this.AvailableISOListCollection.Clear();
         }
 
         private void sendAEModeToCamera(object sender, EventArgs e)

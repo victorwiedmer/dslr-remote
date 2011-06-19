@@ -48,16 +48,24 @@ namespace Canon_EOS_Remote.Commands
             Console.WriteLine("Will run : " + this.ScriptCommands.Count + " commands");
             for (int i = 0; i < this.ScriptCommands.Count; i++)
             {
-                Console.WriteLine("Run the " + i + " command");
+                Console.WriteLine("Run the " + i + " command : " + this.ScriptCommands.ElementAt(i).Command);
                 if (this.ScriptCommands.ElementAt(i).Command == EDSDKLib.EDSDK.CameraCommand_TakePicture)
                 {
                     tmperror=EDSDKLib.EDSDK.EdsSendCommand(this.ScriptCommands.ElementAt(i).CommandDestination, EDSDKLib.EDSDK.CameraCommand_TakePicture, 0);
+                    if (tmperror != 0)
+                    {
+                        Console.WriteLine("Error at taking photo in script : " + tmperror);
+                    }
                     Console.WriteLine("Nehme Foto auf ...");
                 }
                 else
                 {
                     tmperror=EDSDKLib.EDSDK.EdsSetPropertyData(this.ScriptCommands.ElementAt(i).CommandDestination,
                         this.ScriptCommands.ElementAt(i).Command, 0, this.ScriptCommands.ElementAt(i).ParamSize, this.ScriptCommands.ElementAt(i).CommandParam);
+                    if (tmperror != 0)
+                    {
+                        Console.WriteLine("Error at Change Property via script : " + tmperror);
+                    }
                     Console.WriteLine("Change Property via script");
                 }
                 if (tmperror != 0)

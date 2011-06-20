@@ -52,11 +52,14 @@ namespace Canon_EOS_Remote.classes
         /// <example>uint AEMode=getAEHex("Reihenaufnahme")</example>
         /// <returns>uint AE Mode</returns>
         public uint getAEHex(string AEstring) {
-            for (int i = 0; i < this.aeModes.Count; i++)
+            int count = this.aeModes.Count; // 20.6.2011 moved from loop to increase performance
+            TAEMode temporaryAeMode; // to advoid two calls to increase performance
+            for (int i = 0; i < count; i++)
             {
-                if (this.aeModes.ElementAt(i).AeModeString == AEstring)
+                temporaryAeMode = this.aeModes.ElementAt(i);
+                if (temporaryAeMode.AeModeString == AEstring)
                 {
-                    return this.aeModes.ElementAt(i).AeModeHex;
+                    return temporaryAeMode.AeModeHex;
                 }
             }
 
@@ -71,11 +74,14 @@ namespace Canon_EOS_Remote.classes
         /// <returns>String AE Mode</returns>
         public string getAEString(uint aeHex)
         {
-            for (int i = 0; i < this.aeModes.Count; i++)
+            int count = this.aeModes.Count; // 20.6.2011 moved from loop to increase performance
+            TAEMode temporaryAeMode; // to advoid two calls to increase performance
+            for (int i = 0; i < count; i++)
             {
-                if (this.aeModes.ElementAt(i).AeModeHex == aeHex)
+                temporaryAeMode = this.aeModes.ElementAt(i);
+                if (temporaryAeMode.AeModeHex == aeHex)
                 {
-                    return this.aeModes.ElementAt(i).AeModeString;
+                    return temporaryAeMode.AeModeString;
                 }
             }
 

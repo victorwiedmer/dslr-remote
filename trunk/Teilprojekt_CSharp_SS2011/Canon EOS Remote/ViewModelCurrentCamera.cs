@@ -23,14 +23,17 @@ namespace Canon_EOS_Remote.ViewModel
         private EDSDK.EdsPropertyDesc PropertyDescISO;
         private EDSDK.EdsPropertyDesc propertyDescTv;
         private EDSDK.EdsPropertyDesc propertyDescEBV;
+        private EDSDK.EdsPropertyDesc propertyDescAE;
+        private EDSDK.EdsPropertyDesc apertureDesc;
         private string currentDate;
         private string currentTime;
         private string currentISO;
         private string currentProgramm;
         private string currentAperture;
+        private string currentTv;
         #endregion
 
-        #region Script Commands
+        #region Script Commands und Felder
         private string script;
         private CommandChangeTv commandChangeTv;
         private Command_RunScript scriptCommand;
@@ -39,8 +42,8 @@ namespace Canon_EOS_Remote.ViewModel
         private Command_DelScript commandDelScript;
         private Command_DelScript_LastCommand commandDelLastCommandScript;
         private CommandHDR commandHDR;
-
-
+        private CommandChangeISO commandChangeIso;
+        private CommandChangeEBV commandChangeEbv;
         #endregion
 
         #region CollectionViews für die GUI
@@ -71,28 +74,17 @@ namespace Canon_EOS_Remote.ViewModel
         private AEModes aeModeConverter;
         private ExposureCompensation ebvConverter;
         private Apertures apertureConverter;
+        private PropertyCodes propertyCodesConverter;
         #endregion
 
-
-
-
-        
-
+        #region Events
         public delegate void scriptEventHandler(string e);
-
-        private EDSDK.EdsPropertyDesc propertyDescAE;
-        
-        
-        
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        
+        #endregion
 
         #region Commands
-
         private Command_TakePhoto commandTakePhoto; //Macht n-Fotos die ueber die Kameraeinstellung festgelegt wurden
-
+        
         #region Commands fuer die Objektivfokus Steuerung
         private Command_DriveLensNearOne commandDriveLensNearOne;
         private Command_DriveLensNearTwo commandDriveLensNearTwo;
@@ -100,30 +92,13 @@ namespace Canon_EOS_Remote.ViewModel
 
         private Command_DriveLensFarOne commandDriveLensFarOne;
         private Command_DriveLensFarTwo commandDriveLensFarTwo;
-        private Command_DriveLensFarThree commandDriveLensFarThree;
-        #endregion
-        #region Commands der Scriptsteuerung
-        private CommandChangeEBV commandChangeEbv;
+        private Command_DriveLensFarThree commandDriveLensFarThree;      
         #endregion
         #endregion
 
-
-
-        private EDSDK.EdsPropertyDesc apertureDesc;
-
-        
-        
         private IntPtr streamref;
         private IntPtr imageref;
-        private PropertyCodes propertyCodes;
-
         
-
-        private string currentTv;
-        
-
-        private CommandChangeISO commandChangeIso;
-
         #region setter und getter methoden der klassenfelder
 
         public CommandHDR CommandHDR
@@ -419,8 +394,8 @@ namespace Canon_EOS_Remote.ViewModel
 
         public PropertyCodes PropertyCodes
         {
-            get { return propertyCodes; }
-            set { propertyCodes = value;
+            get { return propertyCodesConverter; }
+            set { propertyCodesConverter = value;
             update("PropertyCodes");
             }
         }
@@ -739,17 +714,17 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void init()
         {
-            this.CurrentCameraName = "CurrentCameraName";
-            this.CurrentCameraOwner = "CurrentCameraOwner";
-            this.CurrentCameraFirmware = "CurrentCameraFirmware";
-            this.currentProgramm = "CurrentProgramm";
-            this.CurrentAperture = "CurrentAperture";
-            this.CurrentDate = " CurrentDate";
-            this.CurrentTime = "CurrentTime";
-            this.CurrentBatteryLevel = 50;
-            this.CurrentEBV = "EBV";
-            this.CurrentISO = "CurrentISO";
-            this.CurrentTv = "Lange";
+            this.CurrentCameraName = "";
+            this.CurrentCameraOwner = "";
+            this.CurrentCameraFirmware = "";
+            this.currentProgramm = "";
+            this.CurrentAperture = "";
+            this.CurrentDate = " ";
+            this.CurrentTime = "";
+            this.CurrentBatteryLevel = 0;
+            this.CurrentEBV = "";
+            this.CurrentISO = "";
+            this.CurrentTv = "";
             this.Script = "";
             instance();
             setEvents();
@@ -836,6 +811,9 @@ namespace Canon_EOS_Remote.ViewModel
             copyPropertyDescEbvToCollection();
         }
 
+        /// <summary>
+        /// Updated die Property Desc fuer die Belichtungszeiten
+        /// </summary>
         private void updatePropertyDescTv()
         {
             Console.WriteLine("UpdatePropertyDescTV called");
@@ -955,33 +933,19 @@ namespace Canon_EOS_Remote.ViewModel
                             updatePropertyDescTv();
                             updatePropertyDescEBV();
                             delPropertyDescAperturesFromCollection();
-                            Console.WriteLine(
-                                "|-----------------------------------------------------------------------------|\n"+
-                                "|Property Desc fuer die Zeit geladen, da auf Blendenautomatik gewechselt wurde|\n"+
-                                "|-----------------------------------------------------------------------------|\n");
                         }
                         if (this.CurrentCamera.CameraAEMode == 2)
                         {
                             updatePropertyDescAv();
                             updatePropertyDescEBV();
                             delPropertyDescShutterTimesFromCollection();
-                            Console.WriteLine(
-                                "|----------------------------------------------------------------------------|\n" +
-                                "|Property Desc fuer die Blende geladen, da auf Zeitautomatik gewechselt wurde|\n" +
-                                "|----------------------------------------------------------------------------|\n");
                         }
                         if (this.CurrentCamera.CameraAEMode == 3)
                         {
                             updatePropertyDescTv();
                             updatePropertyDescAv();
                             delPropertyDescEbvFromCollection();
-                            Console.WriteLine(
-                                "|------------------------------------------------------------------------------|\n" +
-                                "|Property Desc fuer die Zeit und Blende geladen, da auf Manuel gewechselt wurde|\n" +
-                                "|------------------------------------------------------------------------------|\n");
                         }
-
-
                         break;
                     }
                 case EDSDK.PropID_Av:
@@ -1036,7 +1000,6 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void copyPropertyDescShutterTimesToCollection()
         {
-            Console.WriteLine("CopyPropertyDescShutterTimesToCollection called");
             this.AvailableShutterTimesCollection.Clear();
             for (int i = 0; i < this.PropertyDescTv.NumElements; i++)
             {

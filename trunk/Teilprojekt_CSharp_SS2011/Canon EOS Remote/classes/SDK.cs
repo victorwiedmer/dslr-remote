@@ -52,12 +52,11 @@ namespace Canon_EOS_Remote.classes
             if (tmpError != 0)
             {
                 this.SDKState = false;
-                System.Windows.MessageBox.Show("SDK can't initilized : " + tmpError);
+                //TODO Fehler behandeln
             }
             else
             {
                 this.SDKState = true;
-                Console.WriteLine("SDK initialized");
             }
 
         }
@@ -67,7 +66,6 @@ namespace Canon_EOS_Remote.classes
             if (PropertyChanged != null)
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(property));
-                System.Windows.MessageBox.Show("Property has changed from : " + this + " : " + property);
             }
         }
 

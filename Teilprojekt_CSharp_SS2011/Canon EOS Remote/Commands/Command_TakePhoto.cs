@@ -32,7 +32,6 @@ namespace Canon_EOS_Remote.Commands
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("Command_TakePhoto say : PropertyChanged : " + property);
             }
         }
 

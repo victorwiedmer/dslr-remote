@@ -349,7 +349,6 @@ namespace Canon_EOS_Remote
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("Property has changed from : " + this + " : " + property);
             }
         }
 

@@ -53,7 +53,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetCameraList(out tmpPtr);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                Console.WriteLine("Error while getting cameralist : " + error);
+                //TODO Fehler behandeln
             }
             /*
              * Getting count of cameralist childs to choose the last adding on the list
@@ -61,7 +61,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetChildCount(tmpPtr, out tmpCount);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                Console.WriteLine("Error while getting count of cameralist childs : " + error);
+                //TODO Fehler behandeln
             }
             /*
              * Get the camera pointer of the last object on the cameralist
@@ -69,7 +69,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetChildAtIndex(tmpPtr, tmpCount - 1, out tmpPtr);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                Console.WriteLine("Error while getting camerapointer : " + error);
+                //TODO Fehler behandeln
             }
             /*
              * Getting device info of given camera pointer
@@ -77,7 +77,7 @@ namespace Canon_EOS_Remote.classes
             error=EDSDKLib.EDSDK.EdsGetDeviceInfo(tmpPtr, out deviceInfo);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                Console.WriteLine("Error while getting deviceinfo : " + error);
+                //TODO Fehler behandeln
             }
             string cameraName;
             EDSDK.EdsOpenSession(tmpPtr);
@@ -100,7 +100,7 @@ namespace Canon_EOS_Remote.classes
             this.cameraStateEventHandler = new EDSDK.EdsStateEventHandler(onCameraStateChanged);
             if (error != EDSDK.EDS_ERR_OK)
             {
-                Console.WriteLine("Error while adding cameraAddedEvent : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+                //TODO Fehler behandeln
             }
             this.eventIDs = new EventCodes();
             this.propertyCodes = new PropertyCodes();
@@ -108,10 +108,6 @@ namespace Canon_EOS_Remote.classes
 
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
         {
-            Console.WriteLine("Cameralist meldet, in einer Kamera hat sich was geaendert : \n" +
-                this.CameraList.ElementAt(getCameraIndexFromList(inContext)).Name + "\nEventID:" +
-                this.eventIDs.getEventIDString(inEvent) +"\nPropertyID : " + this.propertyCodes.getPropertyString(inPropertyID));
-                
             if(onCameraPropertyChangedEvent!=null){
                     onCameraPropertyChangedEvent(new PropertyEventArgs(inPropertyID));
                 }
@@ -121,7 +117,6 @@ namespace Canon_EOS_Remote.classes
 
         private uint onCameraStateChanged(uint inEvent, uint inParameter, IntPtr inContext)
         {
-            Console.WriteLine("State changed : " + this.eventIDs.getEventIDString(inEvent));
             if (inEvent == EDSDK.StateEvent_Shutdown)
             {
                 EDSDK.EdsCloseSession(inContext);
@@ -132,8 +127,7 @@ namespace Canon_EOS_Remote.classes
                         this.CameraList.RemoveAt(i);
                     }
                 }
-                Console.WriteLine("Cant delete camera from list");
-                //TODO find out why he dont cant delete camera from list , try method getCameraIndexFromList
+                //TODO wenn Kamera von der Liste gelöscht wird müssen alle Felder der GUI über das Databinding gelöscht werden
             }
             return 0x0;
         }
@@ -156,7 +150,6 @@ namespace Canon_EOS_Remote.classes
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("Cameralist say : PropertyChanged : " + property);
             }
         }
 

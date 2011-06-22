@@ -98,6 +98,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\Command_DelScript_LastCommand.cs" />
     <Compile Include="Commands\CommandHDR.cs" />
+    <Compile Include="CurrentCamera.cs" />
     <Compile Include="LiveView.cs" />
     <Compile Include="Typen und Listen\AEModes.cs" />
     <Compile Include="Typen und Listen\Apertures.cs" />

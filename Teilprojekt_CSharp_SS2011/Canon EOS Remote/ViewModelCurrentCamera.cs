@@ -816,7 +816,6 @@ namespace Canon_EOS_Remote.ViewModel
         /// </summary>
         private void updatePropertyDescTv()
         {
-            Console.WriteLine("UpdatePropertyDescTV called");
             this.CurrentCamera.getpropertyDescShutterTimes();
             this.PropertyDescTv = this.CurrentCamera.AvailableShutterspeeds;
             copyPropertyDescShutterTimesToCollection();
@@ -824,7 +823,6 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void updatePropertyDescAv()
         {
-            Console.WriteLine("UpdatePropertyDescAv called");
             this.CurrentCamera.getpropertyDescApertureValues();
             this.ApertureDesc = this.CurrentCamera.AvailableApertureValues;
             copyPropertyDescAperturesToCollection();
@@ -832,7 +830,6 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void updatePropertyDescEBV()
         {
-            Console.WriteLine("UpdatePropertyDescEBV called");
             this.CurrentCamera.getpropertyDescExposureCompensation();
             this.PropertyDescEBV = this.CurrentCamera.AvailableExposureCompensation;
             copyPropertyDescEbvToCollection();
@@ -848,7 +845,6 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentBodyID = this.CurrentCamera.BodyID;
             this.CurrentAvailableShots = (int)this.CurrentCamera.CameraAvailableShots;
             this.CurrentCameraOwner = this.CurrentCamera.Owner;
-            Console.WriteLine("Current CameraOwner is : " + this.CurrentCameraOwner);
             this.CurrentCameraFirmware = this.CurrentCamera.CameraFirmware;
             this.CurrentTv = this.shutterTimeConverter.getShutterTimeStringFromHex(this.CurrentCamera.CameraShutterTime);
             this.CurrentProgramm = this.AeModeConverter.getAEString(this.CurrentCamera.CameraAEMode);
@@ -990,11 +986,9 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void sendISOSpeedToCamera(object sender, EventArgs e)
         {
-            string tmpProperty = "";
             if (this.AvailableISOListView.CurrentItem != null)
             {
-                tmpProperty = (string)this.AvailableISOListView.CurrentItem;
-                this.CurrentCamera.setISOSpeedToCamera((int)this.isoConverter.getISOSpeedFromDec(tmpProperty));
+                this.CurrentCamera.setISOSpeedToCamera((int)this.isoConverter.getISOSpeedFromDec((string)this.AvailableISOListView.CurrentItem));
             }
         }
 

@@ -15,6 +15,8 @@ namespace Canon_EOS_Remote
         private Cameralist _cameraList;
         #endregion
 
+
+
         #region Setter/Getter Methods
 
         public SDK Sdk

@@ -12,52 +12,57 @@ namespace Canon_EOS_Remote.ViewModel
     class ViewModelCurrentCamera : INotifyPropertyChanged
     {
         #region Kamera Parameter der aktuellen Kamera
-        private string currentCameraName;
-        private int currentBatteryLevel;
-        private string currentBodyID;
-        private int currentAvailableShots;
-        private string currentCameraOwner;
-        private string currentCameraFirmware;
+        private string currentCameraName;//direkte Anzeige auf der GUI
+        private int currentBatteryLevel;//direkte Anzeige auf der GUI
+        private string currentBodyID;//direkte Anzeige auf der GUI
+        private int currentAvailableShots;//direkte Anzeige auf der GUI
+        private string currentCameraOwner;//direkte Anzeige auf der GUI
+        private string currentCameraFirmware;//direkte Anzeige auf der GUI
+
         private Camera currentCamera;
-        private string currentEBV;
-        private EDSDK.EdsPropertyDesc PropertyDescISO;
-        private EDSDK.EdsPropertyDesc propertyDescTv;
-        private EDSDK.EdsPropertyDesc propertyDescEBV;
-        private EDSDK.EdsPropertyDesc propertyDescAE;
-        private EDSDK.EdsPropertyDesc apertureDesc;
-        private string currentDate;
-        private string currentTime;
-        private string currentISO;
-        private string currentProgramm;
-        private string currentAperture;
-        private string currentTv;
+
+        private string currentEBV;//direkte Anzeige auf der GUI
+
+        //Exported to ModelCurrentCamera
+        private EDSDK.EdsPropertyDesc PropertyDescISO; //TODO nach Model
+        private EDSDK.EdsPropertyDesc propertyDescTv;//TODO nach Model
+        private EDSDK.EdsPropertyDesc propertyDescEBV;//TOD//TODO nach Model
+        private EDSDK.EdsPropertyDesc propertyDescAE;//TODO nach Model
+        private EDSDK.EdsPropertyDesc propertyDescAperture;//TODO nach Model
+        //
+        private string currentDate; //direkte Anzeige auf der GUI
+        private string currentTime;//direkte Anzeige auf der GUI
+        private string currentISO;//direkte Anzeige auf der GUI
+        private string currentProgramm;//direkte Anzeige auf der GUI
+        private string currentAperture;//direkte Anzeige auf der GUI
+        private string currentTv;//direkte Anzeige auf der GUI
         #endregion
 
         #region Script Commands und Felder
         private string script;
-        private CommandChangeTv commandChangeTv;
-        private Command_RunScript scriptCommand;
-        private CommandScriptPhoto scriptTakePhoto;
-        private CommandChangeAv commandChangeAv;
-        private Command_DelScript commandDelScript;
-        private Command_DelScript_LastCommand commandDelLastCommandScript;
-        private CommandHDR commandHDR;
-        private CommandChangeISO commandChangeIso;
-        private CommandChangeEBV commandChangeEbv;
+        private CommandChangeTv commandChangeTv; //TODO nach ViewModelScript
+        private Command_RunScript scriptCommand; //TODO nach ViewModelScript
+        private CommandScriptPhoto scriptTakePhoto;//TODO nach ViewModelScript
+        private CommandChangeAv commandChangeAv;//TODO nach ViewModelScript
+        private Command_DelScript commandDelScript;//TODO nach ViewModelScript
+        private Command_DelScript_LastCommand commandDelLastCommandScript;//TODO nach ViewModelScript
+        private CommandHDR commandHDR;//TODO nach ViewModelScript
+        private CommandChangeISO commandChangeIso;//TODO nach ViewModelScript
+        private CommandChangeEBV commandChangeEbv;//TODO nach ViewModelScript
         #endregion
 
         #region CollectionViews für die GUI
         //Collections Views der Kamera Einstellung
-        private CollectionView availableISOListView;
-        private CollectionView availableShutterTimesView;
-        private CollectionView availableEBVView;
-        private CollectionView aEView;
-        private CollectionView apertureView;
+        private CollectionView availableISOListView;//direkte Anzeige auf der GUI
+        private CollectionView availableShutterTimesView;//direkte Anzeige auf der GUI
+        private CollectionView availableEBVView;//direkte Anzeige auf der GUI
+        private CollectionView aEView;//direkte Anzeige auf der GUI
+        private CollectionView apertureView;//direkte Anzeige auf der GUI
         // Collection Views der Scriptsteuerung
-        private CollectionView scriptIso;
-        private CollectionView scriptAperture;
-        private CollectionView scriptTv;
-        private CollectionView scriptEbv;
+        private CollectionView scriptIso;//direkte Anzeige auf der GUI
+        private CollectionView scriptAperture;//direkte Anzeige auf der GUI
+        private CollectionView scriptTv;//direkte Anzeige auf der GUI
+        private CollectionView scriptEbv;//direkte Anzeige auf der GUI
         #endregion
 
         #region ObservableCollections fuer die CollectionViews der GUI
@@ -288,8 +293,8 @@ namespace Canon_EOS_Remote.ViewModel
 
         public EDSDK.EdsPropertyDesc ApertureDesc
         {
-            get { return apertureDesc; }
-            set { apertureDesc = value;
+            get { return propertyDescAperture; }
+            set { propertyDescAperture = value;
             update("ApertureDesc");
             }
         }

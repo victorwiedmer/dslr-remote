@@ -100,7 +100,7 @@ namespace Canon_EOS_Remote.classes
             {
                 if (this.shutterTimes.ElementAt(i).ShutterTimeHex == hexvalue)
                 {
-                    return this.shutterTimes.ElementAt(i).ShutterTimeDec;
+                    return this.shutterTimes.ElementAt(i).ShutterTimeString;
                 }
             }
             return "unknown" + hexvalue;
@@ -110,7 +110,7 @@ namespace Canon_EOS_Remote.classes
         {
             for (int i = 0; i < this.shutterTimes.Count; i++)
             {
-                if (this.shutterTimes.ElementAt(i).ShutterTimeDec == decvalue)
+                if (this.shutterTimes.ElementAt(i).ShutterTimeString == decvalue)
                 {
                     return this.shutterTimes.ElementAt(i).ShutterTimeHex;
                 }

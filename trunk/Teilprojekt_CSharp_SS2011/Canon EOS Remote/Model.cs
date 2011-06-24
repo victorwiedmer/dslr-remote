@@ -13,9 +13,23 @@ namespace Canon_EOS_Remote
 
         private SDK _sdk;
         private Cameralist _cameraList;
+        private ModelConverter _modelConverter;
+
+        public ModelConverter ModelConverter
+        {
+            get { return _modelConverter; }
+            set { _modelConverter = value; }
+        }
+        private ModelCurrentCamera _modelCurrentCamera;
+
+        internal ModelCurrentCamera ModelCurrentCamera
+        {
+            get { return _modelCurrentCamera; }
+            set { _modelCurrentCamera = value;
+            update("ModelCurrentCamera");
+            }
+        }
         #endregion
-
-
 
         #region Setter/Getter Methods
 
@@ -37,6 +51,8 @@ namespace Canon_EOS_Remote
         {
          Sdk = new SDK();
          CameraList = new Cameralist();
+         this.ModelConverter = new ModelConverter();
+         this.ModelCurrentCamera = new ModelCurrentCamera();
         }
 
         private void update(string property)
@@ -44,9 +60,9 @@ namespace Canon_EOS_Remote
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("Property has changed from : " + this + " : " + property);
             }
         }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

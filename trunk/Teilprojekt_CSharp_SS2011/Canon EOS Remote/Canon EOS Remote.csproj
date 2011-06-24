@@ -99,7 +99,9 @@
     <Compile Include="Commands\Command_DelScript_LastCommand.cs" />
     <Compile Include="Commands\CommandHDR.cs" />
     <Compile Include="CurrentCamera.cs" />
+    <Compile Include="INotifyPropertyChange.cs" />
     <Compile Include="LiveView.cs" />
+    <Compile Include="ModelConverter.cs" />
     <Compile Include="ModelCurrentCamera.cs" />
     <Compile Include="Typen und Listen\AEModes.cs" />
     <Compile Include="Typen und Listen\Apertures.cs" />
@@ -107,7 +109,7 @@
     <Compile Include="Typen und Listen\TEventID.cs" />
     <Compile Include="Typen und Listen\PropertyCodes.cs" />
     <Compile Include="Typen und Listen\PropertyEventArgs.cs" />
-    <Compile Include="Typen und Listen\PropertyID.cs" />
+    <Compile Include="Typen und Listen\TPropertyID.cs" />
     <Compile Include="Typen und Listen\scriptCommandEventArgs.cs" />
     <Compile Include="Typen und Listen\ShutterTimes.cs" />
     <Compile Include="Typen und Listen\TAEMode.cs" />
@@ -152,7 +154,6 @@
     <Compile Include="ErrorHandling\ErrorCodes.cs" />
     <Compile Include="Typen und Listen\ISOSpeeds.cs" />
     <Compile Include="Typen und Listen\ExposureCompensation.cs" />
-    <Compile Include="Typen und Listen\ISOSpeed.cs" />
     <Compile Include="Typen und Listen\TISOValue.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

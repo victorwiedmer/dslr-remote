@@ -29,6 +29,7 @@ namespace Canon_EOS_Remote.ViewModel
         private EDSDK.EdsPropertyDesc propertyDescEBV;//TOD//TODO nach Model
         private EDSDK.EdsPropertyDesc propertyDescAE;//TODO nach Model
         private EDSDK.EdsPropertyDesc propertyDescAperture;//TODO nach Model
+        private EDSDK.EdsPropertyDesc propertyDescDriveMode;
         //
         private string currentDate; //direkte Anzeige auf der GUI
         private string currentTime;//direkte Anzeige auf der GUI
@@ -36,6 +37,15 @@ namespace Canon_EOS_Remote.ViewModel
         private string currentProgramm;//direkte Anzeige auf der GUI
         private string currentAperture;//direkte Anzeige auf der GUI
         private string currentTv;//direkte Anzeige auf der GUI
+        private string driveMode;
+
+        public string DriveMode
+        {
+            get { return driveMode; }
+            set { driveMode = value;
+            update("DriveMode");
+            }
+        }
         #endregion
 
         #region Script Commands und Felder
@@ -58,6 +68,7 @@ namespace Canon_EOS_Remote.ViewModel
         private CollectionView availableEBVView;//direkte Anzeige auf der GUI
         private CollectionView aEView;//direkte Anzeige auf der GUI
         private CollectionView apertureView;//direkte Anzeige auf der GUI
+        private CollectionView driveModeView;
         // Collection Views der Scriptsteuerung
         private CollectionView scriptIso;//direkte Anzeige auf der GUI
         private CollectionView scriptAperture;//direkte Anzeige auf der GUI
@@ -71,6 +82,7 @@ namespace Canon_EOS_Remote.ViewModel
         private ObservableCollection<string> availableEVBCollection;
         private ObservableCollection<string> apertureCollection;
         private ObservableCollection<string> aECollection;
+        private ObservableCollection<string> driveModeCollection;
         #endregion
 
         #region Konverter fuer die Umwandlung von String zu Hexadezimal
@@ -80,6 +92,9 @@ namespace Canon_EOS_Remote.ViewModel
         private ExposureCompensation ebvConverter;
         private Apertures apertureConverter;
         private PropertyCodes propertyCodesConverter;
+        private DriveModes driveModeConverter;
+
+
         #endregion
 
         #region Events
@@ -105,6 +120,42 @@ namespace Canon_EOS_Remote.ViewModel
         private IntPtr imageref;
         
         #region setter und getter methoden der klassenfelder
+
+        public EDSDK.EdsPropertyDesc PropertyDescDriveMode
+        {
+            get { return propertyDescDriveMode; }
+            set
+            {
+                propertyDescDriveMode = value;
+                update("PropertyDescDriveMode");
+            }
+        }
+
+        public DriveModes DriveModeConverter
+        {
+            get { return driveModeConverter; }
+            set { driveModeConverter = value; }
+        }
+
+        public ObservableCollection<string> DriveModeCollection
+        {
+            get { return driveModeCollection; }
+            set
+            {
+                driveModeCollection = value;
+                update("DriveModeCollection");
+            }
+        }
+
+        public CollectionView DriveModeView
+        {
+            get { return driveModeView; }
+            set
+            {
+                driveModeView = value;
+                update("DriveModeView");
+            }
+        }
 
         public CommandHDR CommandHDR
         {
@@ -640,7 +691,6 @@ namespace Canon_EOS_Remote.ViewModel
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("\n\nViewModelCurrentCamera Property has changed : " + property + "\n\n");
             }
         }
 
@@ -681,12 +731,14 @@ namespace Canon_EOS_Remote.ViewModel
             this.AECollection = new ObservableCollection<string>();
             this.AvailableEVBCollection = new ObservableCollection<string>();
             this.ApertureCollection = new ObservableCollection<string>();
+            this.DriveModeCollection = new ObservableCollection<string>();
             //Instance CollectionViews
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
             this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
             this.AEView = new CollectionView(this.AECollection);
             this.AvailableEBVView = new CollectionView(this.AvailableEVBCollection);
             this.ApertureView = new CollectionView(this.ApertureCollection);
+            this.DriveModeView = new CollectionView(this.DriveModeCollection);
             //Initialise CollectionViews for Scriptpanel
             this.ScriptAperture = new CollectionView(this.apertureCollection);
             this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
@@ -700,6 +752,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.ApertureConverter = new Apertures();
             this.EbvConverter = new ExposureCompensation();
             this.AeModeConverter = new AEModes();
+            this.DriveModeConverter = new DriveModes();
         }
 
         /// <summary>
@@ -731,6 +784,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentISO = "";
             this.CurrentTv = "";
             this.Script = "";
+            this.DriveMode = "";
             instance();
             setEvents();
         }
@@ -814,6 +868,8 @@ namespace Canon_EOS_Remote.ViewModel
             copyPropertyDescAperturesToCollection();
             this.PropertyDescEBV = this.CurrentCamera.AvailableExposureCompensation;
             copyPropertyDescEbvToCollection();
+            this.PropertyDescDriveMode = this.CurrentCamera.AvailableDriveModes;
+            copyPropertyDescDriveModeToCollection();
         }
 
         /// <summary>
@@ -840,6 +896,13 @@ namespace Canon_EOS_Remote.ViewModel
             copyPropertyDescEbvToCollection();
         }
 
+        private void updatePropertyDescDriveMode()
+        {
+            this.CurrentCamera.getPropertyDescDriveModes();
+            this.PropertyDescDriveMode = this.CurrentCamera.AvailableDriveModes;
+            copyPropertyDescDriveModeToCollection();
+        }
+
         /// <summary>
         /// Holt die einzelnen Felder der aktuellen Kamera
         /// </summary>
@@ -858,6 +921,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentTime = convertEdsTimeToTimeString(this.CurrentCamera.CameraTime);
             this.CurrentISO = this.isoConverter.getISOSpeedFromHex(this.CurrentCamera.CameraISOSpeed);
             this.CurrentEBV = this.EbvConverter.getEbvString(this.CurrentCamera.CameraExposureCompensation);
+            this.DriveMode = this.DriveModeConverter.getDriveModeString(this.CurrentCamera.CameraDriveMode);
         }
 
        /// <summary>
@@ -870,6 +934,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.AvailableShutterTimesView.CurrentChanged += new EventHandler(sendShutterTimeToCamera);
             this.AEView.CurrentChanged += new EventHandler(sendAEModeToCamera);
             this.AvailableEBVView.CurrentChanged += new EventHandler(sendEbvToCamera);
+            this.DriveModeView.CurrentChanged += new EventHandler(sendDriveModeToCamera);
         }
 
         public void updateCurrentlyCamera(classes.PropertyEventArgs p)
@@ -968,7 +1033,12 @@ namespace Canon_EOS_Remote.ViewModel
                         this.CurrentEBV = this.EbvConverter.getEbvString(this.CurrentCamera.CameraExposureCompensation);
                         break;
                     }
-                  
+                case EDSDK.PropID_DriveMode:
+                    {
+                        this.CurrentCamera.getDriveMode();
+                        this.DriveMode = this.DriveModeConverter.getDriveModeString(this.CurrentCamera.CameraDriveMode);
+                        break;
+                    }
                 default:
                     {
                         Console.WriteLine("Cant identify PropertyID");
@@ -1043,6 +1113,16 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
+        private void copyPropertyDescDriveModeToCollection()
+        {
+            this.DriveModeCollection.Clear();
+            for (int i = 0; i < this.PropertyDescDriveMode.NumElements; i++)
+            {
+                this.DriveModeCollection.Add(this.DriveModeConverter.getDriveModeString((uint)this.PropertyDescDriveMode.PropDesc[i]));
+            }
+        }
+
+
         private void delPropertyDescAperturesFromCollection()
         {
             this.ApertureCollection.Clear();
@@ -1088,6 +1168,14 @@ namespace Canon_EOS_Remote.ViewModel
             if (this.AvailableEBVView.CurrentItem != null)
             {
                 this.CurrentCamera.setEbvToCamera((int)this.EbvConverter.getebvHex((string)this.AvailableEBVView.CurrentItem));
+            }
+        }
+
+        private void sendDriveModeToCamera(object sender, EventArgs e)
+        {
+            if (this.DriveModeView.CurrentItem != null)
+            {
+                this.CurrentCamera.setDriveModeToCamera((int)this.DriveModeConverter.getDriveModeHex((string)this.DriveModeView.CurrentItem));
             }
         }
 

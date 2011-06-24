@@ -46,14 +46,13 @@ namespace Canon_EOS_Remote
         private EDSDK.EdsPropertyDesc availableShutterspeeds;
         private EDSDK.EdsPropertyDesc availableISOSpeeds;
         private EDSDK.EdsPropertyDesc availableExposureCompensation;
+        private EDSDK.EdsPropertyDesc availableDriveModes;
 
-        private LiveView liveView;
-
-        internal LiveView LiveView
+        public EDSDK.EdsPropertyDesc AvailableDriveModes
         {
-            get { return liveView; }
-            set { liveView = value;
-            update("LiveView");
+            get { return availableDriveModes; }
+            set { availableDriveModes = value;
+            update("AvailableDriveModes");
             }
         }
 
@@ -271,33 +270,10 @@ namespace Canon_EOS_Remote
         }
         #endregion
 
-        private void startLiveView()
-        {
-            EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_Evf_OutputDevice, 0, Marshal.SizeOf(EDSDK.EvfOutputDevice_PC), EDSDK.EvfOutputDevice_PC);
-        }
-
-        private void startLVThread()
-        {
-            Thread LV = new Thread(new ThreadStart(startLiveView));
-            //LV.Start();
-        }
-
         #region Constructors
-
-        /// <summary>
-        /// Konstruktor für das Objekt Kamera
-        /// </summary>
-        /// <param name="cameraPtr">Zeiger auf die Kamera der von der SDK zurückgegeben wurde</param>
-        /// <remarks>Werte die nicht vom Konstruktor festgelegt wurden, werden automatisch während der Instanzierung ausgelesen</remarks>
-        public Camera(IntPtr cameraPtr)
-        {
-            throw new NotImplementedException();
-            //TODO implementieren
-        }
 
         private void initFields()
         {
-            //startLVThread();
             getBatteryLevel();
             getAeMode();
             getDriveMode();
@@ -317,12 +293,11 @@ namespace Canon_EOS_Remote
             getpropertyDescExposureCompensation();
             getpropertyDescMeteringModes();
             getpropertyDescShutterTimes();
+            getPropertyDescDriveModes();
             getLensState();
             getApertureFromCamera();
             getTime();
             getEbvFromBody();
-            LiveView = new LiveView(this.Ptr);
-            //StartLV();
         }
 
         /// <summary>
@@ -473,6 +448,12 @@ namespace Canon_EOS_Remote
             {
                 publicError(Error);
             }
+            if(this.Owner==""){
+                if ((Error = EDSDK.EdsGetPropertyData(this.Ptr, EDSDK.PropID_Copyright, 0, out this._owner)) != 0)
+                {
+                    publicError(Error);
+                }
+            }
             update("Owner");
         }
 
@@ -588,6 +569,17 @@ namespace Canon_EOS_Remote
         }
 
         /// <summary>
+        /// Holt die Tabelle der verfügbaren Aufnahmemodi von der Kamera und speichert sie in den Klassemember
+        /// </summary>
+        public void getPropertyDescDriveModes()
+        {
+            if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_DriveMode, out this.availableDriveModes)) != 0)
+            {
+                publicError(Error);
+            }
+        }
+
+        /// <summary>
         /// Holt die Einstellung für den Objektivstatus(angeschlossen) von der Kamera und speichert sie in den Klassemember
         /// </summary>
         public void getLensState()
@@ -626,6 +618,11 @@ namespace Canon_EOS_Remote
             EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_ISOSpeed, 0, sizeof(int), isoSpeed);
         }
 
+        public void setDriveModeToCamera(int driveMode)
+        {
+            EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_DriveMode, 0, sizeof(int), driveMode);
+        }
+
         public void setShutterTimeToCamera(int shutterTime)
         {
             EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_Tv, 0, sizeof(int), shutterTime);
@@ -656,57 +653,6 @@ namespace Canon_EOS_Remote
         }
 
         #endregion
-
-        private Thread LVThread;
-        private bool LVrunning = false;
-        private bool LVinit = false;
-
-
-        public void StartLV()
-        {
-            if (!LVinit)
-            {
-                LiveView.startLV();
-
-                LVinit = true;
-
-                ContinueLV();
-            }
-        }
-
-        private void ContinueLV()
-        {
-            if (!LVrunning & LVinit)
-            {
-                LVThread = new Thread(new ThreadStart(LiveView.Run));
-                LVThread.Start();
-
-                LVrunning = true;
-            }
-        }
-
-        public void StopLV()
-        {
-            if (LVrunning)
-            {
-                LVrunning = false;
-                LVinit = false;
-                LiveView.pauseLV();
-                LiveView.stopLV();
-                LVThread.Join();
-                EDSDK.EdsSetPropertyData(this.Ptr, (uint)EDSDK.PropID_Evf_OutputDevice, 0, Marshal.SizeOf((uint)EDSDK.EvfOutputDevice_PC), (uint)EDSDK.EvfOutputDevice_TFT);
-            }
-        }
-
-        private EDSDK.EdsDirectoryItemInfo _pictureInfo;
-        private EDSDK.EdsImageInfo _imageInfo;
-        private IntPtr _pictureRef;
-
-        public void downloadLastImage()
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
 }

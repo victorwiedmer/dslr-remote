@@ -29,8 +29,16 @@ namespace Canon_EOS_Remote
             this._driveModes.Add(new TDriveMode("2s Selbstauslöser",0x11));
         }
 
-        //public uint getDriveModeHex(){
-        //}
+        public uint getDriveModeHex(string driveModeString){
+          for (int i = 0; i < this._driveModes.Count; i++)
+            {
+                if (this._driveModes.ElementAt(i).DriveModeName == driveModeString)
+                {
+                    return this._driveModes.ElementAt(i).DriveModeHex;
+                }
+            }
+            return 0x0;
+        }
         public string getDriveModeString(UInt32 tmpDriveModeHex){
             for (int i = 0; i < this._driveModes.Count; i++)
             {
@@ -39,7 +47,7 @@ namespace Canon_EOS_Remote
                     return this._driveModes.ElementAt(i).DriveModeName;
                 }
             }
-            return "unknown";
+            return "unknown : " + tmpDriveModeHex;
         }
     }
 }

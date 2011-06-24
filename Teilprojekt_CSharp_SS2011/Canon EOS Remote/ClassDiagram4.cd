@@ -86,13 +86,6 @@
       <FileName>Typen und Listen\ExposureCompensation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Canon_EOS_Remote.ISOSpeed" Collapsed="true">
-    <Position X="7.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AEQAAAAAAAAABAAAAAAAAAAAACAAAAAAABAAAAAAAAA=</HashCode>
-      <FileName>Typen und Listen\ISOSpeed.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Canon_EOS_Remote.ISOSpeeds" Collapsed="true">
     <Position X="9.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
@@ -358,7 +351,7 @@
     <Position X="0.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAAAgAAAAAAAAAAgAAAAAAAAIAAA=</HashCode>
-      <FileName>Typen und Listen\PropertyID.cs</FileName>
+      <FileName>Typen und Listen\TPropertyID.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Canon_EOS_Remote.Types.TISOValue" Collapsed="true">

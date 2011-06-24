@@ -5,14 +5,20 @@ using System.Text;
 
 namespace Canon_EOS_Remote.classes
 {
+    /// <summary>
+    /// Klasse des Types Belichtungszeit,
+    /// speichert die Belichtungszeit in hexadezimalen Darstellung als Member
+    /// und die Stringdarstellung als Member
+    /// Version 1.0 ohne Fehlersicherheit in den setter Methoden
+    /// </summary>
     class TShutterTime
     {
-        private string shutterTimeDec;
+        private string shutterTimeString;
 
-        public string ShutterTimeDec
+        public string ShutterTimeString
         {
-            get { return shutterTimeDec; }
-            set { shutterTimeDec = value; }
+            get { return shutterTimeString; }
+            set { shutterTimeString = value; }
         }
         private uint shutterTimeHex;
 
@@ -24,7 +30,13 @@ namespace Canon_EOS_Remote.classes
 
         public TShutterTime(string shutterTimeString, uint shutterTimeHex)
         {
-            this.ShutterTimeDec = shutterTimeString;
+            this.ShutterTimeString = shutterTimeString;
+            this.ShutterTimeHex = shutterTimeHex;
+        }
+
+        public TShutterTime(uint shutterTimeHex, string shutterTimeString)
+        {
+            this.ShutterTimeString = shutterTimeString;
             this.ShutterTimeHex = shutterTimeHex;
         }
     }

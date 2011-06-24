@@ -100,6 +100,7 @@
     <Compile Include="Commands\CommandHDR.cs" />
     <Compile Include="CurrentCamera.cs" />
     <Compile Include="LiveView.cs" />
+    <Compile Include="ModelCurrentCamera.cs" />
     <Compile Include="Typen und Listen\AEModes.cs" />
     <Compile Include="Typen und Listen\Apertures.cs" />
     <Compile Include="Typen und Listen\EventCodes.cs" />
@@ -179,6 +180,7 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram4.cd" />
     <None Include="EDSDK.lib" />
     <None Include="icc\1001_F.BIN">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

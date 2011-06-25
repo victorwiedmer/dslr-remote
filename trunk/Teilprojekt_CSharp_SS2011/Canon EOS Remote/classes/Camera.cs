@@ -41,12 +41,17 @@ namespace Canon_EOS_Remote
         public event PropertyChangedEventHandler PropertyChanged;
 
         private EDSDK.EdsPropertyDesc availableMeteringModes;
+
+
         private EDSDK.EdsPropertyDesc availableApertureValues;
 
         private EDSDK.EdsPropertyDesc availableShutterspeeds;
         private EDSDK.EdsPropertyDesc availableISOSpeeds;
         private EDSDK.EdsPropertyDesc availableExposureCompensation;
         private EDSDK.EdsPropertyDesc availableDriveModes;
+        private EDSDK.EdsPropertyDesc availableAFModes;
+
+
 
         public EDSDK.EdsPropertyDesc AvailableDriveModes
         {
@@ -59,6 +64,26 @@ namespace Canon_EOS_Remote
         #endregion
 
         #region Setter and Getter of class member
+
+        public EDSDK.EdsPropertyDesc AvailableAFModes
+        {
+            get { return availableAFModes; }
+            set
+            {
+                availableAFModes = value;
+                update("AvailableAFModes");
+            }
+        }
+
+        public EDSDK.EdsPropertyDesc AvailableMeteringModes
+        {
+            get { return availableMeteringModes; }
+            set
+            {
+                availableMeteringModes = value;
+                update("AvailableMeteringModes");
+            }
+        }
 
         public EDSDK.EdsPropertyDesc AvailableApertureValues
         {
@@ -294,6 +319,8 @@ namespace Canon_EOS_Remote
             getpropertyDescMeteringModes();
             getpropertyDescShutterTimes();
             getPropertyDescDriveModes();
+            getpropertyDescMeteringModes();
+            getPropertyDescAFModes();
             getLensState();
             getApertureFromCamera();
             getTime();
@@ -527,7 +554,7 @@ namespace Canon_EOS_Remote
         /// <summary>
         /// Holt die Tabelle der verfübaren Belichtungsmessungen aus der Kamera und speichert sie in den Klassemember 
         /// </summary>
-        private void getpropertyDescMeteringModes()
+        public void getpropertyDescMeteringModes()
         {
             if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_MeteringMode, out this.availableMeteringModes)) != 0)
             {
@@ -574,6 +601,28 @@ namespace Canon_EOS_Remote
         public void getPropertyDescDriveModes()
         {
             if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_DriveMode, out this.availableDriveModes)) != 0)
+            {
+                publicError(Error);
+            }
+        }
+
+        /// <summary>
+        /// Holt die Tabelle der verfügbaren Belichtungmessungsmodi von der Kamera und speichert sie in den Klassemember
+        /// </summary>
+        public void getProperyDescMeteringModes()
+        {
+            if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_MeteringMode, out this.availableMeteringModes)) != 0)
+            {
+                publicError(Error);
+            }
+        }
+
+        /// <summary>
+        /// Holt die Tabelle der verfügbaren Autofokusmodi von der Kamera und speichert sie in den Klassemember
+        /// </summary>
+        public void getPropertyDescAFModes()
+        {
+            if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_AFMode, out this.availableAFModes)) != 0)
             {
                 publicError(Error);
             }
@@ -641,6 +690,16 @@ namespace Canon_EOS_Remote
         public void setEbvToCamera(int ebv)
         {
             EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_ExposureCompensation,0, sizeof(int), ebv);
+        }
+
+        public void setAFModeToCamera(int afmode)
+        {
+            EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_AFMode,0, sizeof(int), afmode);
+        }
+
+        public void setMeteringModeToCamera(int meteringmode)
+        {
+            EDSDK.EdsSetPropertyData(this.Ptr, EDSDK.PropID_MeteringMode, 0, sizeof(int), meteringmode);
         }
 
         /// <summary>

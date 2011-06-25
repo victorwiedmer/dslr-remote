@@ -9,7 +9,7 @@ namespace Canon_EOS_Remote.Typen_und_Listen
     {
         private List<TMeteringMode> _meteringModesList;
 
-        internal List<TMeteringMode> MeteringModesList
+        public List<TMeteringMode> MeteringModesList
         {
             get { return _meteringModesList; }
             set { _meteringModesList = value; }

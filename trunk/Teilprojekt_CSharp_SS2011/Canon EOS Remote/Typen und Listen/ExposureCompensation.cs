@@ -8,9 +8,9 @@ namespace Canon_EOS_Remote
 {
     class ExposureCompensation
     {
-        private List<classes.TExposureCompensation> ebvList;
+        private List<TExposureCompensation> ebvList;
 
-        internal List<classes.TExposureCompensation> EbvList
+        public List<TExposureCompensation> EbvList
         {
             get { return ebvList; }
             set { ebvList = value; }
@@ -69,8 +69,7 @@ namespace Canon_EOS_Remote
                     return this.EbvList.ElementAt(i).EBVHex;
                 }
             }
-
-            return 0;
+            return 0x0;
         }
 
     }

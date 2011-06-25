@@ -99,7 +99,6 @@
     <Compile Include="Commands\Command_DelScript_LastCommand.cs" />
     <Compile Include="Commands\CommandHDR.cs" />
     <Compile Include="CurrentCamera.cs" />
-    <Compile Include="INotifyPropertyChange.cs" />
     <Compile Include="LiveView.cs" />
     <Compile Include="ModelConverter.cs" />
     <Compile Include="ModelCurrentCamera.cs" />
@@ -136,7 +135,6 @@
     <Compile Include="Commands\CommandChangeAv.cs" />
     <Compile Include="ScriptCommand.cs" />
     <Compile Include="ViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelCameralist.cs" />
     <Compile Include="ViewModelCurrentCamera.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

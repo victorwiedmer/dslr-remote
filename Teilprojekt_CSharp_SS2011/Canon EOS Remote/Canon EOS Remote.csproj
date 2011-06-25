@@ -104,11 +104,15 @@
     <Compile Include="ModelConverter.cs" />
     <Compile Include="ModelCurrentCamera.cs" />
     <Compile Include="Typen und Listen\AEModes.cs" />
+    <Compile Include="Typen und Listen\AFModes.cs" />
     <Compile Include="Typen und Listen\Apertures.cs" />
     <Compile Include="Typen und Listen\EventCodes.cs" />
+    <Compile Include="Typen und Listen\MeteringModes.cs" />
+    <Compile Include="Typen und Listen\TAFMode.cs" />
     <Compile Include="Typen und Listen\TEventID.cs" />
     <Compile Include="Typen und Listen\PropertyCodes.cs" />
     <Compile Include="Typen und Listen\PropertyEventArgs.cs" />
+    <Compile Include="Typen und Listen\TMeteringMode.cs" />
     <Compile Include="Typen und Listen\TPropertyID.cs" />
     <Compile Include="Typen und Listen\scriptCommandEventArgs.cs" />
     <Compile Include="Typen und Listen\ShutterTimes.cs" />

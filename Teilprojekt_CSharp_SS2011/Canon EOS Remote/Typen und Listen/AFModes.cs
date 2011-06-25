@@ -26,7 +26,7 @@ namespace Canon_EOS_Remote.Typen_und_Listen
             this.List.Add(new TAFMode("One Shot AF",0));
             this.List.Add(new TAFMode("AI Server AF",1));
             this.List.Add(new TAFMode("AI Focus AF",2));
-            this.List.Add(new TAFMode("Manueller Focus",3));
+            this.List.Add(new TAFMode("Manueller Fokus",3));
             this.List.Add(new TAFMode("Not Available",0xff));
         }
 

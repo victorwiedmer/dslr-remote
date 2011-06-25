@@ -69,7 +69,6 @@ namespace Canon_EOS_Remote.ViewModel
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
-                Console.WriteLine("ViewModel Property has changed : " + property);
             }
         }
 

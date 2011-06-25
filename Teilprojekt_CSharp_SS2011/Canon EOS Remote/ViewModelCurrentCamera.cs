@@ -110,7 +110,7 @@ namespace Canon_EOS_Remote.ViewModel
 
         #region Commands
         private Command_TakePhoto commandTakePhoto; //Macht n-Fotos die ueber die Kameraeinstellung festgelegt wurden
-        
+
         #region Commands fuer die Objektivfokus Steuerung
         private Command_DriveLensNearOne commandDriveLensNearOne;
         private Command_DriveLensNearTwo commandDriveLensNearTwo;
@@ -118,21 +118,20 @@ namespace Canon_EOS_Remote.ViewModel
 
         private Command_DriveLensFarOne commandDriveLensFarOne;
         private Command_DriveLensFarTwo commandDriveLensFarTwo;
-        private Command_DriveLensFarThree commandDriveLensFarThree;      
+        private Command_DriveLensFarThree commandDriveLensFarThree;
         #endregion
         #endregion
 
-        private IntPtr streamref;
-        private IntPtr imageref;
-        
         #region setter und getter methoden der klassenfelder
 
+        #region PropertyDescs
         public EDSDK.EdsPropertyDesc PropertyDescAfMode
         {
             get { return propertyDescAfMode; }
-            set { propertyDescAfMode = value; }
+            set { propertyDescAfMode = value;
+            update("PropertyDescAfMode");
+            }
         }
-
         public EDSDK.EdsPropertyDesc PropertyDescMeteringMode
         {
             get { return propertyDescMeteringMode; }
@@ -142,7 +141,63 @@ namespace Canon_EOS_Remote.ViewModel
                 update("PropertyDescMeteringMode");
             }
         }
+        public EDSDK.EdsPropertyDesc PropertyDescDriveMode
+        {
+            get { return propertyDescDriveMode; }
+            set
+            {
+                propertyDescDriveMode = value;
+                update("PropertyDescDriveMode");
+            }
+        }
+        public EDSDK.EdsPropertyDesc PropertyDescTv
+        {
+            get { return propertyDescTv; }
+            set
+            {
+                propertyDescTv = value;
+                update("PropertyDescTv");
+            }
+        }
+        public EDSDK.EdsPropertyDesc PropertyDescEBV
+        {
+            get { return propertyDescEBV; }
+            set
+            {
+                propertyDescEBV = value;
+                update("PropertyDescEBV");
+            }
+        }
+        public EDSDK.EdsPropertyDesc ApertureDesc
+        {
+            get { return propertyDescAperture; }
+            set
+            {
+                propertyDescAperture = value;
+                update("ApertureDesc");
+            }
+        }
+        public EDSDK.EdsPropertyDesc PropertyDescAE
+        {
+            get { return propertyDescAE; }
+            set
+            {
+                propertyDescAE = value;
+                update("PropertyDescAE");
+            }
+        }
+        public EDSDK.EdsPropertyDesc AvailableISOList
+        {
+            get { return PropertyDescISO; }
+            set
+            {
+                PropertyDescISO = value;
+                update("AvailableISOList");
+            }
+        }
+        #endregion
 
+        #region Einzelfelder
         public string AfMode
         {
             get { return afMode; }
@@ -152,7 +207,6 @@ namespace Canon_EOS_Remote.ViewModel
                 update("AfMode");
             }
         }
-
         public string MeteringMode
         {
             get { return meteringMode; }
@@ -162,7 +216,6 @@ namespace Canon_EOS_Remote.ViewModel
                 update("MeteringMode");
             }
         }
-
         public string DriveMode
         {
             get { return driveMode; }
@@ -172,7 +225,158 @@ namespace Canon_EOS_Remote.ViewModel
                 update("DriveMode");
             }
         }
+        public string CurrentCameraFirmware
+        {
+            get { return currentCameraFirmware; }
+            set
+            {
+                currentCameraFirmware = value;
+                update("CurrentCameraFirmware");
+            }
+        }
+        public string CurrentEBV
+        {
+            get { return currentEBV; }
+            set
+            {
+                currentEBV = value;
+                update("CurrentEBV");
+            }
+        }
+        public string CurrentTime
+        {
+            get { return currentTime; }
+            set
+            {
+                currentTime = value;
+                update("CurrentTime");
+            }
+        }
+        public string CurrentDate
+        {
+            get { return currentDate; }
+            set
+            {
+                currentDate = value;
+                update("CurrentDate");
+            }
+        }
+        public string CurrentAperture
+        {
+            get { return currentAperture; }
+            set
+            {
+                currentAperture = value;
+                update("CurrentAperture");
+            }
+        }
+        public string CurrentProgramm
+        {
+            get { return currentProgramm; }
+            set
+            {
+                currentProgramm = value;
+                update("CurrentProgramm");
+            }
+        }
+        public string CurrentISO
+        {
+            get { return currentISO; }
+            set
+            {
+                currentISO = value;
+                update("CurrentISO");
+            }
+        }
+        public string CurrentTv
+        {
+            get { return currentTv; }
+            set
+            {
+                currentTv = value;
+                update("CurrentTv");
+            }
+        }
+        public Camera CurrentCamera
+        {
+            get { return currentCamera; }
+            set
+            {
+                currentCamera = value;
 
+                #region Setze neuen Zeiger bei den Commands
+
+                this.CommandTakePhoto.Camera = currentCamera.Ptr;
+
+                this.CommandDriveLensNearOne.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensNearTwo.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensNearThree.CameraPtr = currentCamera.Ptr;
+
+                this.CommandDriveLensFarOne.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensFarTwo.CameraPtr = currentCamera.Ptr;
+                this.CommandDriveLensFarThree.CameraPtr = currentCamera.Ptr;
+                #endregion
+
+                update("CurrentCamera");
+            }
+        }
+        public string Script
+        {
+            get { return script; }
+            set
+            {
+                script = value;
+                update("Script");
+            }
+        }
+        public string CurrentCameraOwner
+        {
+            get { return currentCameraOwner; }
+            set
+            {
+                currentCameraOwner = value;
+                update("CurrentCameraOwner");
+            }
+        }
+        public int CurrentAvailableShots
+        {
+            get { return currentAvailableShots; }
+            set
+            {
+                currentAvailableShots = value;
+                update("CurrentAvailableShots");
+            }
+        }
+        public string CurrentBodyID
+        {
+            get { return currentBodyID; }
+            set
+            {
+                currentBodyID = value;
+                update("CurrentBodyID");
+            }
+        }
+        public int CurrentBatteryLevel
+        {
+            get { return currentBatteryLevel; }
+            set
+            {
+                currentBatteryLevel = value;
+                update("CurrentBatteryLevel");
+            }
+        }
+        public string CurrentCameraName
+        {
+            get { return currentCameraName; }
+            set
+            {
+                currentCameraName = value;
+                update("CurrentCameraName");
+            }
+        }
+        #endregion
+
+        #region CollectionViews
         public CollectionView AfModeView
         {
             get { return afModeView; }
@@ -192,7 +396,100 @@ namespace Canon_EOS_Remote.ViewModel
                 update("MeteringModeView");
             }
         }
+        public CollectionView ScriptIso
+        {
+            get { return scriptIso; }
+            set
+            {
+                scriptIso = value;
+                update("ScriptIso");
+            }
+        }
+        public CollectionView ScriptAperture
+        {
+            get { return scriptAperture; }
+            set
+            {
+                scriptAperture = value;
+                update("ScriptAperture");
+            }
+        }
 
+        public CollectionView ScriptTv
+        {
+            get { return scriptTv; }
+            set
+            {
+                scriptTv = value;
+                update("ScriptTv");
+            }
+        }
+        public CollectionView ScriptEbv
+        {
+            get { return scriptEbv; }
+            set
+            {
+                scriptEbv = value;
+                update("ScriptEbv");
+            }
+        }
+        public CollectionView DriveModeView
+        {
+            get { return driveModeView; }
+            set
+            {
+                driveModeView = value;
+                update("DriveModeView");
+            }
+        }
+        public CollectionView AvailableEBVView
+        {
+            get { return availableEBVView; }
+            set
+            {
+                availableEBVView = value;
+                update("AvailableEBVView");
+            }
+        }
+        public CollectionView ApertureView
+        {
+            get { return apertureView; }
+            set
+            {
+                apertureView = value;
+                update("ApertureView");
+            }
+        }
+        public CollectionView AEView
+        {
+            get { return aEView; }
+            set
+            {
+                aEView = value;
+                update("AEView");
+            }
+        }
+        public CollectionView AvailableShutterTimesView
+        {
+            get { return availableShutterTimesView; }
+            set
+            {
+                availableShutterTimesView = value;
+                update("AvailableShutterTimesView");
+            }
+        }
+        public CollectionView AvailableISOListView
+        {
+            get { return availableISOListView; }
+            set
+            {
+                availableISOListView = value;
+                update("AvailableISOListView");
+            }
+        }
+        #endregion
+
+        #region ObservableCollections
         public ObservableCollection<string> AfModeCollection
         {
             get { return afModeCollection; }
@@ -212,7 +509,63 @@ namespace Canon_EOS_Remote.ViewModel
                 update("MeteringModeCollection");
             }
         }
+        public ObservableCollection<string> DriveModeCollection
+        {
+            get { return driveModeCollection; }
+            set
+            {
+                driveModeCollection = value;
+                update("DriveModeCollection");
+            }
+        }
+        public ObservableCollection<string> AvailableEVBCollection
+        {
+            get { return availableEVBCollection; }
+            set
+            {
+                availableEVBCollection = value;
+                update("AvailableEVBCollection");
+            }
+        }
+        public ObservableCollection<string> ApertureCollection
+        {
+            get { return apertureCollection; }
+            set
+            {
+                apertureCollection = value;
+                update("AptureCollection");
+            }
+        }
+        public ObservableCollection<string> AvailableShutterTimesCollection
+        {
+            get { return availableShutterTimesCollection; }
+            set
+            {
+                availableShutterTimesCollection = value;
+                update("AvailableShutterTimesCollection");
+            }
+        }
+        public ObservableCollection<string> AECollection
+        {
+            get { return aECollection; }
+            set
+            {
+                aECollection = value;
+                update("AECollection");
+            }
+        }
+        public ObservableCollection<string> AvailableISOListCollection
+        {
+            get { return availableISOListCollection; }
+            set
+            {
+                availableISOListCollection = value;
+                update("AvailableISOListCollection");
+            }
+        }
+        #endregion
 
+        #region Konverter
         public AFModes AfModeConverter
         {
             get { return afModeConverter; }
@@ -224,74 +577,85 @@ namespace Canon_EOS_Remote.ViewModel
             get { return meteringModeConverter; }
             set { meteringModeConverter = value; }
         }
-
-        public EDSDK.EdsPropertyDesc PropertyDescDriveMode
-        {
-            get { return propertyDescDriveMode; }
-            set
-            {
-                propertyDescDriveMode = value;
-                update("PropertyDescDriveMode");
-            }
-        }
-
         public DriveModes DriveModeConverter
         {
             get { return driveModeConverter; }
             set { driveModeConverter = value; }
         }
-
-        public ObservableCollection<string> DriveModeCollection
+        public PropertyCodes PropertyCodes
         {
-            get { return driveModeCollection; }
+            get { return propertyCodesConverter; }
             set
             {
-                driveModeCollection = value;
-                update("DriveModeCollection");
+                propertyCodesConverter = value;
+                update("PropertyCodes");
             }
         }
-
-        public CollectionView DriveModeView
+        public ExposureCompensation EbvConverter
         {
-            get { return driveModeView; }
+            get { return ebvConverter; }
             set
             {
-                driveModeView = value;
-                update("DriveModeView");
+                ebvConverter = value;
+                update("EbvConverter");
             }
         }
-
-        public CommandHDR CommandHDR
+        public AEModes AeModeConverter
         {
-            get { return commandHDR; }
-            set { commandHDR = value;
-            update("CommandHDR");
-            }
-        }
-
-        public EDSDK.EdsPropertyDesc PropertyDescTv
-        {
-            get { return propertyDescTv; }
+            get { return aeModeConverter; }
             set
             {
-                propertyDescTv = value;
-                update("PropertyDescTv");
+                aeModeConverter = value;
+                update("AeModeConverter");
             }
         }
+        public ISOSpeeds IsoConverter
+        {
+            get { return isoConverter; }
+            set
+            {
+                isoConverter = value;
+                update("IsoConverter");
+            }
+        }
+        public ShutterTimes ShutterTimeConverter
+        {
+            get { return shutterTimeConverter; }
+            set
+            {
+                shutterTimeConverter = value;
+                update("ShutterTimeConverter");
+            }
+        }
+        public Apertures ApertureConverter
+        {
+            get { return apertureConverter; }
+            set
+            {
+                apertureConverter = value;
+                update("ApertureConverter");
+            }
+        }
+        #endregion
 
+        #region Commands
         public Command_DelScript_LastCommand CommandDelLastCommandScript
         {
             get { return commandDelLastCommandScript; }
-            set { commandDelLastCommandScript = value;
-            update("CommandDelLastCommandScript");
+            set
+            {
+                commandDelLastCommandScript = value;
+                update("CommandDelLastCommandScript");
             }
         }
 
         public Command_DelScript CommandDelScript
         {
             get { return commandDelScript; }
-            set { commandDelScript = value;
-            update("CommandDelScript");
+            set
+            {
+                commandDelScript = value;
+                update("CommandDelScript");
             }
         }
 
@@ -314,9 +678,6 @@ namespace Canon_EOS_Remote.ViewModel
                 update("CommandChangeAv");
             }
         }
-
-        
-
         public CommandChangeEBV CommandChangeEbv
         {
             get { return commandChangeEbv; }
@@ -346,449 +707,98 @@ namespace Canon_EOS_Remote.ViewModel
                 update("CommandChangeTv");
             }
         }
-
-        public CollectionView ScriptIso
+        public CommandHDR CommandHDR
         {
-            get { return scriptIso; }
-            set { scriptIso = value;
-            update("ScriptIso");
-            }
-        }
-        public CollectionView ScriptAperture
-        {
-            get { return scriptAperture; }
-            set { scriptAperture = value;
-            update("ScriptAperture");
-            }
-        }
-
-        public CollectionView ScriptTv
-        {
-            get { return scriptTv; }
-            set { scriptTv = value;
-            update("ScriptTv");
-            }
-        }
-        public CollectionView ScriptEbv
-        {
-            get { return scriptEbv; }
-            set { scriptEbv = value;
-            update("ScriptEbv");
-            }
-        }
-
-        public CommandChangeISO CommandChangeIso
-        {
-            get { return commandChangeIso; }
-            set { commandChangeIso = value;
-            update("CommandChangeIso");
-            }
-        }
-
-        public CollectionView AvailableEBVView
-        {
-            get { return availableEBVView; }
-            set { availableEBVView = value;
-            update("AvailableEBVView");
-            }
-        }
-
-
-        public string Script
-        {
-            get { return script; }
+            get { return commandHDR; }
             set
             {
-                script = value;
-                update("Script");
+                commandHDR = value;
+                update("CommandHDR");
             }
         }
-
-        public ObservableCollection<string> AvailableEVBCollection
-        {
-            get { return availableEVBCollection; }
-            set { availableEVBCollection = value;
-            update("AvailableEVBCollection");
-            }
-        }
-
-        public EDSDK.EdsPropertyDesc PropertyDescEBV
-        {
-            get { return propertyDescEBV; }
-            set
-            {
-                propertyDescEBV = value;
-                update("propertyDescEBV");
-            }
-        }
-
-        public ExposureCompensation EbvConverter
-        {
-            get { return ebvConverter; }
-            set { ebvConverter = value;
-            update("EbvConverter");
-            }
-        }
-
-        public string CurrentEBV
-        {
-            get { return currentEBV; }
-            set { currentEBV = value;
-            update("CurrentEBV");
-            }
-        }
-
-        public AEModes AeModeConverter
-        {
-            get { return aeModeConverter; }
-            set { aeModeConverter = value;
-            update("AeModeConverter");
-            }
-        }
-
-        public EDSDK.EdsPropertyDesc ApertureDesc
-        {
-            get { return propertyDescAperture; }
-            set { propertyDescAperture = value;
-            update("ApertureDesc");
-            }
-        }
-        
-        public CollectionView ApertureView
-        {
-            get { return apertureView; }
-            set { apertureView = value;
-            update("ApertureView");
-            }
-        }
-       
-        public ObservableCollection<string> ApertureCollection
-        {
-            get { return apertureCollection; }
-            set { apertureCollection = value;
-            update("AptureCollection");
-            }
-        }
-
-        public string CurrentTime
-        {
-            get { return currentTime; }
-            set { currentTime = value;
-            update("CurrentTime");
-            }
-        }
-
-        public string CurrentDate
-        {
-            get { return currentDate; }
-            set { currentDate = value;
-            update("CurrentDate");
-            }
-        }
-
         public Command_DriveLensNearOne CommandDriveLensNearOne
         {
             get { return commandDriveLensNearOne; }
-            set { commandDriveLensNearOne = value;
-            update("CommandDriveLensNearOne");
+            set
+            {
+                commandDriveLensNearOne = value;
+                update("CommandDriveLensNearOne");
             }
         }
 
         public Command_DriveLensNearTwo CommandDriveLensNearTwo
         {
             get { return commandDriveLensNearTwo; }
-            set { commandDriveLensNearTwo = value;
-            update("CommandDriveLensNearTwo");
+            set
+            {
+                commandDriveLensNearTwo = value;
+                update("CommandDriveLensNearTwo");
             }
         }
 
         public Command_DriveLensFarThree CommandDriveLensFarThree
         {
             get { return commandDriveLensFarThree; }
-            set { commandDriveLensFarThree = value;
-            update("CommandDriveLensFarThree");
+            set
+            {
+                commandDriveLensFarThree = value;
+                update("CommandDriveLensFarThree");
             }
         }
 
         public Command_DriveLensFarTwo CommandDriveLensFarTwo
         {
             get { return commandDriveLensFarTwo; }
-            set { commandDriveLensFarTwo = value;
-            update("CommandDriveLensFarTwo");
+            set
+            {
+                commandDriveLensFarTwo = value;
+                update("CommandDriveLensFarTwo");
             }
         }
 
         public Command_DriveLensFarOne CommandDriveLensFarOne
         {
             get { return commandDriveLensFarOne; }
-            set { commandDriveLensFarOne = value;
-            update("CommandDriveLensFarOne");
+            set
+            {
+                commandDriveLensFarOne = value;
+                update("CommandDriveLensFarOne");
             }
         }
 
         public Command_DriveLensNearThree CommandDriveLensNearThree
         {
             get { return commandDriveLensNearThree; }
-            set { commandDriveLensNearThree = value;
-            update("CommandDriveLensNearThree");
-            }
-        }
-
-        public string CurrentAperture
-        {
-            get { return currentAperture; }
-            set  { currentAperture = value;
-                update("CurrentAperture");
-            }
-        }
-
-        public string CurrentProgramm
-        {
-            get { return currentProgramm; }
             set
             {
-                currentProgramm = value;
-                update("CurrentProgramm");
+                commandDriveLensNearThree = value;
+                update("CommandDriveLensNearThree");
             }
         }
 
-        public PropertyCodes PropertyCodes
+        public CommandChangeISO CommandChangeIso
         {
-            get { return propertyCodesConverter; }
-            set { propertyCodesConverter = value;
-            update("PropertyCodes");
-            }
-        }
-
-        public IntPtr Imageref
-        {
-            get { return imageref; }
-            set { imageref = value;
-            update("Imageref");
+            get { return commandChangeIso; }
+            set
+            {
+                commandChangeIso = value;
+                update("CommandChangeIso");
             }
         }
 
         public Command_TakePhoto CommandTakePhoto
         {
             get { return commandTakePhoto; }
-            set { commandTakePhoto = value;
-            update("CommandTakePhoto");
-            }
-        }
-
-        public string CurrentISO
-        {
-            get { return currentISO; }
             set
             {
-                currentISO = value;
-                update("CurrentISO");
+                commandTakePhoto = value;
+                update("CommandTakePhoto");
             }
         }
 
-        public string CurrentTv
-        {
-            get { return currentTv; }
-            set
-            {
-                currentTv = value;
-                update("CurrentTv");
-            }
-        }
+        #endregion
 
-        public EDSDK.EdsPropertyDesc PropertyDescAE
-        {
-            get { return propertyDescAE; }
-            set { propertyDescAE = value;
-                update("PropertyDescAE");
-            }
-        }
-
-        public CollectionView AEView
-        {
-            get { return aEView; }
-            set
-            {
-                aEView = value;
-                update("AEView");
-            }
-        }
-
-        public ObservableCollection<string> AECollection
-        {
-            get { return aECollection; }
-            set
-            {
-                aECollection = value;
-                update("AECollection");
-            }
-        }
-
-        public CollectionView AvailableShutterTimesView
-        {
-            get { return availableShutterTimesView; }
-            set
-            {
-                availableShutterTimesView = value;
-                update("AvailableShutterTimesView");
-            }
-        }
-
-        public ObservableCollection<string> AvailableShutterTimesCollection
-        {
-            get { return availableShutterTimesCollection; }
-            set
-            {
-                availableShutterTimesCollection = value;
-                update("AvailableShutterTimesCollection");
-            }
-        }
-
-        public ObservableCollection<string> AvailableISOListCollection
-        {
-            get { return availableISOListCollection; }
-            set
-            {
-                availableISOListCollection = value;
-                update("AvailableISOListCollection");
-            }
-        }
-
-        public CollectionView AvailableISOListView
-        {
-            get { return availableISOListView; }
-            set
-            {
-                availableISOListView = value;
-                update("AvailableISOListView");
-            }
-        }
-
-        public EDSDK.EdsPropertyDesc AvailableISOList
-        {
-            get { return PropertyDescISO; }
-            set
-            {
-                PropertyDescISO = value;
-                update("AvailableISOList");
-            }
-        }
-
-        public Camera CurrentCamera
-        {
-            get { return currentCamera; }
-            set
-            {
-                currentCamera = value;
-
-                #region Setze neuen Zeiger bei den Commands
-
-                this.CommandTakePhoto.Camera = currentCamera.Ptr;
-
-                this.CommandDriveLensNearOne.CameraPtr = currentCamera.Ptr;
-                this.CommandDriveLensNearTwo.CameraPtr = currentCamera.Ptr;
-                this.CommandDriveLensNearThree.CameraPtr = currentCamera.Ptr;
-
-                this.CommandDriveLensFarOne.CameraPtr = currentCamera.Ptr;
-                this.CommandDriveLensFarTwo.CameraPtr = currentCamera.Ptr;
-                this.CommandDriveLensFarThree.CameraPtr = currentCamera.Ptr;
-                #endregion
-
-                update("CurrentCamera");
-            }
-        }
-
-        public string CurrentCameraFirmware
-        {
-            get { return currentCameraFirmware; }
-            set
-            {
-                currentCameraFirmware = value;
-                update("CurrentCameraFirmware");
-            }
-        }
-
-        public string CurrentCameraOwner
-        {
-            get { return currentCameraOwner; }
-            set
-            {
-                currentCameraOwner = value;
-                update("CurrentCameraOwner");
-            }
-        }
-
-        public int CurrentAvailableShots
-        {
-            get { return currentAvailableShots; }
-            set
-            {
-                currentAvailableShots = value;
-                update("CurrentAvailableShots");
-            }
-        }
-
-        public string CurrentBodyID
-        {
-            get { return currentBodyID; }
-            set
-            {
-                currentBodyID = value;
-                update("CurrentBodyID");
-            }
-        }
-
-        public int CurrentBatteryLevel
-        {
-            get { return currentBatteryLevel; }
-            set
-            {
-                currentBatteryLevel = value;
-                update("CurrentBatteryLevel");
-            }
-        }
-
-        public string CurrentCameraName
-        {
-            get { return currentCameraName; }
-            set
-            {
-                currentCameraName = value;
-                update("CurrentCameraName");
-            }
-        }
-
-        public ISOSpeeds IsoConverter
-        {
-            get { return isoConverter; }
-            set
-            {
-                isoConverter = value;
-                update("IsoConverter");
-            }
-        }
-
-        public ShutterTimes ShutterTimeConverter
-        {
-            get { return shutterTimeConverter; }
-            set
-            {
-                shutterTimeConverter = value;
-                update("ShutterTimeConverter");
-            }
-        }
-
-        public Apertures ApertureConverter
-        {
-            get { return apertureConverter; }
-            set
-            {
-                apertureConverter = value;
-                update("ApertureConverter");
-            }
-        }
-
-#endregion
+        #endregion
 
         private void update(string property)
         {
@@ -803,6 +813,9 @@ namespace Canon_EOS_Remote.ViewModel
             init();
         }
 
+        /// <summary>
+        /// Erstellt von allen Klassenfeldern eine Instanz
+        /// </summary>
         private void instance()
         {
             // Instance Commands
@@ -912,7 +925,7 @@ namespace Canon_EOS_Remote.ViewModel
             {
                 //TODO funktioniert nicht
                 this.Script.Remove(
-                this.Script.LastIndexOf(";")-1);
+                this.Script.LastIndexOf(";") - 1);
                 this.Script.Remove(this.Script.LastIndexOf(";"));
             }
         }
@@ -922,12 +935,12 @@ namespace Canon_EOS_Remote.ViewModel
             if (e == "ChangeISO")
             {
                 this.Script += "Ändere ISO nach : " + this.ScriptIso.CurrentItem + ";\n";
-                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ISOSpeed,sizeof(int),this.IsoConverter.getISOSpeedFromDec((string)this.ScriptIso.CurrentItem)));
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.PropID_ISOSpeed, sizeof(int), this.IsoConverter.getISOSpeedFromDec((string)this.ScriptIso.CurrentItem)));
             }
             if (e == "TakePhoto")
             {
                 this.Script += "Foto Aufnahme;\n";
-                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr,EDSDK.CameraCommand_TakePicture,0,0));
+                this.ScriptCommand.ScriptCommands.Add(new ScriptCommand(this.CurrentCamera.Ptr, EDSDK.CameraCommand_TakePicture, 0, 0));
             }
             if (e == "ChangeTv")
             {
@@ -1054,9 +1067,9 @@ namespace Canon_EOS_Remote.ViewModel
             this.AfMode = this.AfModeConverter.getAfModeString(this.CurrentCamera.CameraAFMode);
         }
 
-       /// <summary>
+        /// <summary>
         /// Wenn in den ComboBoxen ein neuer Wert gewählt wird, werden diese durch die EventHandler bei CurrentChanged an die Kamera gesendet 
-       /// </summary>
+        /// </summary>
         private void setEventHandlerToViews()
         {
             this.ApertureView.CurrentChanged += new EventHandler(sendApertureToCamera);
@@ -1126,7 +1139,7 @@ namespace Canon_EOS_Remote.ViewModel
                     {
                         this.currentCamera.getAeMode();
                         this.CurrentProgramm = this.AeModeConverter.getAEString(this.CurrentCamera.CameraAEMode);
-                        if (this.CurrentCamera.CameraAEMode==1)
+                        if (this.CurrentCamera.CameraAEMode == 1)
                         {
                             updatePropertyDescTv();
                             updatePropertyDescEBV();
@@ -1283,7 +1296,6 @@ namespace Canon_EOS_Remote.ViewModel
                 this.afModeCollection.Add(this.AfModeConverter.getAfModeString((uint)this.PropertyDescAfMode.PropDesc[i]));
             }
         }
-
 
         private void delPropertyDescAperturesFromCollection()
         {

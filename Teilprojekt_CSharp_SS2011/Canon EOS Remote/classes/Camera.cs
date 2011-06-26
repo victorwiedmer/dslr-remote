@@ -629,6 +629,17 @@ namespace Canon_EOS_Remote
         }
 
         /// <summary>
+        /// Holt die Tabelle der verfügbaren ISO-Werte von der Kamera und speichert sie in den Klassemember
+        /// </summary>
+        public void getPropertyDescIsoSpeed()
+        {
+            if ((Error = EDSDK.EdsGetPropertyDesc(this.Ptr, EDSDK.PropID_ISOSpeed, out this.availableISOSpeeds)) != 0)
+            {
+                publicError(Error);
+            }
+        }
+
+        /// <summary>
         /// Holt die Einstellung für den Objektivstatus(angeschlossen) von der Kamera und speichert sie in den Klassemember
         /// </summary>
         public void getLensState()

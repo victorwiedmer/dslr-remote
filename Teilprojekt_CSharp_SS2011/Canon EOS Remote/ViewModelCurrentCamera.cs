@@ -818,6 +818,27 @@ namespace Canon_EOS_Remote.ViewModel
         /// </summary>
         private void instance()
         {
+            instanceCommands();
+            instanceObservableCollections();
+            instanceCollectionViews();
+            instanceConverter();
+        }
+
+        private void instanceObservableCollections()
+        {
+            // Instance ObservableCollections
+            this.AvailableISOListCollection = new ObservableCollection<string>();
+            this.AvailableShutterTimesCollection = new ObservableCollection<string>();
+            this.AECollection = new ObservableCollection<string>();
+            this.AvailableEVBCollection = new ObservableCollection<string>();
+            this.ApertureCollection = new ObservableCollection<string>();
+            this.DriveModeCollection = new ObservableCollection<string>();
+            this.MeteringModeCollection = new ObservableCollection<string>();
+            this.AfModeCollection = new ObservableCollection<string>();
+        }
+
+        private void instanceCommands()
+        {
             // Instance Commands
             this.ScriptCommand = new Command_RunScript();
             this.Command_ScriptTakePhoto = new CommandScriptPhoto();
@@ -842,15 +863,10 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandDelScript = new Command_DelScript();
             this.CommandDelLastCommandScript = new Command_DelScript_LastCommand();
             this.CommandHDR = new CommandHDR();
-            // Instance ObservableCollections
-            this.AvailableISOListCollection = new ObservableCollection<string>();
-            this.AvailableShutterTimesCollection = new ObservableCollection<string>();
-            this.AECollection = new ObservableCollection<string>();
-            this.AvailableEVBCollection = new ObservableCollection<string>();
-            this.ApertureCollection = new ObservableCollection<string>();
-            this.DriveModeCollection = new ObservableCollection<string>();
-            this.MeteringModeCollection = new ObservableCollection<string>();
-            this.AfModeCollection = new ObservableCollection<string>();
+        }
+
+        private void instanceCollectionViews()
+        {
             //Instance CollectionViews
             this.AvailableISOListView = new CollectionView(this.AvailableISOListCollection);
             this.AvailableShutterTimesView = new CollectionView(this.AvailableShutterTimesCollection);
@@ -865,7 +881,10 @@ namespace Canon_EOS_Remote.ViewModel
             this.ScriptTv = new CollectionView(this.AvailableShutterTimesCollection);
             this.ScriptIso = new CollectionView(this.AvailableISOListCollection);
             this.ScriptEbv = new CollectionView(this.AvailableEVBCollection);
-            //Instance Konverter
+        }
+
+        private void instanceConverter()
+        {
             this.IsoConverter = new ISOSpeeds();
             this.ShutterTimeConverter = new ShutterTimes();
             this.AeModeConverter = new classes.AEModes();
@@ -895,6 +914,13 @@ namespace Canon_EOS_Remote.ViewModel
 
         private void init()
         {
+            initFields();
+            instance();
+            setEvents();
+        }
+
+        private void initFields()
+        {
             this.CurrentCameraName = "";
             this.CurrentCameraOwner = "";
             this.CurrentCameraFirmware = "";
@@ -910,8 +936,6 @@ namespace Canon_EOS_Remote.ViewModel
             this.DriveMode = "";
             this.MeteringMode = "";
             this.AfMode = "";
-            instance();
-            setEvents();
         }
 
         private void delScript(string e)
@@ -984,17 +1008,12 @@ namespace Canon_EOS_Remote.ViewModel
         /// </summary>
         private void CurrentCameraPropertyDescs()
         {
-            this.AvailableISOList = this.CurrentCamera.AvailableISOSpeeds;
-            copyPropertyDescISOToCollection();
+            updatePropertyDescIsoSpeed();
             updatePropertyDescTv();
-            this.propertyDescAE = this.CurrentCamera.AvailableAEModes;
-            copyPropertyDescAEModesToCollection();
-            this.ApertureDesc = this.CurrentCamera.AvailableApertureValues;
-            copyPropertyDescAperturesToCollection();
-            this.PropertyDescEBV = this.CurrentCamera.AvailableExposureCompensation;
-            copyPropertyDescEbvToCollection();
-            this.PropertyDescDriveMode = this.CurrentCamera.AvailableDriveModes;
-            copyPropertyDescDriveModeToCollection();
+            updatePropertyDescAeModes();
+            updatePropertyDescAv();
+            updatePropertyDescEBV();
+            updatePropertyDescDriveMode();
             updatePropertyDescMeteringMode();
             updatePropertyDescAFMode();
         }
@@ -1007,6 +1026,13 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentCamera.getpropertyDescShutterTimes();
             this.PropertyDescTv = this.CurrentCamera.AvailableShutterspeeds;
             copyPropertyDescShutterTimesToCollection();
+        }
+
+        private void updatePropertyDescAeModes()
+        {
+            this.CurrentCamera.getpropertyDescAeModes();
+            this.PropertyDescAE = this.CurrentCamera.AvailableAEModes;
+            copyPropertyDescAEModesToCollection();
         }
 
         private void updatePropertyDescMeteringMode()
@@ -1042,6 +1068,13 @@ namespace Canon_EOS_Remote.ViewModel
             this.CurrentCamera.getPropertyDescAFModes();
             this.PropertyDescAfMode = this.CurrentCamera.AvailableAFModes;
             copyPropertyDescAfModeToCollection();
+        }
+
+        private void updatePropertyDescIsoSpeed()
+        {
+            this.CurrentCamera.getPropertyDescIsoSpeed();
+            this.PropertyDescISO = this.CurrentCamera.AvailableISOSpeeds;
+            copyPropertyDescISOToCollection();
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Canon_EOS_Remote
 {
@@ -51,7 +52,13 @@ namespace Canon_EOS_Remote
         private EDSDK.EdsPropertyDesc availableDriveModes;
         private EDSDK.EdsPropertyDesc availableAFModes;
 
+        private List<MemoryCard> memoryCards;
 
+        public List<MemoryCard> MemoryCards
+        {
+            get { return memoryCards; }
+            set { memoryCards = value; }
+        }
 
         public EDSDK.EdsPropertyDesc AvailableDriveModes
         {
@@ -299,6 +306,7 @@ namespace Canon_EOS_Remote
 
         private void initFields()
         {
+            this.MemoryCards = new List<MemoryCard>();
             getBatteryLevel();
             getAeMode();
             getDriveMode();
@@ -342,6 +350,7 @@ namespace Canon_EOS_Remote
                 publicError(Error);
             }
             initFields();
+            scanForMemoryCards();
         }
 
         #endregion
@@ -720,6 +729,130 @@ namespace Canon_EOS_Remote
         private void publicError(uint error)
         {
             Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+        }
+
+        private void scanForMemoryCards()
+        {
+            IntPtr childPtr;
+            int childcount;
+            MemoryCard tmpMemoryCard;
+            EDSDK.EdsGetChildCount(this.Ptr, out childcount);
+            for (int i = 0; i < childcount; i++)
+            {
+                EDSDK.EdsGetChildAtIndex(this.Ptr,i,out childPtr);
+                tmpMemoryCard = new MemoryCard(childPtr);
+                Console.WriteLine(tmpMemoryCard.toString());
+                this.MemoryCards.Add(tmpMemoryCard);
+                scanForFolders(childPtr);
+            }
+        }
+
+        private void scanForFolders(IntPtr ptr)
+        {
+            Console.WriteLine("Scan for folder ....");
+            IntPtr childPtr;
+            int childcount;
+            Folder tmpFolder;
+            EDSDK.EdsGetChildCount(ptr, out childcount);
+            Console.WriteLine("Found : " + childcount + " folders.");
+            for (int i = 0; i < childcount; i++)
+            {
+                EDSDK.EdsGetChildAtIndex(ptr, i, out childPtr);
+                tmpFolder = new Folder(childPtr);
+                Console.WriteLine(tmpFolder.ToString());
+                if (tmpFolder.FolderInfo.isFolder == 1)
+                {
+                    scanForFolders(childPtr);
+                }
+                else
+                {
+                    savePictureToHost(childPtr);
+                }
+            }
+        }
+
+        private void scanForFiles(IntPtr ptr)
+        {
+            Console.WriteLine("Scan for files ...");
+            IntPtr childPtr;
+            int childCount;
+            Canon_EOS_Remote.classes.Image tmpImage;
+            EDSDK.EdsGetChildCount(ptr, out childCount);
+            Console.WriteLine("Found : " + childCount + " files");
+            for (int i = 0; i < childCount; i++)
+            {
+                EDSDK.EdsGetChildAtIndex(ptr, i, out childPtr);
+                tmpImage = new classes.Image(childPtr);
+                Console.WriteLine(tmpImage.ToString());
+            }
+        }
+
+        private void savePictureToHost(IntPtr ptr)
+        {
+            Canon_EOS_Remote.classes.Image tmpImage;
+            tmpImage = new classes.Image(ptr);
+            Byte[] byteArray = new byte[(int)tmpImage.ImageItemInfo.Size];
+            uint error = 0;
+            IntPtr outputStream;
+            error=EDSDK.EdsCreateMemoryStream((uint)tmpImage.ImageItemInfo.Size, out outputStream);
+            if (error != 0)
+            {
+                Console.WriteLine("Error at creating file stream : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+            }
+            error=EDSDK.EdsDownload(ptr, (uint)tmpImage.ImageItemInfo.Size, outputStream);
+            if (error != 0)
+            {
+                Console.WriteLine("Error at download : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+            }
+            IntPtr imageRef = IntPtr.Zero;
+            error=EDSDK.EdsCreateImageRef(outputStream, out imageRef);
+            if (error != 0)
+            {
+                Console.WriteLine("Error at createimageref : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+            }
+            EDSDK.EdsImageInfo imageinfo;
+            error=EDSDK.EdsGetImageInfo(imageRef, EDSDK.EdsImageSource.FullView, out imageinfo);
+            if (error != 0)
+            {
+                Console.WriteLine("Error at getiamgeinfo : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+            }
+            error=EDSDK.EdsRelease(imageRef);
+            if (error != 0)
+            {
+                Console.WriteLine("Error at release imageref : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+            }
+            GCHandle gcHandle = GCHandle.Alloc(byteArray, GCHandleType.Pinned);
+            IntPtr adress = gcHandle.AddrOfPinnedObject();
+            IntPtr streamRef = IntPtr.Zero;
+            error=EDSDK.EdsGetPointer(outputStream, out streamRef);
+            if (error != 0)
+            {
+                Console.WriteLine("Error at getpointer : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+            }
+            Marshal.Copy(streamRef, byteArray, 0, (int)tmpImage.ImageItemInfo.Size);
+            try
+            {
+                FileStream fstream = new FileStream("e:\\" + tmpImage.ImageItemInfo.szFileName, FileMode.Create);
+                fstream.Write(byteArray, 0, byteArray.Length);
+                fstream.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception at filestream : " + e.Message);
+            }
+            finally
+            {
+                error = EDSDK.EdsRelease(outputStream);
+                if (error != 0)
+                {
+                    Console.WriteLine("Error at release outputstream : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+                }
+                error = EDSDK.EdsRelease(streamRef);
+                if (error != 0)
+                {
+                    Console.WriteLine("Error at at release streamref : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+                }
+            }
         }
 
         #endregion

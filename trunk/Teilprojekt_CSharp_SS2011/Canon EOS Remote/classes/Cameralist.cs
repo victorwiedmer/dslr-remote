@@ -89,6 +89,22 @@ namespace Canon_EOS_Remote.classes
             return 0x0;
         }
 
+        private void scanToCameras()
+        {
+            IntPtr tmpptr;
+            IntPtr tmpCameraPtr;
+            int tmpCount = 0;
+            EDSDK.EdsGetCameraList(out tmpptr);
+            EDSDK.EdsGetChildCount(tmpptr, out tmpCount);
+            for (int i = 0; i < tmpCount; i++)
+            {
+                EDSDK.EdsGetChildAtIndex(tmpptr, i, out tmpCameraPtr);
+                this.CameraList.Add(new Camera(tmpCameraPtr,""));
+                EDSDK.EdsSetPropertyEventHandler(tmpCameraPtr, EDSDK.PropertyEvent_All, cameraPropertyEventHandler, tmpCameraPtr);
+                EDSDK.EdsSetCameraStateEventHandler(tmpCameraPtr, EDSDK.StateEvent_All, this.cameraStateEventHandler, tmpCameraPtr);
+            }
+        }
+
         public Cameralist()
         {
             uint error = 0;
@@ -104,6 +120,7 @@ namespace Canon_EOS_Remote.classes
             }
             this.eventIDs = new EventCodes();
             this.propertyCodes = new PropertyCodes();
+            scanToCameras();
         }
 
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)

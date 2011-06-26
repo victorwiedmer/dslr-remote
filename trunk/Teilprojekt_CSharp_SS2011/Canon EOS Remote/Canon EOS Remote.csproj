@@ -96,6 +96,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\Folder.cs" />
+    <Compile Include="classes\Image.cs" />
+    <Compile Include="classes\MemoryCard.cs" />
     <Compile Include="Commands\Command_DelScript_LastCommand.cs" />
     <Compile Include="Commands\CommandHDR.cs" />
     <Compile Include="CurrentCamera.cs" />

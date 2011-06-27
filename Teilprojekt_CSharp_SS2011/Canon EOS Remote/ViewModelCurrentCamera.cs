@@ -4,7 +4,6 @@ using EDSDKLib;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using Canon_EOS_Remote.classes;
-using System.Collections.Generic;
 using Canon_EOS_Remote.Commands;
 using Canon_EOS_Remote.Typen_und_Listen;
 
@@ -110,6 +109,7 @@ namespace Canon_EOS_Remote.ViewModel
 
         #region Commands
         private Command_TakePhoto commandTakePhoto; //Macht n-Fotos die ueber die Kameraeinstellung festgelegt wurden
+        private Command_SaveAllPictures commandSaveAllPcitures;
 
         #region Commands fuer die Objektivfokus Steuerung
         private Command_DriveLensNearOne commandDriveLensNearOne;
@@ -796,6 +796,14 @@ namespace Canon_EOS_Remote.ViewModel
             }
         }
 
+        public Command_SaveAllPictures CommandSaveAllPictures
+        {
+            get { return commandSaveAllPcitures; }
+            set { commandSaveAllPcitures = value;
+            update("CommandSaveAllPcitures");
+            }
+        }
+
         #endregion
 
         #endregion
@@ -863,6 +871,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.CommandDelScript = new Command_DelScript();
             this.CommandDelLastCommandScript = new Command_DelScript_LastCommand();
             this.CommandHDR = new CommandHDR();
+            this.CommandSaveAllPictures = new Command_SaveAllPictures();
         }
 
         private void instanceCollectionViews()
@@ -1101,6 +1110,21 @@ namespace Canon_EOS_Remote.ViewModel
         }
 
         /// <summary>
+        /// Ruft einen Win32 Speichern Unter Dialog auf und nach dem festlegen
+        /// des Pfades werden alle Fotos von der Kamera geladen
+        /// </summary>
+        private void saveAllPictures()
+        {
+            string tmpPath;
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.Title = "Canon EOS Remote - Alle Fotos von der Kamera laden";
+            dlg.Filter = ".CR2";
+            dlg.ShowDialog();
+            tmpPath = dlg.FileName;
+            CurrentCamera.saveAllPictures(tmpPath);
+        }
+
+        /// <summary>
         /// Wenn in den ComboBoxen ein neuer Wert gewählt wird, werden diese durch die EventHandler bei CurrentChanged an die Kamera gesendet 
         /// </summary>
         private void setEventHandlerToViews()
@@ -1113,6 +1137,7 @@ namespace Canon_EOS_Remote.ViewModel
             this.DriveModeView.CurrentChanged += new EventHandler(sendDriveModeToCamera);
             this.MeteringModeView.CurrentChanged += new EventHandler(sendMeteringModeToCamera);
             this.AfModeView.CurrentChanged += new EventHandler(sendAFModeToCamera);
+            this.CommandSaveAllPictures.clickEventHandler += saveAllPictures;
         }
 
         public void updateCurrentlyCamera(classes.PropertyEventArgs p)
@@ -1401,7 +1426,6 @@ namespace Canon_EOS_Remote.ViewModel
                 this.CurrentCamera.setAFModeToCamera((int)this.AfModeConverter.getAFModeHex((string)this.AfModeView.CurrentItem));
             }
         }
-
 
         /// <summary>
         /// Konvertiert das Kameradatum vom Typ EdsTime zum String

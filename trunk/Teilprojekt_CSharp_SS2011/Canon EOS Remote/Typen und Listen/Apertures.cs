@@ -76,7 +76,8 @@ namespace Canon_EOS_Remote.classes
             this.ApertureList.Add(new TAperture("76", 0x6C));
             this.ApertureList.Add(new TAperture("80", 0x6D));
             this.ApertureList.Add(new TAperture("91", 0x70));
-            this.ApertureList.Add(new TAperture("unkown", 0xFFFFFFFF));
+            this.ApertureList.Add(new TAperture("unbekannt", 0xFFFFFFFF));
+            this.ApertureList.Add(new TAperture("nicht verfügbar", 0));
         }
 
         public uint getApertureHex(string apertureString)
@@ -100,7 +101,7 @@ namespace Canon_EOS_Remote.classes
                     return this.ApertureList.ElementAt(i).ApertureString;
                 }
             }
-            return "unkown : " + apertureHex;
+            return "unbekannt : " + apertureHex;
         }
     }
 }

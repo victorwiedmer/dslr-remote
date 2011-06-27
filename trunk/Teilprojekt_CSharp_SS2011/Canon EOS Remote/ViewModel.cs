@@ -44,7 +44,10 @@ namespace Canon_EOS_Remote.ViewModel
             viewModelCurrentCamera = new ViewModelCurrentCamera();
             cameraListView = new CollectionView(Model.CameraList.CameraList);
             CameraListView.CurrentChanged += new EventHandler(setCurrentlyCamera);
-            Model.CameraList.onCameraPropertyChangedEvent += ViewModelCurrentCamera.updateCurrentlyCamera;
+            if (ViewModelCurrentCamera != null)
+            {
+                Model.CameraList.onCameraPropertyChangedEvent += ViewModelCurrentCamera.updateCurrentlyCamera;
+            }
         }
 
         #region ViewModel Events

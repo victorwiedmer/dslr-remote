@@ -60,6 +60,7 @@ namespace Canon_EOS_Remote
             set { memoryCards = value; }
         }
 
+
         public EDSDK.EdsPropertyDesc AvailableDriveModes
         {
             get { return availableDriveModes; }
@@ -350,7 +351,6 @@ namespace Canon_EOS_Remote
                 publicError(Error);
             }
             initFields();
-            scanForMemoryCards();
         }
 
         #endregion
@@ -728,26 +728,32 @@ namespace Canon_EOS_Remote
         /// <param name="error">ErrorCode der SDK</param>
         private void publicError(uint error)
         {
-            Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(error));
-        }
-
-        private void scanForMemoryCards()
-        {
-            IntPtr childPtr;
-            int childcount;
-            MemoryCard tmpMemoryCard;
-            EDSDK.EdsGetChildCount(this.Ptr, out childcount);
-            for (int i = 0; i < childcount; i++)
+            if (error != EDSDK.EDS_ERR_OK)
             {
-                EDSDK.EdsGetChildAtIndex(this.Ptr,i,out childPtr);
-                tmpMemoryCard = new MemoryCard(childPtr);
-                Console.WriteLine(tmpMemoryCard.toString());
-                this.MemoryCards.Add(tmpMemoryCard);
-                scanForFolders(childPtr);
+                Console.WriteLine("An error has oocured : " + ErrorCodes.getErrorDataWithCodeNumber(error));
+                System.Windows.MessageBox.Show("Ein Fehler ist aufgetreten : " + ErrorCodes.getErrorDataWithCodeNumber(error));
             }
         }
 
-        private void scanForFolders(IntPtr ptr)
+        public void saveAllPictures(string path)
+        {
+            scanForMemoryCards(path);
+        }
+
+        private void scanForMemoryCards(string path)
+        {
+            IntPtr childPtr;
+            int childcount;
+            publicError(EDSDK.EdsGetChildCount(this.Ptr, out childcount));
+            for (int i = 0; i < childcount; i++)
+            {
+                publicError(EDSDK.EdsGetChildAtIndex(this.Ptr,i,out childPtr));
+                this.MemoryCards.Add(new MemoryCard(childPtr));
+                scanMemoryCard(childPtr, path);
+            }
+        }
+
+        private void scanMemoryCard(IntPtr ptr, string path)
         {
             Console.WriteLine("Scan for folder ....");
             IntPtr childPtr;
@@ -762,32 +768,17 @@ namespace Canon_EOS_Remote
                 Console.WriteLine(tmpFolder.ToString());
                 if (tmpFolder.FolderInfo.isFolder == 1)
                 {
-                    scanForFolders(childPtr);
+                    scanMemoryCard(childPtr,path);
                 }
                 else
                 {
-                    savePictureToHost(childPtr);
+
+                    savePictureToHost(childPtr, path);
                 }
             }
         }
 
-        private void scanForFiles(IntPtr ptr)
-        {
-            Console.WriteLine("Scan for files ...");
-            IntPtr childPtr;
-            int childCount;
-            Canon_EOS_Remote.classes.Image tmpImage;
-            EDSDK.EdsGetChildCount(ptr, out childCount);
-            Console.WriteLine("Found : " + childCount + " files");
-            for (int i = 0; i < childCount; i++)
-            {
-                EDSDK.EdsGetChildAtIndex(ptr, i, out childPtr);
-                tmpImage = new classes.Image(childPtr);
-                Console.WriteLine(tmpImage.ToString());
-            }
-        }
-
-        private void savePictureToHost(IntPtr ptr)
+        private void savePictureToHost(IntPtr ptr, string path)
         {
             Canon_EOS_Remote.classes.Image tmpImage;
             tmpImage = new classes.Image(ptr);
@@ -832,9 +823,14 @@ namespace Canon_EOS_Remote
             Marshal.Copy(streamRef, byteArray, 0, (int)tmpImage.ImageItemInfo.Size);
             try
             {
-                FileStream fstream = new FileStream("e:\\" + tmpImage.ImageItemInfo.szFileName, FileMode.Create);
+                FileStream fstream = new FileStream(path + tmpImage.ImageItemInfo.szFileName, FileMode.Create);
                 fstream.Write(byteArray, 0, byteArray.Length);
                 fstream.Close();
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Console.WriteLine("Zugriff verweigert.");
+                System.Windows.MessageBox.Show("Zugriff verweigert : \n" + e.Message);
             }
             catch (Exception e)
             {
@@ -852,6 +848,7 @@ namespace Canon_EOS_Remote
                 {
                     Console.WriteLine("Error at at release streamref : " + ErrorCodes.getErrorDataWithCodeNumber(error));
                 }
+                gcHandle.Free();
             }
         }
 

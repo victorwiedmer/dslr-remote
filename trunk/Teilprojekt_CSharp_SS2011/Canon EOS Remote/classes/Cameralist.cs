@@ -120,7 +120,7 @@ namespace Canon_EOS_Remote.classes
             }
             this.eventIDs = new EventCodes();
             this.propertyCodes = new PropertyCodes();
-            //scanToCameras();
+            scanToCameras();
         }
 
         private uint onCameraPropertyChanged(uint inEvent, uint inPropertyID, uint inParameter, IntPtr inContext)
